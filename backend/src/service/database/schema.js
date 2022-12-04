@@ -8,7 +8,7 @@ const userSchema = new Schema({
     password: String,
     isAdmin: Boolean,
     token: String,
-    favourite: [],
+    favourite: [{venueId: Number}],
 });
 
 const commentSchema = new Schema({
