@@ -29,5 +29,11 @@ async function getCommentsByVenue(venueId) {
 
 }
 
+// **** add more functions here to extend the database interfaces ****
 
-module.exports = {};
+module.exports = {
+    getAllVenues,
+    getVenuesByKeyword,
+    addVenueToUserFavourite,
+    getCommentsByVenue,
+};
