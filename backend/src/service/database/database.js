@@ -43,6 +43,7 @@ async function getVenuesByKeyword(keyword) {
     ));
 }
 
+// TODO
 async function addVenueToUserFavourite(userId, venueId) {
 
 }
@@ -61,6 +62,10 @@ async function getCommentsByVenue(venueId) {
     ))
 }
 
+async function createCommentByVenue(userId, venueId, text) {
+    await commentModel.create({userId, venueId, text});
+}
+
 // **** add more functions here to extend the database interfaces ****
 
 
@@ -73,4 +78,5 @@ module.exports = {
     getVenuesByKeyword,
     addVenueToUserFavourite,
     getCommentsByVenue,
+    createCommentByVenue,
 };
