@@ -7,7 +7,7 @@ const {
     addCommentByVenueRoute,
 } = require("./route/database");
 
-const { checkIn } = require("./route/login_database");
+const { checkIn, createUser} = require("./route/login_database");
 
 function mountRouter(app) {
     
@@ -16,6 +16,7 @@ function mountRouter(app) {
     app.get("/mainpage", (req, res) => res.sendFile(__dirname + '/mainpage.html'));
     app.get("/adminpage", (req, res) => res.sendFile(__dirname + '/adminpage.html'));
     app.post('/login', checkIn);
+    app.post('/login/creat', createUser);
     app.get("/venue/all", getAllVenuesRoute);
     app.get("/venue/all/keywords", getVenuesByKeywordRoute);
     app.post("/venue/add/favourite", addVenueToUserFavouriteRoute);
