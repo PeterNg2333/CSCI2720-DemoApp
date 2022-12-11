@@ -8,6 +8,7 @@ const {mountRouter} = require("./router");
 const app = express();
 const server = http.createServer(app);
 
+
 // expose these paths to public access
 const publicPath = path.join(__dirname, "public");
 
@@ -16,9 +17,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(publicPath));
 
+
+
+
 mountRouter(app);
 
-const BACKEND_PORT = 8000;
+const BACKEND_PORT = 3000;
 const BACKEND_HOSTNAME = "0.0.0.0";
 
 server.listen(BACKEND_PORT, BACKEND_HOSTNAME, () => {

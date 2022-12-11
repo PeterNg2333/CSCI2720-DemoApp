@@ -1,14 +1,10 @@
 const {Schema} = require("mongoose");
 
 const userSchema = new Schema({
-    id: Number,
-    name: String,
-    role: String,
-    salt: String,
-    password: String,
-    isAdmin: Boolean,
-    token: String,
-    favourite: [{venueId: Number}],
+    userId: { type: Number, required: true, unique: true },
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    isAdmin: {type: Boolean, required: true}
 });
 
 const commentSchema = new Schema({
