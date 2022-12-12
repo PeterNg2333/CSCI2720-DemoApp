@@ -3,3 +3,13 @@
     color: white;
 }
 
+.btn:hover{
+    background-color: #01032e;
+}
+
+
+
+.no-click {pointer-events: none;}
+
+
+
