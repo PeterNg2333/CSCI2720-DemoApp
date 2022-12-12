@@ -5,6 +5,7 @@ class UserNavBar extends React.Component{
     render(){
         return(
             <nav className="container-fluid navbar navbar-expand nav-user">
+
             <div>
                 <button className="navbar-toggle btn">
                     <i className="fa fa-chevron-left text-white"></i>
