@@ -5,9 +5,9 @@ const fs = require('fs');
 
 /**
  * Config
- * @param {*} url: url of the xml api
- * @param {*} fileName: file name of the scraped data
- * @param {*} jsonOption: setting of conversting xml to json data 
+ * targetXML.url: url of the xml api
+ * targetXML.fileName: file name of the scraped data
+ * jsonOption: setting of conversting xml to json data 
  */
 const jsonOption = {compact: true, spaces: 4 , ignoreDeclaration: true, ignoreInstruction: true}
 const targetXML = [{url:"https://www.lcsd.gov.hk/datagovhk/event/events.xml", fileName:"eventData"}, 
@@ -19,10 +19,10 @@ const targetXML = [{url:"https://www.lcsd.gov.hk/datagovhk/event/events.xml", fi
  */
 // 1. Scrape the XML and save the json result into ./Output folder
 function downloadXML2JSON(url, fileName, jsonOption=jsonOption){
+	var path = `./output/${String(fileName)}.json`;
+
 	request(url, (err, response, body) => {
 		var jsonResult = convert.xml2json(body, jsonOption);
-
-		var path = `./output/${String(fileName)}.json`;
 		save(jsonResult, path)
 	});
 }
@@ -30,26 +30,27 @@ function downloadXML2JSON(url, fileName, jsonOption=jsonOption){
 // 2. Save the json variable into ./Output folder
 function save(jsonResult, path){
 	var stringResult = JSON.stringify(jsonResult);
+
 	fs.writeFile(path, stringResult, 'utf8', function (err) { 
 		if (err) { 
 			console.log("An error occured while writing JSON Object to File."); 
 			console.log(err)
-			return false; 
 		} 
 		else 
 			console.log(`Write Json object successful at ${path}`)
-			return true
 	})
 }
 
 // 3. update the data file as well as meta data file at "./output"
 function runUpdate(dataXML, dataSourceNum, jsonOption, metaDataFileLocation){
-	// Record XML scraper's meta data e.g. last update date
 	var currentDate = new Date().toJSON().slice(0, 10);
-	var jsonMetaData = {	LastUpdate:currentDate	};
+	var jsonMetaData = {LastUpdate:currentDate};
+
+	// Record XML scraper's meta data e.g. last update date
 	save(jsonMetaData , metaDataFileLocation);
 
 	// DownloadXML at JSON format 
+	console.log("Start Scraping...")
 	for (var idx = 0; idx < dataSourceNum; idx++) {
 		downloadXML2JSON(dataXML[idx].url, dataXML[idx].fileName, jsonOption)
 	}
@@ -64,15 +65,12 @@ function runUpdate(dataXML, dataSourceNum, jsonOption, metaDataFileLocation){
  */
 class XMLScraper{
 	constructor(targetXML, jsonOption=jsonOption){
-		console.log("Run initialization")
-
 		this.dataXML = targetXML
 		this.dataSourceNum = targetXML.length
 		this.jsonOption = jsonOption
 		this.metaDataFileLocation =  "./output/scraperMetaData.json"
 
 		runUpdate(this.dataXML,this.dataSourceNum,this.jsonOption,this.metaDataFileLocation)
-		console.log("initialization success")
 		
 	}
 
@@ -87,7 +85,7 @@ class XMLScraper{
 			var result = JSON.parse(data)
 			var lastUpdate = result.LastUpdate
 			if (err) { 
-				console.log("An error occured while reading JSON Object to File."); 
+				console.log("An error occured while reading JSON File."); 
 				console.log(err);
 			}
 			else if (lastUpdate <= currentDate) {
