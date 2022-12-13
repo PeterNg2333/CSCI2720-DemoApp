@@ -8,7 +8,8 @@ const userSchema = new Schema({
     userId: { type: Number, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    isAdmin: {type: Boolean, required: true}
+    isAdmin: {type: Boolean, required: true},
+    favouriteVenues: [Number],
 });
 
 // hash the password
@@ -55,7 +56,7 @@ const venueSchema = new Schema({
 });
 
 const eventSchema = new Schema({
-    id: Number,
+    eventId: Number,
     title: String,
     venueId: Number,
     datetime: [],
