@@ -1,13 +1,11 @@
 import React from 'react';
 
-class UserLocation extends React.Component{
-    render(){
-        return(
-            <div className="container-fluid">
+function UserLocation(){
+    return(
+        <div className="container-fluid">
                 
-            </div>
-        );
-    }
+        </div>
+    );
 }
 export default UserLocation;
 
