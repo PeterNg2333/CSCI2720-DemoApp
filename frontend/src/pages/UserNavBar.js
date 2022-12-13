@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
 
-function UserNavBar (){
+function UserNavBar(props){
     let location = useLocation()
     return(
         <nav className="container-fluid navbar navbar-expand nav-user py-1">
@@ -15,7 +15,7 @@ function UserNavBar (){
                 </button>
                 <span className="navbar-toggle nav-item-text "> &nbsp; &nbsp;  
                     <Link to="/Location" className="btn text-white px-0">{location.pathname}</Link>
-                    <span className="text-white url">/abdc</span>
+                    <span className="text-white url">{props.subPagePath}</span>
                 </span>
 
             </div>

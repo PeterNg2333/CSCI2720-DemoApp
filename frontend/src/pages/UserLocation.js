@@ -1,6 +1,6 @@
 import React from 'react';
 
-class UserLocationMain extends React.Component{
+class UserLocation extends React.Component{
     render(){
         return(
             <div className="container-fluid">
@@ -9,6 +9,6 @@ class UserLocationMain extends React.Component{
         );
     }
 }
-export default UserLocationMain;
+export default UserLocation;
 
 
