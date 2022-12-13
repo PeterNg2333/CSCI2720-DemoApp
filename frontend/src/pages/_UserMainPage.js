@@ -5,12 +5,14 @@ import UserLocation from "./UserLocation"
 
 function UserMainLocation(){
     let venueName = useParams();
-    return(
-        <>
-            <header ><UserNavBar venue={String(venueName)}/></header>
-            <main><UserLocation/></main>
-        </>
-    );
+    return(<>
+        <header className='row'>
+            <UserNavBar venue={String(venueName)}/>
+        </header>
+        <main className='row'>
+            <UserLocation/>
+        </main>
+    </>);
 }
 
 export default UserMainLocation;

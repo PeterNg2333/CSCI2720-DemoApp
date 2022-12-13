@@ -26,24 +26,24 @@ function UserNavBar(props){
                 <li className="mx-1 nav-item ">
                     <Link to="/Location" className="nav-item-text">
                         <button className="btn navbar-btn nav-item-text text-white">
-                            <i className="fa fa-light fa-home mr-2"> <span className='d-none d-md-inline d-lg-inline d-xl-inline'> Home </span>  </i>
+                            <i className="fa fa-light fa-home mr-2"> <span className='d-none d-lg-inline d-xl-inline'> Home </span>  </i>
                         </button>
                     </Link>
                 </li>
                 <li className="mx-1 nav-item">
                     <Link to="main" className="nav-item-text">
                         <button className="btn navbar-btn nav-item-text text-white">
-                            <i className="fa fa-light fa-heart mr-2"><span className='d-none d-md-inline d-lg-inline d-xl-inline'> Favorite</span> </i>
+                            <i className="fa fa-light fa-heart mr-2"><span className='d-none d-lg-inline d-xl-inline'> Favorite</span> </i>
                         </button>
                     </Link>
                 </li>
             </ul>
 
             <button className="btn navbar-btn nav-item-text text-white no-click">
-                <i className="fa fa-light fa-user mr-1"><span className='d-none d-md-inline d-lg-inline d-xl-inline'> Hi!,</span> [User Name] </i>
+                <i className="fa fa-light fa-user mr-1"><span className='d-none d-lg-inline d-xl-inline'> Hi!,</span> [User Name] </i>
             </button>
             <button className="btn navbar-btn nav-item-text text-white" >
-                <span className='d-none d-md-inline d-lg-inline d-xl-inline'>Log Out</span><i className="fa fa-light fa-sign-out mx-1"></i>
+                <span className='d-none d-lg-inline d-xl-inline'>Log Out</span><i className="fa fa-light fa-sign-out mx-1"></i>
             </button>
         </nav>
     );

@@ -14,11 +14,13 @@ function App() {
         <Route path="/" element={<AdminPanelEventPage />} />
 
         {/** User Pages*/}
+        
         <Route path="/location" element={<UserMainLocation/>}/>
 
-        <Route path='/location/Events/:venueName' element={<>Hello world</>}/>
-        
-        <Route path='/location/Favorite_Venue' element={<>Hello world</>}/>
+        <Route path='/location/:venueName/Events' element={<>Hello world</>}/>
+
+        <Route path='/location/Favorite_Venue' element={<UserMainLocation/>}/>
+
 
         {/**<Route path="*" element={<NoMatch/>}/>*/}
       </Routes>
