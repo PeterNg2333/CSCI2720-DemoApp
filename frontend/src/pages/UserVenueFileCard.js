@@ -7,8 +7,7 @@ function UserVenueFileCard(){
     return (
         <tr className=''>
             <th scope="row">
-
-                <div className='row '>
+                <div className='row'>
                     <Link to="/Location/Location_A/Events" className='col-9' >
                         <h4 style={{color: "#181E84"}}>Location A</h4>
                     </Link>

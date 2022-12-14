@@ -38,9 +38,8 @@ function UserMainEvents() {
             <UserCommentSection />
         </div>
         <br/>
-        <div className="container-lg mt-3 pt-1 pb-1">
+        <div className="container-lg mt-3 pb-1">
             <UserEventList />
-
         </div>
         
     </section></main>
