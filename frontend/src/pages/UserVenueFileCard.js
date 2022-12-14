@@ -8,9 +8,9 @@ function UserVenueFileCard(){
         <tr className=''>
             <th scope="row">
                 <div className='row'>
-                    <Link to="/Location/Location_A/Events" className='col-7' ><h4 style={{color: "#181E84"}}>Location A</h4></Link>
+                    <Link to="/Location/Location_A/Events" className='col-9' ><h4 style={{color: "#181E84"}}>Location A</h4></Link>
                     
-                    <form  class="custom-checkbox d-inlineBlock col-4 mt-1">
+                    <form  className="custom-checkbox d-inlineBlock col-3 mt-1">
                     <label for={/**assign a unique id*/ "LikeButton"}  id="likeButtionLabel">
                         <input type="checkbox" id={/**assign a unique id*/ "LikeButton"} className='label' style={{}}/>
                         <i className="fa fa-star-o"></i>
