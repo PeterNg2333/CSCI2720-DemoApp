@@ -16,4 +16,16 @@ function UserMainLocation(){
     </>);
 }
 
-export default UserMainLocation;
+function UserMainEvents(){
+    let venueName = useParams();
+    return(<>
+        <header className='row'>
+            <UserNavBar venue={String(venueName)}/>
+        </header>
+        <main className='row'>
+        </main>
+    </>);
+}
+
+
+export {UserMainLocation, UserMainEvents};

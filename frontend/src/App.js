@@ -2,7 +2,7 @@ import './css/userPage.css';
 import "./App.css";
 import {BrowserRouter, Route, Routes, Link, useParams, useLocation} from 'react-router-dom';
 import AdminPanelEventPage from "./pages/AdminPanelEventPage";
-import UserMainLocation from "./pages/_UserMainPage";
+import {UserMainLocation, UserMainEvents} from "./pages/_UserMainPage";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         
         <Route path="/location" element={<UserMainLocation/>}/>
 
-        <Route path='/location/:venueName/Events' element={<>Hello world</>}/>
+        <Route path='/location/:venueName/Events' element={<UserMainEvents/>}/>
 
         <Route path='/location/Favorite_Venue' element={<UserMainLocation/>}/>
 

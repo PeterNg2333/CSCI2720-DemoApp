@@ -4,7 +4,6 @@ import {useLocation} from 'react-router-dom';
 
 function UserNavBar(props){
     let location = useLocation();
-    
 
     return(
         <nav className="navbar navbar-expand nav-user shadow shadow-lg border-bottom-1">

@@ -1,12 +1,14 @@
 import React from 'react';
+import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import placeholder_canRemove from './placeholder_canRemove.png'
+import UserEventFileCard_smallSize from './UserEventFileCard';
 
 function UserVenueFileCard(){
     return (
         <tr className=''>
             <th scope="row">
                 <div className='row'>
-                    <h4 className='col-7' style={{color: "#181E84"}}>Location A</h4>
+                    <Link to="/Location/Location_A/Events" className='col-7' ><h4 style={{color: "#181E84"}}>Location A</h4></Link>
                     
                     <form  class="custom-checkbox d-inlineBlock col-4 mt-1">
                     <label for={/**assign a unique id*/ "LikeButton"}  id="likeButtionLabel">
@@ -38,7 +40,9 @@ function UserVenueFileCard(){
             </td>
 
             <td className=''>
-
+                <div>
+                    <UserEventFileCard_smallSize/>
+                </div>
             </td>
         </tr>
     );
