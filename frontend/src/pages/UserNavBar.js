@@ -7,7 +7,7 @@ function UserNavBar(props){
     
 
     return(
-        <nav className="navbar navbar-expand nav-user">
+        <nav className="navbar navbar-expand nav-user shadow shadow-lg border-bottom-1">
             <div className="p-0">
                 <button className="navbar-toggle btn ">
                     <i className="fa fa-chevron-left text-white"></i>
