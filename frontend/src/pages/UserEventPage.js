@@ -1,10 +1,15 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, Link, useParams, useLocation} from 'react-router-dom';
-import {UserEventFileCard_regular} from './UserEventFileCard';
+import {UserEventFileCardRegular} from './UserEventFileCard';
 import placeholder_canRemove from './placeholder_canRemove.png'
 import {UserCommentSection, UserCommentInput} from './UserCommentSection';
 
+/** Components for Event Pages http://localhost:3000/Location/ABC/Events
+*/
 
+/** 
+* UserEventLocationHead: Information of the location e.g. address, map and Comment input box
+*/
 function UserEventLocationHead(props){
     return(
         <div className='row mt-3'>
@@ -45,6 +50,9 @@ function UserEventLocationHead(props){
     );
 }
 
+/** 
+* UserEventLocationHead: A list of event and searching bar
+*/
 function UserEventList(props){
     return(
         <section className='pb-3'>
@@ -70,11 +78,11 @@ function UserEventList(props){
             </div><br/>
             
             <div className='row'>
-                <UserEventFileCard_regular/>
-                <UserEventFileCard_regular/>
-                <UserEventFileCard_regular/>
-                <UserEventFileCard_regular/>
-                <UserEventFileCard_regular/>
+                <UserEventFileCardRegular/>
+                <UserEventFileCardRegular/>
+                <UserEventFileCardRegular/>
+                <UserEventFileCardRegular/>
+                <UserEventFileCardRegular/>
             </div>
 
 

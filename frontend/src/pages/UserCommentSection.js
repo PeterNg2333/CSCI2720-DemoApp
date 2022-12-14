@@ -1,5 +1,11 @@
 import React from 'react';
 
+/** Components for comment section in Event Page
+* UserCommentSection: show the comment history 
+* UserCommentInput: allow user to input comment
+* UserCommentI one user comment (used by UserCommentSection)
+*/
+
 function UserCommentSection(props){
     return (
         <div className='row'> 

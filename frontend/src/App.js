@@ -11,24 +11,22 @@ import {
 import AdminPanelEventPage from "./pages/AdminPanelEventPage";
 import UserNavBar from "./components/UserNavBar";
 import { UserMainLocation, UserMainEvents,UserMainFavorite } from "./pages/_UserMainPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         {/** Login Pages*/}
+        <Route path="/" element={<LoginPage/>} />
 
         {/**Admin Pages*/}
         <Route path="/admin/event" element={<AdminPanelEventPage />} />
 
         {/** User Pages*/}
-
         <Route path="/location" element={<UserMainLocation />} />
 
-        <Route
-          path="/location/:venueName/Events"
-          element={<UserMainEvents />}
-        />
+        <Route path="/location/:venueName/Events" element={<UserMainEvents />}/>
 
         <Route path="/location/Favorite_Venue" element={<UserMainFavorite/>} />
 
