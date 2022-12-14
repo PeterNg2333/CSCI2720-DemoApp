@@ -7,6 +7,14 @@ import AdminEventCard from "./AdminEventCard";
 function UserNavBar(props){
     let location = useLocation();
 
+    function clearToken(){
+        //TODO:
+    }
+    function logOut(){
+        console.log("logOut");
+        clearToken();
+        window.location.assign("/")
+    }
     return(
         <nav
             className={
@@ -48,7 +56,7 @@ function UserNavBar(props){
             <button className="btn navbar-btn nav-item-text text-white no-click">
                 <i className="fa fa-light fa-user mr-1"><span className='d-none d-lg-inline d-xl-inline'> Hi!,</span> [User Name] </i>
             </button>
-            <button className="btn navbar-btn nav-item-text text-white" >
+            <button className="btn navbar-btn nav-item-text text-white" onClick={logOut}>
                 <span className='d-none d-lg-inline d-xl-inline'>Log Out</span><i className="fa fa-light fa-sign-out mx-1"></i>
             </button>
         </nav>
