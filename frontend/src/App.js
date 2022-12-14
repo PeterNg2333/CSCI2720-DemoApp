@@ -10,7 +10,6 @@ import {
 } from "react-router-dom";
 import AdminPanelEventPage from "./pages/AdminPanelEventPage";
 import UserNavBar from "./components/UserNavBar";
-import UserLocationMain from "./pages/UserLocationMainPage";
 import { UserMainLocation, UserMainEvents } from "./pages/_UserMainPage";
 
 function App() {
