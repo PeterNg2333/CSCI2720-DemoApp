@@ -1,11 +1,12 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 
-function UserEventFileCard_smallSize(props){
+function UserEventFileCard(props){
     return(
         <div className='container p-0'>
             <div className='row p-0'>
-                <div style={{width: "45%", height:"80px", marginLeft: "auto", marginRight: "auto"}}  className='border border-dark'>
+                <div 
+                    className='border border-dark EventFileCard'>
                     <div className="text-center" >
                         <h3 style={{marginBottom: "0px"}}>14</h3>
                         <p style={{marginBottom: "0px"}}>Dec</p>
@@ -25,8 +26,6 @@ function UserEventFileCard_smallSize(props){
     );
 }
 
-function UserEventFileCard_fullSize(){
-    return(<>HI</>);
-}
 
-export default UserEventFileCard_smallSize;
+
+export default UserEventFileCard;

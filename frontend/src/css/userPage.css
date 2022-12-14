@@ -16,6 +16,12 @@
     border-radius: 5px;
 
 }
+
+.EventFileCard{width: 45%;
+     height:80px; 
+      margin-left: auto; 
+      margin-right: auto; }
+
 .block {
     display: block;
     color: black;
