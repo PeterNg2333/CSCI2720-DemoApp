@@ -3,7 +3,7 @@ import {BrowserRouter,Route,Routes,Link,useParams,useLocation} from "react-route
 import UserNavBar from "../components/UserNavBar";
 import { MapSection, VenueSection } from "./UserLocation";
 import { UserEventLocationHead, UserEventList } from "./UserEventPage";
-import { UserVenueFileCard_favorite } from "./UserVenueFileCard";
+import { UserVenueFileCardFavorite } from "./UserVenueFileCard";
 import { UserCommentSection } from "./UserCommentSection";
 
 /** Full webpage for the location page in user view e.g., http://localhost:3000/Location/ */
@@ -89,12 +89,12 @@ function UserMainFavorite() {
         </div><br/>
 
         <div className="row">
-          <UserVenueFileCard_favorite cardOrder={"AB"}/>
-          <UserVenueFileCard_favorite cardOrder={"BA"}/>
-          <UserVenueFileCard_favorite cardOrder={"AB"}/>
-          <UserVenueFileCard_favorite cardOrder={"BA"}/>
-          <UserVenueFileCard_favorite cardOrder={"AB"}/>
-          <UserVenueFileCard_favorite cardOrder={"BA"}/>
+          <UserVenueFileCardFavorite cardOrder={"AB"}/>
+          <UserVenueFileCardFavorite  cardOrder={"BA"}/>
+          <UserVenueFileCardFavorite  cardOrder={"AB"}/>
+          <UserVenueFileCardFavorite  cardOrder={"BA"}/>
+          <UserVenueFileCardFavorite  cardOrder={"AB"}/>
+          <UserVenueFileCardFavorite  cardOrder={"BA"}/>
         </div>
     </main>
     </>

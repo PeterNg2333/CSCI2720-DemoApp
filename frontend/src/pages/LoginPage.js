@@ -1,5 +1,9 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
+import WebLogInImage from "./Resource/LoginPage/WebLogInImage.png"
+
+
+
 
 function LoginPage(){
     return(
@@ -19,6 +23,7 @@ function LoginPicture(){
         <section className='col-6 logInPictureBg'
             style={{backgroundImage: 'url("./Resource/LoginPage/WebLogInImage.png")'}}>
             HI
+        <img src={WebLogInImage}></img>
         </section>
     );
 }

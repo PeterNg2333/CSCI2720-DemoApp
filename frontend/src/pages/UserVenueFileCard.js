@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import placeholder_canRemove from './placeholder_canRemove.png'
-import {UserEventFileCard_small} from './UserEventFileCard';
+import {UserEventFileCardSmall} from './UserEventFileCard';
 
 
 /** Components for showing location/venue information of different pages
@@ -40,7 +40,7 @@ function UserVenueFileCard(){
             </div></td>
 
             <td className=''><div>
-                    <UserEventFileCard_small/>
+                    <UserEventFileCardSmall/>
             </div></td>
 
         </tr>
@@ -52,14 +52,14 @@ function UserVenueFileCard(){
 * What's special about the component is: it integrates the following component "UserVenueFileCard_favorite_A" & "UserVenueFileCard_favorite_A" (can show A&B in different sequence)
 */
 
-function UserVenueFileCard_favorite(props){
+function UserVenueFileCardFavorite(props){
     if (props.cardOrder == "AB")
         return(
             <div className='col-12 px-2 my-2'>
                 <div className='row m-0'>
                     <div className='col-1'></div>
-                    <UserVenueFileCard_favorite_A/>
-                    <UserVenueFileCard_favorite_B/>
+                    <UserVenueFileCardFavorite_A/>
+                    <UserVenueFileCardFavorite_B/>
                     <div className='col-1'></div>
                 </div>
 
@@ -71,8 +71,8 @@ function UserVenueFileCard_favorite(props){
             <div className='col-12 col-12 px-0 my-2 '>
                 <div className='row m-0'>
                     <div className='col-1 '></div>
-                    <UserVenueFileCard_favorite_B/>
-                    <UserVenueFileCard_favorite_A/>
+                    <UserVenueFileCardFavorite_B/>
+                    <UserVenueFileCardFavorite_A/>
                     <div className='col-1 '></div>
                 </div>
 
@@ -84,7 +84,7 @@ function UserVenueFileCard_favorite(props){
 /** 
 * Part of UserVenueFileCard_favorite: Image and address
 */
-function UserVenueFileCard_favorite_A(props){
+function UserVenueFileCardFavorite_A(props){
     return (
         <div className='card col-lg-5 col-md-3' style={{maxWidth: "28rem", padding:"0px" ,margin: "auto" }}>
             <h5 className='card-title mt-2 text-center'> Location Photo </h5>
@@ -100,7 +100,7 @@ function UserVenueFileCard_favorite_A(props){
 /** 
 * Part of UserVenueFileCard_favorite: Name and upcomming event
 */
-function UserVenueFileCard_favorite_B(props){
+function UserVenueFileCardFavorite_B(props){
     let zeroPadding={paddingRight: "0px",
                     paddingLeft: "0px"}
 
@@ -126,9 +126,9 @@ function UserVenueFileCard_favorite_B(props){
         <div className="card-body">   
             <h5 className="mx-2 card-title text-primary">Upcoming Event</h5>
             <div className='container '><div className='row' style={zeroPadding}>
-                <div className='col-4' style={zeroPadding}><UserEventFileCard_small/></div>
-                <div className='col-4' style={zeroPadding}><UserEventFileCard_small/></div>
-                <div className='col-4' style={zeroPadding}><UserEventFileCard_small/></div>
+                <div className='col-4' style={zeroPadding}><UserEventFileCardSmall/></div>
+                <div className='col-4' style={zeroPadding}><UserEventFileCardSmall/></div>
+                <div className='col-4' style={zeroPadding}><UserEventFileCardSmall/></div>
 
             </div></div>
         </div>
@@ -138,4 +138,4 @@ function UserVenueFileCard_favorite_B(props){
 }
 
 
-export {UserVenueFileCard, UserVenueFileCard_favorite};
+export {UserVenueFileCard, UserVenueFileCardFavorite};
