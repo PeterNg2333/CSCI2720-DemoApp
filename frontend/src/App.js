@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import AdminPanelEventPage from "./pages/AdminPanelEventPage";
 import UserNavBar from "./components/UserNavBar";
-import { UserMainLocation, UserMainEvents } from "./pages/_UserMainPage";
+import { UserMainLocation, UserMainEvents,UserMainFavorite } from "./pages/_UserMainPage";
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           element={<UserMainEvents />}
         />
 
-        <Route path="/location/Favorite_Venue" element={<UserMainLocation />} />
+        <Route path="/location/Favorite_Venue" element={<UserMainFavorite/>} />
 
         {/**<Route path="*" element={<NoMatch/>}/>*/}
       </Routes>

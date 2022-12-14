@@ -21,8 +21,6 @@ function UserMainLocation() {
 }
 
 
-
-
 function UserMainEvents() {
   let venueName = useParams();
   return (
@@ -38,9 +36,8 @@ function UserMainEvents() {
             <UserCommentSection />
         </div>
         <br/>
-        <div className="container-lg mt-3 pt-1 pb-1">
+        <div className="container-lg mt-3 pb-1">
             <UserEventList />
-
         </div>
         
     </section></main>
@@ -49,4 +46,15 @@ function UserMainEvents() {
 
 }
 
-export { UserMainLocation, UserMainEvents};
+function UserMainFavorite() {
+  let venueName = useParams();
+  return (
+    <>
+    <header className="row">
+        <UserNavBar venue={String(venueName)} />
+    </header>
+    </>
+  );
+}
+
+export { UserMainLocation, UserMainEvents, UserMainFavorite};

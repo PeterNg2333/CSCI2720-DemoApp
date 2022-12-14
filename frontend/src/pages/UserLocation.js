@@ -44,7 +44,7 @@ function MapSection(){
 function VenueSection(){
     return(
         <section className='col-lg-6 '>
-            <div className='container-fluid bg-light mt-4 pb-4  table-responsive table-bordered'>
+            <div className='container-fluid bg-light mt-4 pb-4 table-responsive table-bordered'>
                 <table className="col-5 table mt-3 table-hover">
                     <thead className='shadow shadow-sm border-bottom-1'>
                         <tr className='' style={{textAlign: "center"}}>
