@@ -1,13 +1,20 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
+import PropTypes from "prop-types";
+import AdminEventCard from "./AdminEventCard";
 
 function UserNavBar(props){
     let location = useLocation();
 
     return(
-        <nav className="navbar navbar-expand nav-user shadow shadow-lg border-bottom-1">
-            <div className="p-0">
+        <nav
+            className={
+            props.isAdmin?
+                "navbar navbar-expand nav-admin shadow shadow-lg border-bottom-1"
+                :"navbar navbar-expand nav-user shadow shadow-lg border-bottom-1"
+            }
+        >            <div className="p-0">
                 <button className="navbar-toggle btn ">
                     <i className="fa fa-chevron-left text-white"></i>
                 </button>
@@ -30,7 +37,7 @@ function UserNavBar(props){
                     </Link>
                 </li>
                 <li className="mx-1 nav-item">
-                    <Link to="main" className="nav-item-text">
+                    <Link to="/Location/Favorite_Venue" className="nav-item-text">
                         <button className="btn navbar-btn nav-item-text text-white">
                             <i className="fa fa-light fa-heart mr-2"><span className='d-none d-lg-inline d-xl-inline'> Favorite</span> </i>
                         </button>
@@ -47,4 +54,14 @@ function UserNavBar(props){
         </nav>
     );
 }
+
+UserNavBar.defaultProps = {
+    isAdmin: false
+
+};
+
+UserNavBar.propTypes = {
+    isAdmin: PropTypes.bool,
+};
+
 export default UserNavBar ;

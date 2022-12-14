@@ -1,11 +1,11 @@
-import AdminNavBar from "../components/AdminNavBar";
 import AdminEventCard from "../components/AdminEventCard";
+import UserNavBar from "../components/UserNavBar";
 
 function AdminPanelEventPage(){
     return(
         <div>
 
-            <AdminNavBar/>
+            <UserNavBar isAdmin/>
 
             <AdminEventCard name={"name"} description={"description"} location={"location"} type={"type"} datetime={"datetime"}/>
         </div>
