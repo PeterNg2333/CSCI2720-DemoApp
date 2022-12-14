@@ -19,7 +19,7 @@ function App() {
         {/** Login Pages*/}
 
         {/**Admin Pages*/}
-        <Route path="/" element={<AdminPanelEventPage />} />
+        <Route path="/admin/event" element={<AdminPanelEventPage />} />
 
         {/** User Pages*/}
 

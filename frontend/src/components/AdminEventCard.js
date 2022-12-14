@@ -1,0 +1,49 @@
+import React from "react";
+
+import PropTypes, {object} from "prop-types";
+
+function AdminEventCard(props) {
+    new Date()
+    return (
+        <div className="container w-100 border border-dark m-2">
+            <div className="row border border-dark m-2">
+                <section className="col-12">
+                    <div>{props.name}</div>
+                    <div className={"d-flex flex-row "}>
+                        <section className={"col-6 d-flex flex-row"}>
+                            <i className="fa fa-info"></i>
+                            <div className={"mx-2"}>{props.description}</div>
+                        </section>
+                        <section className={"col-6 d-flex flex-row "}>
+                            <i className="fas fa-map-marker-alt"></i>
+                            <div className={"mx-2"}>{props.location}</div>
+                        </section>
+                    </div>
+                    <div className={"d-flex flex-row "}>
+                        <section className={"col-6 d-flex flex-row"}>
+                            <i className="fa fa-tag" aria-hidden="true"></i>
+                            <div className={"mx-2"}>{props.type}</div>
+                        </section>
+                        <section className={"col-6 d-flex flex-row "}>
+                            <i className="fas fa-calendar-times"></i>
+                            <div className={"mx-2"}>{props.datetime}</div>
+                        </section>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+    )
+}
+
+
+AdminEventCard.propTypes = {
+    name: PropTypes.string,
+    description: PropTypes.string,
+    location: PropTypes.string,
+    type: PropTypes.string,
+    datetime: PropTypes.string
+};
+
+export default AdminEventCard
