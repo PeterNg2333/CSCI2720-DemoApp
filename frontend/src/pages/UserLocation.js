@@ -1,14 +1,6 @@
 import React from 'react';
+import UserVenueFileCard from './UserVenueFileCard';
 import placeholder_canRemove from './placeholder_canRemove.png'
-
-/** Location Pages*/
-function UserLocation(){
-    return(<>
-        <MapSection/>
-        <VenueSection/>
-    </>);
-}
-
 
 /** Google API Map* */
 function MapSection(){
@@ -51,32 +43,20 @@ function MapSection(){
 /** Venue table */
 function VenueSection(){
     return(
-        <section className='col-lg-6'>
-            <div className='align-middle bg-light mt-4 pb-4 table-responsive'>
-                <table className="row table b-3 mx-3 mt-3 table-hover">
-                    <thead>
-                        <tr>
-                        <th scope="col" colspan="2" className='border border-dark col-10'>Location</th>
-                        <th scope="col" className='border border-dark col-9'> What's on </th>
+        <section className='col-lg-6 '>
+            <div className='container-fluid align-middle bg-light mt-4 pb-4  table-responsive'>
+                <table className="col-5 table mt-3 table-hover">
+                    <thead className='shadow shadow-sm border-bottom-1'>
+                        <tr className=''>
+                        <th scope="col" colspan="2" className='border border-dark'>Location</th>
+                        <th scope="col" className='border border-dark '> What's on </th>
                         </tr>
-                    </thead>
+                    </thead >
 
-                    <tbody>
-                        <tr>
-                        <th scope="row">1sssssssssssssssssssssssssssssss</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Birdasdasdasdasdasdasdasdasdasd</td>
-                        </tr>
+                    <tbody className='mt-1'>
+                    <UserVenueFileCard/>
+                        <UserVenueFileCard/>
+                        <UserVenueFileCard/>
                     </tbody>
                 </table>
             </div>
@@ -84,6 +64,6 @@ function VenueSection(){
     );
 }
 
-/** Venue File card */
 
-export default UserLocation;
+
+export {MapSection, VenueSection};
