@@ -8,7 +8,8 @@ const userSchema = new Schema({
     userId: { type: Number, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    isAdmin: {type: Boolean, required: true}
+    isAdmin: {type: Boolean, required: true},
+    favouriteVenues: [Number],
 });
 
 // hash the password
@@ -32,6 +33,28 @@ userSchema.pre('save', function(next) {
     });
 });
 
+/*
+userSchema.pre('updateOne', async function() {
+    const docToUpdate = await this.model.findOne(this.getQuery());
+    console.log(docToUpdate); // The document that findOneAndUpdate() will modify
+
+    // only hash the password if it has been modified (or is new)
+    if (!docToUpdate.isModified('password')) return next();
+
+    // generate a salt
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if (err) return next(err);
+
+        // hash the password using our new salt
+        bcrypt.hash(docToUpdate.password, salt, function(err, hash) {
+            if (err) return next(err);
+            // override the cleartext password with the hashed one
+            docToUpdate.password = hash;
+            next();
+        });
+    });
+});
+*/
 // hash the password
 userSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
@@ -55,7 +78,7 @@ const venueSchema = new Schema({
 });
 
 const eventSchema = new Schema({
-    id: Number,
+    eventId: Number,
     title: String,
     venueId: Number,
     datetime: [],
