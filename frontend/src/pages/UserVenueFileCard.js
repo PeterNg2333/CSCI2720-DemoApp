@@ -24,7 +24,6 @@ function UserVenueFileCard(){
 
                 <div className='row'>
                     <p className='mx-3'><i className='fa fa-map'></i> This is a address</p>
-
                     <p className='mx-3'><i className='fa fa-info'></i> This is some information about the location</p>
                 </div>      
             </th>
@@ -41,7 +40,42 @@ function UserVenueFileCard(){
     );
 }
 
+function UserVenueFileCard_favorite(props){
+    return(
+        <div className='col-xl-6 col-lg-12'>
+            <div className='row'>
+                <UserVenueFileCard_favorite_A/>
+                <UserVenueFileCard_favorite_B/>
+                <div className='col-8'></div>
+            </div>
+
+        </div>
+    );
+}
+
+function UserVenueFileCard_favorite_A(){
+    return (
+        <div className='col-5'>
+            <img className="card-img-top d-inline" src="..." alt="Card image cap"/>
+        </div>
+    );
+}
+
+function UserVenueFileCard_favorite_B(){
+    return (
+    <div className="card bg-light mb-3 tag-center d-inline col-1" style={{maxWidth: "20rem", padding:"0px"}}>
+        <div className="card-header">
+            Header
+        </div>
+            
+        <div className="card-body">   
+            <h5 className="card-title">Info card title</h5>
+            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+    </div>
+        
+    );
+}
 
 
-
-export default UserVenueFileCard;
+export {UserVenueFileCard, UserVenueFileCard_favorite};

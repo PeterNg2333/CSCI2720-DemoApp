@@ -29,7 +29,7 @@ function UserEventFileCard_regular(props){
         <div className='col-lg-12 col-md-6'>
             <div className='row p-0 mb-3 mt-2 size CardRegular'>
                 <div className='col-lg-1 col-md-3 border border-dark'><div className="text-center">
-                    <h3 className="boxCard mt-1" style={{marginBottom: "0px"}}>14</h3>
+                    <h3 className="boxCard mt-lg-1 mt-md-3" style={{marginBottom: "0px"}}>14</h3>
                     <p className="boxCard">Dec</p>
                     <p className="boxCard">2022</p>
                 </div></div>

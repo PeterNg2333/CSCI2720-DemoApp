@@ -1,5 +1,5 @@
 import React from 'react';
-import UserVenueFileCard from './UserVenueFileCard';
+import {UserVenueFileCard, UserVenueFileCard_favorite} from './UserVenueFileCard';
 import placeholder_canRemove from './placeholder_canRemove.png'
 
 /** Google API Map* */
