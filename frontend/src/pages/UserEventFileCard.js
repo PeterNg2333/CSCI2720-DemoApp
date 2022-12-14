@@ -7,7 +7,7 @@ import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 /** 
 * UserEventFileCard_small: show an event in a rectangle box, used http://localhost:3000/Location/ & http://localhost:3000/Location/Favorite_Venue
 */
-function UserEventFileCard_small(props){
+function UserEventFileCardSmall(props){
     return(
         <div className='container'>
             <div className='row p-0'>
@@ -34,7 +34,7 @@ function UserEventFileCard_small(props){
 /** 
 * UserEventFileCard_regular: show an event as a list item, used in http://localhost:3000/Location/ABC/Events
 */
-function UserEventFileCard_regular(props){
+function UserEventFileCardRegular(props){
     return(
         <div className='col-lg-12 col-md-6'>
             <div className='row p-0 mb-3 mt-2 size CardRegular'>
@@ -74,4 +74,4 @@ function UserEventFileCard_regular(props){
     );
 }
 
-export {UserEventFileCard_small, UserEventFileCard_regular};
+export {UserEventFileCardSmall, UserEventFileCardRegular};

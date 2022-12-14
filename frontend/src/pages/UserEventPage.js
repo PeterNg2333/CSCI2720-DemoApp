@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes, Link, useParams, useLocation} from 'react-router-dom';
-import {UserEventFileCard_regular} from './UserEventFileCard';
+import {UserEventFileCardRegular} from './UserEventFileCard';
 import placeholder_canRemove from './placeholder_canRemove.png'
 import {UserCommentSection, UserCommentInput} from './UserCommentSection';
 
@@ -78,11 +78,11 @@ function UserEventList(props){
             </div><br/>
             
             <div className='row'>
-                <UserEventFileCard_regular/>
-                <UserEventFileCard_regular/>
-                <UserEventFileCard_regular/>
-                <UserEventFileCard_regular/>
-                <UserEventFileCard_regular/>
+                <UserEventFileCardRegular/>
+                <UserEventFileCardRegular/>
+                <UserEventFileCardRegular/>
+                <UserEventFileCardRegular/>
+                <UserEventFileCardRegular/>
             </div>
 
 

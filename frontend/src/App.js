@@ -11,6 +11,7 @@ import {
 import AdminPanelEventPage from "./pages/AdminPanelEventPage";
 import UserNavBar from "./components/UserNavBar";
 import { UserMainLocation, UserMainEvents,UserMainFavorite } from "./pages/_UserMainPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
