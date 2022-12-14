@@ -17,18 +17,15 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/** Login Pages*/}
+        <Route path="/" element={<LoginPage/>} />
 
         {/**Admin Pages*/}
         <Route path="/" element={<AdminPanelEventPage />} />
 
         {/** User Pages*/}
-
         <Route path="/location" element={<UserMainLocation />} />
 
-        <Route
-          path="/location/:venueName/Events"
-          element={<UserMainEvents />}
-        />
+        <Route path="/location/:venueName/Events" element={<UserMainEvents />}/>
 
         <Route path="/location/Favorite_Venue" element={<UserMainFavorite/>} />
 
