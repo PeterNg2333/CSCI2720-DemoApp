@@ -7,6 +7,10 @@
     background-color: #01032e;
 }
 
+#likeButtionLabel{
+    font-size: 1.25em;
+}
+
 .url{
     --bs-btn-padding-y: 0.375rem;
     --bs-btn-font-family: ;
