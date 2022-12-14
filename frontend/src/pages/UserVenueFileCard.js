@@ -42,35 +42,38 @@ function UserVenueFileCard(){
 
 function UserVenueFileCard_favorite(props){
     return(
-        <div className='col-xl-6 col-lg-12'>
-            <div className='row'>
+        <div className='col-xl-6 col-lg-12 p-0 my-2 bg-danger'>
+            <div className='row m-0'>
                 <UserVenueFileCard_favorite_A/>
                 <UserVenueFileCard_favorite_B/>
-                <div className='col-8'></div>
             </div>
 
         </div>
     );
 }
 
-function UserVenueFileCard_favorite_A(){
+function UserVenueFileCard_favorite_A(props){
     return (
-        <div className='col-5'>
-            <img className="card-img-top d-inline" src="..." alt="Card image cap"/>
+        <div className='card col-sm-3 col-md-3 col-xl-3 bg-primary tag-center' style={{maxWidth: "15rem"}}>
+            <img className='card-img-top' src={placeholder_canRemove} alt="img" />
+            <div className='card-body'>
+                <h5 className='card-title'> Pasasdasdasdasdasdaasdasdasdsdasdasddasd </h5>
+                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
         </div>
     );
 }
 
-function UserVenueFileCard_favorite_B(){
+function UserVenueFileCard_favorite_B(props){
     return (
-    <div className="card bg-light mb-3 tag-center d-inline col-1" style={{maxWidth: "20rem", padding:"0px"}}>
-        <div className="card-header">
+    <div className="card bg-light mb-3 tag-center col-6 ms-2 mt-2 tag-center" style={{maxWidth: "25rem", padding:"0"}}>
+        <h3 className="card-header">
             Header
-        </div>
+        </h3>
             
         <div className="card-body">   
             <h5 className="card-title">Info card title</h5>
-            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p className="card-text">Some quick example text to bxt to build onxt to build onxt to build onxt to build onxt to build onxt to build onxt to build onxt to build onxt to build onxt to build onuild on the card title and make up the bulk of the card's content.</p>
         </div>
     </div>
         
