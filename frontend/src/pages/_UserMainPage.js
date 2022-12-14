@@ -21,8 +21,6 @@ function UserMainLocation() {
 }
 
 
-
-
 function UserMainEvents() {
   let venueName = useParams();
   return (
@@ -48,4 +46,15 @@ function UserMainEvents() {
 
 }
 
-export { UserMainLocation, UserMainEvents};
+function UserMainFavorite() {
+  let venueName = useParams();
+  return (
+    <>
+    <header className="row">
+        <UserNavBar venue={String(venueName)} />
+    </header>
+    </>
+  );
+}
+
+export { UserMainLocation, UserMainEvents, UserMainFavorite};

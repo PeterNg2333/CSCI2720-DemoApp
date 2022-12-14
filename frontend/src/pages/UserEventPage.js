@@ -68,12 +68,15 @@ function UserEventList(props){
                     </select>
                 </form>
             </div><br/>
+            
+            <div className='row'>
+                <UserEventFileCard_regular/>
+                <UserEventFileCard_regular/>
+                <UserEventFileCard_regular/>
+                <UserEventFileCard_regular/>
+                <UserEventFileCard_regular/>
+            </div>
 
-            <UserEventFileCard_regular/>
-            <UserEventFileCard_regular/>
-            <UserEventFileCard_regular/>
-            <UserEventFileCard_regular/>
-            <UserEventFileCard_regular/>
 
         </section>  
     )

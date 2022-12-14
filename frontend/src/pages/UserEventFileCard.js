@@ -26,26 +26,25 @@ function UserEventFileCard_small(props){
 
 function UserEventFileCard_regular(props){
     return(
-        
-            <div className='row p-0 mb-4 mt-2 size CardRegular '>
-
-                <div className='col-1 border border-dark'><div className="text-center">
+        <div className='col-lg-12 col-md-6'>
+            <div className='row p-0 mb-3 mt-2 size CardRegular'>
+                <div className='col-lg-1 col-md-3 border border-dark'><div className="text-center">
                     <h3 className="boxCard mt-1" style={{marginBottom: "0px"}}>14</h3>
                     <p className="boxCard">Dec</p>
                     <p className="boxCard">2022</p>
                 </div></div>
 
-                <div className='col-10'>
+                <div className='col-lg-10 col-md-8'>
                     <div className='mt-1 card-body tag-center'>
                         <h4 className="boxCard my-1" >Latest Event Name</h4>
 
                         <div className='row'>
-                            <div className='col-10 '>
+                            <div className='col-lg-10 col-md-12'>
                                 <p className="boxCard my-0"> Time </p>
-                                <p className="boxCard my-0"> Intro </p>
+                                <p className="boxCard my-0"> Intr: abcdefghi123456789 </p>
                             </div>
 
-                            <div className='mt-4 col-2'>
+                            <div className='mt-4 col-lg-2 col-md-12'>
                                 <Link to="" ><button> Learn More {">>>"} </button></Link>
                             </div>
 
@@ -54,7 +53,7 @@ function UserEventFileCard_regular(props){
                         
                     </div>
                 </div>
-
+            </div>
 
                 
             </div>
