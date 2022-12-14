@@ -1,5 +1,5 @@
 import React from 'react';
-import UserVenueFileCard from './UserVenueFileCard';
+import {UserVenueFileCard, UserVenueFileCard_favorite} from './UserVenueFileCard';
 import placeholder_canRemove from './placeholder_canRemove.png'
 
 /** Google API Map* */
@@ -8,9 +8,8 @@ function MapSection(){
         <section className='col-lg-6'>
             <div className='align-middle bg-light mt-4 pb-4'>
 
-                <div className='row'>
-
-                    <form className='form-group col-8 mx-3 mr-0 mt-3'>
+                <div className='row mb-4'>
+                    <form className='form-group col-8 mx-3 mr-0 my-3'>
                         <div className="rounded input-group">
                             <input type="search" className="form-control" placeholder="Find Venue"/>
                             <button className='btn navbar-btn bg-dark nav-item-text '>
@@ -19,7 +18,7 @@ function MapSection(){
                         </div>
                     </form>
 
-                    <form className='form-group col-3 mr-3 mt-3 p-0 pt-1 d-inline'>
+                    <form className='form-group col-3 mr-3 my-3 p-0 pt-1 d-inline'>
                         <select class="form-select rounded input-group" aria-label="">
                             <option selected>Sort by </option>
                             <option value="1">One</option>
@@ -30,7 +29,7 @@ function MapSection(){
 
                 </div>
 
-                <div className='row rounded-top border border-dark b-3 mx-3 mt-3'>
+                <div className='row rounded-top border border-dark b-3 mx-3'>
                     <img className='img-fluid' src={placeholder_canRemove} alt="img" style={{maxWidth: '100%', height: 'auto'}}/>
                 </div>
 
