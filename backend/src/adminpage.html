@@ -6,18 +6,141 @@
     <title>Login Page</title>
   </head>
   <body>
-    <h1>adminpage Page</h1>
-    <h1>Creat Page</h1>
-     <form action="http://localhost:3000/login/creat" method="post">
-      <div class="error" style="background-color: red;"></div>
-      <br />
-      <label for="username">Username</label><br />
-      <input type="text" id="username" name="username" required><br />
-      <label for="password">Password</label><br />
-      <input type="text" id="password" name="password" required  ><br />
-      <label for="isAdmin">Is admin?</label><br />
-      <input type="number" id="isAdmin" name="isAdmin" required  ><br />
-      <input type="submit">
+    <h1>Admin Page</h1>      
+    <form action="/logout" method="post">
+    <input type="submit" value="Logout">
     </form>
+
+    <fieldset>
+      <legend><h1>Create New User</h1></legend>
+      <form action="/admin/createuser" method="post">
+
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+      <br>
+      <br>
+
+      <label for="password">Password</label>
+      <input type="text" id="password" name="password" required>
+      <br>
+      <br>
+
+      <label for="isAdmin">Is admin?</label>
+      <input type="number" id="isAdmin" name="isAdmin" required>
+      <br>
+      <br>
+
+
+      <input type="submit" value="Create">
+      <br>
+      <br>
+      </fieldset>
+
+      </form> 
+
+      <fieldset>
+      <legend><h1>Get and Update User</h1></legend>
+      <h1>GET</h1>    
+
+      <h1>Please first enter the Username and press the "Get" button.</h1>    
+
+      <label for="username">Username</label>
+      <input type="text" id="getusername" name="getusername" required>
+      <br>
+      <br>
+      <button onclick="get()">Get</button>
+      <br>
+
+      <h1>The userId is shown but it CANNOT be updated.</h1>    
+
+      <label for="userId">UserId</label>
+      <input type="number" id="userId" name="userId" readonly>
+      <br>
+      <br>
+
+
+      <h1>UPDATE</h1>    
+
+      <h1>Then you can choose to update the username, password and press the "Update" button.</h1>    
+
+
+      <label for="username">Username</label>
+      <input type="text" id="newusername" name="newusername" required>
+      <br>
+      <br>
+
+      <h1>Hashed password is shown. Just type in your new password, we will do hashing for you.</h1>    
+      <label for="password">Password </label>
+      <input type="text" id="newpassword" name="newpassword" required>
+      <br>
+      <br>
+
+
+      <button onclick="update()">Update</button>      
+      <br>
+      <br>
+      
+      <h1>DELETE</h1>  
+      <h1>You can delete this user by pressing the "Delete" button.</h1>    
+  
+      <button onclick="deleteuser()">Delete</button>      
+
+      <br>
+
+      </fieldset>
+
+      <br>
+
+
   </body>
 </html>
+
+<script>
+  var getusername = document.querySelector("#getusername");
+  var newusername = document.querySelector("#newusername");
+  var newpassword = document.querySelector("#newpassword");
+  var userId = document.querySelector("#userId");
+
+  async function get() {
+      await fetch("/admin/getuser", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `username=${getusername.value}`
+      })
+          .then(res => res.json())
+          .then(data => {
+              userId.value = data['userId'];
+              newusername.value = data['username'];
+              newpassword.value = data['password'];
+          })
+          .catch(error => {
+            alert("No User Found");
+            console.log(error); 
+          })
+  }
+
+  async function update() {
+      await fetch("/admin/updateuser", {
+          method: "PUT",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `userId=${userId.value}&username=${newusername.value}&password=${newpassword.value}`
+      })
+          .then(res => res.text())
+
+      alert("Update done.");
+
+  }
+
+  async function deleteuser() {
+      await fetch("/admin/deleteuser", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `userId=${userId.value}`
+      })
+          .then(res => res.text())
+
+      alert("Delete done.");
+
+  }
+
+</script>
