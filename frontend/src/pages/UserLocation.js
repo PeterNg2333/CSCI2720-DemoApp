@@ -19,7 +19,7 @@ function MapSection(){
                         </div>
                     </form>
 
-                    <form className='form-group col-3 mr-3 mt-3 p-0 d-inline'>
+                    <form className='form-group col-3 mr-3 mt-3 p-0 pt-1 d-inline'>
                         <select class="form-select rounded input-group" aria-label="">
                             <option selected>Sort by </option>
                             <option value="1">One</option>

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Link,
-  useParams,
-  useLocation,
-} from "react-router-dom";
+import {BrowserRouter,Route,Routes,Link,useParams,useLocation} from "react-router-dom";
 import UserNavBar from "../components/UserNavBar";
 import { MapSection, VenueSection } from "./UserLocation";
 import { UserEventLocationHead, UserEventList } from "./UserEventPage";
@@ -28,49 +21,29 @@ function UserMainLocation() {
 }
 
 
-function UserMainEvents(){
-    let venueName = useParams();
-    
-    return(<>
-        <header className='row'>
-            <UserNavBar venue={String(venueName)}/>
-        </header>
 
-        <div className='row'><main className='col-lg-12'>
-
-            <section className='container-lg bg-light mt-3 pt-1 pb-4' >
-                <UserEventLocationHead/>
-                <UserCommentSection/>
-            </section>
-
-            <section className='container-lg bg-light mt-3 pt-1 pb-4' >
-                <UserEventList/>
-            </section>
-
-        </main></div>
-    </>);
-}
 
 function UserMainEvents() {
   let venueName = useParams();
   return (
     <>
-      <header className="row">
+    <header className="row">
         <UserNavBar venue={String(venueName)} />
-      </header>
+    </header>
 
-      <main className="row">
-        <section className="col-lg-12">
-          <div className="container-lg bg-light mt-3 pt-1 pb-4">
+    <main className="row"><section className="col-lg-12">
+
+        <div className="container-lg bg-light mt-3 pt-1 pb-4">
             <UserEventLocationHead />
-            <div className="row">
-              <UserCommentSection />
-            </div>
-          </div>
-        </section>
+            <UserCommentSection />
+        </div>
+        <br/>
+        <div className="container-lg mt-3 pt-1 pb-1">
+            <UserEventList />
 
-        <UserEventList />
-      </main>
+        </div>
+        
+    </section></main>
     </>
   );
 
