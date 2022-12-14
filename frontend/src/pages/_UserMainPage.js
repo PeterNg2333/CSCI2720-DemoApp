@@ -57,11 +57,12 @@ function UserMainFavorite() {
 
     <main className="container-lg">
       <div className='row'>
-        <h2 className="text-center my-3"> JOIN US in Favourite Location </h2>
+        <h2 className="text-center mt-4"> <strong>My Favorite Venue</strong></h2>
       </div>
 
-      <div className='row'  >
-        <form className='form-group col-9  mr-0 mt-3'>
+      <div className='row' >
+
+        <form className='form-group col-9 mr-0 mt-3 '>
           <div className="rounded input-group">
             <input type="search" className="form-control" placeholder="Find Events"/>
             <button className='btn navbar-btn bg-dark nav-item-text '>
@@ -82,12 +83,12 @@ function UserMainFavorite() {
         </div><br/>
 
         <div className="row">
-          <UserVenueFileCard_favorite/>
-          <UserVenueFileCard_favorite/>
-          <UserVenueFileCard_favorite/>
-          <UserVenueFileCard_favorite/>
-          <UserVenueFileCard_favorite/>
-          <UserVenueFileCard_favorite/>
+          <UserVenueFileCard_favorite cardOrder={"AB"}/>
+          <UserVenueFileCard_favorite cardOrder={"BA"}/>
+          <UserVenueFileCard_favorite cardOrder={"AB"}/>
+          <UserVenueFileCard_favorite cardOrder={"BA"}/>
+          <UserVenueFileCard_favorite cardOrder={"AB"}/>
+          <UserVenueFileCard_favorite cardOrder={"BA"}/>
         </div>
     </main>
     </>

@@ -41,24 +41,43 @@ function UserVenueFileCard(){
 }
 
 function UserVenueFileCard_favorite(props){
-    return(
-        <div className='col-xl-6 col-lg-12 p-0 my-2 bg-danger'>
-            <div className='row m-0'>
-                <UserVenueFileCard_favorite_A/>
-                <UserVenueFileCard_favorite_B/>
-            </div>
+    if (props.cardOrder == "AB")
+        return(
+            <div className='col-12 px-2 my-2'>
+                <div className='row m-0'>
+                    <div className='col-1'></div>
+                    <UserVenueFileCard_favorite_A/>
+                    <UserVenueFileCard_favorite_B/>
+                    <div className='col-1'></div>
+                </div>
 
-        </div>
-    );
+            </div>
+        );
+    
+    else 
+        return(
+            <div className='col-12 col-12 px-0 my-2 '>
+                <div className='row m-0'>
+                    <div className='col-1 '></div>
+                    <UserVenueFileCard_favorite_B/>
+                    <UserVenueFileCard_favorite_A/>
+                    <div className='col-1 '></div>
+                </div>
+
+            </div>
+        );
 }
+
+
 
 function UserVenueFileCard_favorite_A(props){
     return (
-        <div className='card col-sm-3 col-md-3 col-xl-3 bg-primary tag-center' style={{maxWidth: "15rem"}}>
-            <img className='card-img-top' src={placeholder_canRemove} alt="img" />
+        <div className='card col-lg-5 col-md-3' style={{maxWidth: "28rem", padding:"0px" ,margin: "auto" }}>
+            <h5 className='card-title mt-2 text-center'> Location Photot </h5>
+            <img className='card-img-top' src={placeholder_canRemove} alt="img" style={{maxWidth: "50%" ,margin: "auto" }}/>
             <div className='card-body'>
-                <h5 className='card-title'> Pasasdasdasdasdasdaasdasdasdsdasdasddasd </h5>
-                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h6 className='mx-3'><i className='fa fa-map'></i> This is a address</h6>
+                <h6 className='mx-3'><i className='fa fa-info'></i> This is some information about the location</h6>
             </div>
         </div>
     );
@@ -66,14 +85,20 @@ function UserVenueFileCard_favorite_A(props){
 
 function UserVenueFileCard_favorite_B(props){
     return (
-    <div className="card bg-light mb-3 tag-center col-6 ms-2 mt-2 tag-center" style={{maxWidth: "25rem", padding:"0"}}>
-        <h3 className="card-header">
-            Header
-        </h3>
+    <div className="card bg-lighttag-center col-lg-5 col-md-6 ms-2 mt-3 border-0" style={{maxWidth: "36rem", padding:"0" , margin: "auto" }}>
+        <h2 className="card-header">
+            Location A
+        </h2>
             
         <div className="card-body">   
-            <h5 className="card-title">Info card title</h5>
-            <p className="card-text">Some quick example text to bxt to build onxt to build onxt to build onxt to build onxt to build onxt to build onxt to build onxt to build onxt to build onxt to build onuild on the card title and make up the bulk of the card's content.</p>
+            <h5 className="card-title text-primary">Upcoming Event</h5>
+            <div className='container '><div className='row zeroPadding'>
+
+                <div className='col-4 zeroPadding'><UserEventFileCard_small/></div>
+                <div className='col-4 zeroPadding'><UserEventFileCard_small/></div>
+                <div className='col-4 zeroPadding'><UserEventFileCard_small/></div>
+
+            </div></div>
         </div>
     </div>
         
