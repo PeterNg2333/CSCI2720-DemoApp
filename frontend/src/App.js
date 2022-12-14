@@ -1,20 +1,38 @@
-import './css/userPage.css';
+import "./css/userPage.css";
 import "./App.css";
-import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Link,
+  useParams,
+  useLocation,
+} from "react-router-dom";
 import AdminPanelEventPage from "./pages/AdminPanelEventPage";
-import UserNavBar from "./pages/UserNavBar";
-import UserLocationMain from "./pages/UserLocationMainPage"
+import UserNavBar from "./components/UserNavBar";
+import { UserMainLocation, UserMainEvents } from "./pages/_UserMainPage";
 
 function App() {
   return (
     <BrowserRouter>
-      <header>
-        <UserNavBar />
-      </header>
-        <UserLocationMain/>
       <Routes>
+        {/** Login Pages*/}
+
+        {/**Admin Pages*/}
         <Route path="/" element={<AdminPanelEventPage />} />
-        {/*<Route path="*" element={<NoMatch/>}/>*/}
+
+        {/** User Pages*/}
+
+        <Route path="/location" element={<UserMainLocation />} />
+
+        <Route
+          path="/location/:venueName/Events"
+          element={<UserMainEvents />}
+        />
+
+        <Route path="/location/Favorite_Venue" element={<UserMainLocation />} />
+
+        {/**<Route path="*" element={<NoMatch/>}/>*/}
       </Routes>
     </BrowserRouter>
   );
