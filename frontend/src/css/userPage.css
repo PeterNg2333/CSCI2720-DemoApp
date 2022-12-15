@@ -122,6 +122,16 @@ html, body{
     font-size: 20px;
 }
 
-.admin-search-bar-item{
-    height: fit-content;
+.color-green{
+    color: green;
 }
+
+.color-red{
+    color: red;
+}
+
+.btn-transparent{
+    border-color: transparent;
+    background-color:transparent;
+}
+

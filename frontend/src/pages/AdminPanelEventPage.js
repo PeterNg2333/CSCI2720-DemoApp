@@ -39,6 +39,18 @@ function AdminPanelEventPage() {
                         <option value="dateAndTime">Date and time</option>
                     </select>
                 </section>
+                <section className="w-10 mx-2">
+                <button type="button" className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-around">
+                    <i className="fa fa-circle-plus color-green fa-2x"></i>
+                    <div className='color-green'>Create</div>
+                </button>
+                </section>
+                <section className="w-10 mx-2 ">
+                    <button type="button" className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-around">
+                        <i className="fas fa-trash-alt color-red fa-2x" ></i>
+                        <div className='color-red'>Delete</div>
+                    </button>
+                </section>
             </form>
 
 
