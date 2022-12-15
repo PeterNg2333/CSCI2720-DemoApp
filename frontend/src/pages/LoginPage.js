@@ -34,15 +34,14 @@ function LoginForm() {
 
   const handleUsername = (event) => {
     setUsername(event.target.value);
-    console.log("username =", event.target.value);
+    // console.log("username =", event.target.value);
   };
   const handlePassword = (event) => {
     setPassword(event.target.value);
-    console.log("password =", event.target.value);
+    // console.log("password =", event.target.value);
   };
   const navigate = useNavigate();
   const fetchLogin = () => {
-    console.log("fetchLogin")
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -58,16 +57,21 @@ function LoginForm() {
     };
 
     fetch(`${backendUrl}/login`, requestOptions)
-      .then((response) => response.text())
+      .then((response) => {
+        // console.log("status code:", response.status);
+        if (response.status !== 200) throw new Error(response.json());
+        else return response.json();
+      })
       .then((result) => {
-        if (result.isAdmin) {
+        if (result.isAdmin === true) {
           // go to admin page
           // navigate('/admin');
+          console.log("navigate to admin");
         } else {
           navigate("/location");
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log(error));
   };
   return (
     <section className="col-lg-6 logInFormBg border border-dark">
