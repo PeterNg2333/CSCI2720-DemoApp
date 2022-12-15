@@ -37,3 +37,15 @@
   }
 }
 
+.login-btn {
+  margin: 18px;
+  padding: 4px 10px;
+  color: rgb(75, 75, 75);
+  border-radius: 20px;
+  border: 1px solid rgb(211, 211, 211);
+  background-color: rgb(247, 247, 247);
+}
+
+.login-btn:hover {
+  background-color: rgb(233, 233, 233);
+}
