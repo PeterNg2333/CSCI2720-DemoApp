@@ -70,6 +70,7 @@ UserNavBar.defaultProps = {
 
 UserNavBar.propTypes = {
     isAdmin: PropTypes.bool,
+    venueName: PropTypes.string,
 };
 
 export default UserNavBar ;

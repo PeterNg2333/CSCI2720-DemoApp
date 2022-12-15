@@ -121,3 +121,17 @@ html, body{
     font-weight: bold;
     font-size: 20px;
 }
+
+.color-green{
+    color: green;
+}
+
+.color-red{
+    color: red;
+}
+
+.btn-transparent{
+    border-color: transparent;
+    background-color:transparent;
+}
+
