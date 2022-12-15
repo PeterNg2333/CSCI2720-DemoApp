@@ -54,7 +54,7 @@ function UserNavBar(props){
             </ul>
 
             <button className="btn navbar-btn nav-item-text text-white no-click">
-                <i className="fa fa-light fa-user mr-1"><span className='d-none d-lg-inline d-xl-inline'> Hi!,</span> [User Name] </i>
+                <i className="fa fa-light fa-user mr-1"><span className='d-none d-lg-inline d-xl-inline'>Hi!,[User Name]</span></i>
             </button>
             <button className="btn navbar-btn nav-item-text text-white" onClick={logOut}>
                 <span className='d-none d-lg-inline d-xl-inline'>Log Out</span><i className="fa fa-light fa-sign-out mx-1"></i>

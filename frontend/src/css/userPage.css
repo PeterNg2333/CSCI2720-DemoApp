@@ -134,4 +134,10 @@ html, body{
     border-color: transparent;
     background-color:transparent;
 }
+.one-line{
+    white-space: nowrap;
+}
 
+.bg-deep-blue{
+    background-color: #001f48;
+}

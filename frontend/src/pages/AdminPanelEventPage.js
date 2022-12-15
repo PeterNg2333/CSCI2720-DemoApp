@@ -7,17 +7,17 @@ function AdminPanelEventPage() {
     return (
         <div>
             <UserNavBar isAdmin/>
-            <form className='mt-3 d-flex flex-row'>
-                <section className="w-10 mx-2">
+            <form className='mt-3 d-flex flex-row '>
+                <section className="w-6 mx-2">
                     <input type="search" className="form-control border border-dark" id="location" placeholder="Location"/>
                 </section>
-                <section className="w-10 mx-2">
+                <section className="w-6 mx-2">
                     <input type="search" className="form-control border border-dark" id="eventId" placeholder="Event ID"/>
                 </section>
-                <section className="w-10 mx-2">
+                <section className="w-6 mx-2">
                     <input type="search" className="form-control border border-dark" id="eventName" placeholder="Event Name"/>
                 </section>
-                <section className="w-10 mx-2">
+                <section className="w-6 mx-2">
                     <select className="form-select border border-dark" aria-label="Even Type">
                         <option selected>Event Type</option>
                         {
@@ -29,6 +29,9 @@ function AdminPanelEventPage() {
                 </section>
                 <section className="w-10 mx-2">
                     <input type="search" className="form-control border border-dark" id="eventName" placeholder="Date and time"/>
+                </section>
+                <section className="w-6 mx-2">
+                    <button type="button" className="btn btn-sm btn-dark one-line bg-deep-blue">Find Event</button>
                 </section>
                 <section className="w-10 mx-2">
                     <select className="form-select border border-dark" aria-label="Order by">
@@ -51,6 +54,7 @@ function AdminPanelEventPage() {
                         <div className='color-red'>Delete</div>
                     </button>
                 </section>
+`
             </form>
 
 
