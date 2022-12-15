@@ -9,7 +9,7 @@ const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
-const { userSchema } = require("../service/database/schema");
+const { userSchema, venueSchema } = require("../service/database/schema");
 const cors = require("cors");
 
 const app = express();
@@ -21,8 +21,52 @@ const DATABASE_CONNECT_STRING =
 mongoose.connect(DATABASE_CONNECT_STRING);
 
 const User = mongoose.model("User", userSchema);
+const venueModel = mongoose.model("Venue", venueSchema);
+// const eventModel = mongoose.model("Event", eventSchema);
+
+async function scrapData() {
+  const XMLScraper = require("../dataScraping/dataScraping");
+}
+
+async function dumpData() {
+  let rawData = require("../dataScraping/output/venuesData.json");
+  // get a certain number of venue array
+  let tmpDataArray = rawData.venues.venue.slice(13, 55);
+  let dataArray = [];
+  let i;
+  let count = 0;
+  // since not every location has latitude and longitude
+  // need to import those with latitude and longitude only
+  for (i = 0; i < tmpDataArray.length; i++) {
+    if (tmpDataArray[i].latitude._cdata && tmpDataArray[i].longitude._cdata) {
+      dataArray.push(tmpDataArray[i]);
+      count++;
+    }
+    if (count == 10) break;
+  }
+  var id, name, latitude, longitude;
+  dataArray.forEach(async (element) => {
+    id = Number(element._attributes.id);
+    name = element.venuee._cdata;
+    latitude = Number(element.latitude._cdata);
+    longitude = Number(element.longitude._cdata);
+    await venueModel.create({
+      id,
+      name,
+      latitude,
+      longitude,
+    });
+  });
+}
+
+async function clearData() {
+  await venueModel.deleteMany({});
+}
 
 async function login(req, res) {
+  await clearData();
+  await scrapData();
+  await dumpData();
   User.findOne({ username: req.body["username"] }, (err, e) => {
     if (err) res.send(err);
     else {
@@ -38,11 +82,16 @@ async function login(req, res) {
           function (error, isMatch) {
             if (error) {
             } else if (isMatch) {
-              res.redirect("/admin");
-              //res.cookie("username", e.username);
+              const txt = {
+                isAdmin: e.isAdmin,
+              };
+              res.status(200).send(txt);
             } else {
               res.set("Content-Type", "text/plain");
-              res.status(404).send("Wrong password.");
+              const txt = {
+                error: "wrong password.",
+              };
+              res.status(401).send(txt);
             }
           }
         );
@@ -54,11 +103,17 @@ async function login(req, res) {
             if (error) {
             } else if (isMatch) {
               //res.cookie("username", e.username);
-              res.redirect("/main");
+              res.set("Content-Type", "text/plain");
+              const txt = {
+                isAdmin: e.isAdmin,
+              };
+              res.status(200).send(txt);
             } else {
               res.set("Content-Type", "text/plain");
-              res.status(404).send("Wrong password.");
-              res.redirect("/login");
+              const txt = {
+                error: "wrong password.",
+              };
+              res.status(401).send(txt);
             }
           }
         );
@@ -83,11 +138,15 @@ async function createUser(req, res) {
         (err, e) => {
           if (err) {
             res.set("Content-Type", "text/plain");
-            res.send("Creating error <br>" + err);
+            const txt = {
+              error: err,
+            };
+            res.status(404).send(txt);
           } else {
             res.status(201);
             res.set("Content-Type", "text/plain");
-            res.send(JSON.stringify(e, null, " "));
+            // res.send(JSON.stringify(e, null, " "));
+            res.send(e);
           }
         }
       );
@@ -103,7 +162,8 @@ async function getUser(req, res) {
       res.set("Content-Type", "text/plain");
       res.send("No User Found");
     } else {
-      res.send(JSON.stringify(e, null, " "));
+      //   res.send(JSON.stringify(e, null, " "));
+      res.send(e);
     }
   });
 }
@@ -116,7 +176,8 @@ async function updateUser(req, res) {
       e.password = req.body["password"];
       e.save();
       res.set("Content-Type", "text/plain");
-      res.send(JSON.stringify(e, null, " "));
+      //   res.send(JSON.stringify(e, null, " "));
+      res.send(e);
     }
   });
 }
@@ -159,7 +220,8 @@ async function getAllUser(req, res) {
           });
         }
         res.set("Content-Type", "text/plain");
-        res.send(JSON.stringify(all, null, " "));
+        // res.send(JSON.stringify(all, null, " "));
+        res.send(all);
       }
     }
   });
