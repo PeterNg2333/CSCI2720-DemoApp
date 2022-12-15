@@ -23,16 +23,16 @@ const {
   getAllUser,
 } = require("./route/login_database");
 
+const XMLScraper = require("./dataScraping/dataScraping");
+
 function mountRouter(app) {
-  //app.get("/", (req, res) => res.send("Hello world"));
-  // <<<<<<< HEAD
-  app.get("/login", (req, res) => res.sendFile(__dirname + "/loginpage.html"));
-  app.get("/mainpage", (req, res) =>
-    res.sendFile(__dirname + "/mainpage.html")
-  );
-  app.get("/adminpage", (req, res) =>
-    res.sendFile(__dirname + "/adminpage.html")
-  );
+  // app.get("/login", (req, res) => res.sendFile(__dirname + "/loginpage.html"));
+  // app.get("/mainpage", (req, res) =>
+  //   res.sendFile(__dirname + "/mainpage.html")
+  // );
+  // app.get("/adminpage", (req, res) =>
+  //   res.sendFile(__dirname + "/adminpage.html")
+  // );
   app.post("/login", login);
 
   //   CRUD user
@@ -58,7 +58,6 @@ function mountRouter(app) {
   app.post("/venue/comment/create", addCommentByVenueRoute);
 
   app.all("/*", (req, res) => res.redirect("/login"));
-
 }
 
 module.exports = { mountRouter };
