@@ -14,6 +14,8 @@ function UserNavBar(props){
     }
     function logOut(){
         console.log("logOut");
+        Cookies.remove('username');
+
         clearToken();
         window.location.assign("/")
     }

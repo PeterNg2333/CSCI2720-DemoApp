@@ -87,7 +87,7 @@ async function login(req, res) {
                 isAdmin: e.isAdmin,
                 username: e.username
               };
-              res.cookie("username", e.username);
+              //res.cookie("username", e.username);
               res.status(200).send(txt);
             } else {
               res.set("Content-Type", "text/plain");
@@ -112,8 +112,7 @@ async function login(req, res) {
                 isAdmin: e.isAdmin,
                 username: e.username
               };
-              res.cookie("username", e.username);
-              //console.log("here");
+              //res.cookie("username", e.username);
               res.status(200).send(txt);
             } else {
               res.set("Content-Type", "text/plain");

@@ -10,6 +10,8 @@ import {
 import userIcon from "./Resource/LoginPage/user-icon.png";
 import { useState } from "react";
 import { backendUrl } from "../variables";
+import Cookies from 'js-cookie';
+
 
 function LoginPage() {
   return (
@@ -45,6 +47,7 @@ function LoginForm() {
     console.log("fetchLogin")
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    Cookies.set('username', username);
 
     let urlencoded = new URLSearchParams();
     urlencoded.append("username", username);
