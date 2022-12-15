@@ -42,14 +42,15 @@ function LoginForm() {
   };
   const navigate = useNavigate();
   const fetchLogin = () => {
-    var myHeaders = new Headers();
+    console.log("fetchLogin")
+    let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-    var urlencoded = new URLSearchParams();
+    let urlencoded = new URLSearchParams();
     urlencoded.append("username", username);
     urlencoded.append("password", password);
 
-    var requestOptions = {
+    let requestOptions = {
       method: "POST",
       headers: myHeaders,
       body: urlencoded,
@@ -107,7 +108,7 @@ function LoginForm() {
             <br />
             <input className="mt-3" type="checkbox" name="rememberMe" />{" "}
             Remember Me <br />
-            <button className="login-btn" onClick={fetchLogin()}>
+            <button className="login-btn" onClick={fetchLogin}>
               Login
             </button>
           </div>
