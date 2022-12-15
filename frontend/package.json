@@ -12,11 +12,8 @@
     "bootstrap": "^5.2.3",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
-<<<<<<< HEAD
     "react-cookie": "^4.1.1",
-=======
     "react-bootstrap-icons": "^1.10.2",
->>>>>>> 09dc1eadeee5e4bcbbd32ac7e319a9507650893d
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1"

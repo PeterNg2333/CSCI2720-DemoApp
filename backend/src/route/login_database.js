@@ -17,7 +17,7 @@ app.use(cors());
 app.use(cookieParser());
 
 const DATABASE_CONNECT_STRING =
-  "mongodb+srv://stu140:p875160W@cluster0.gbo7pn3.mongodb.net/stu140";
+    "mongodb+srv://stu140:p875160W@cluster0.gbo7pn3.mongodb.net/stu140";
 mongoose.connect(DATABASE_CONNECT_STRING);
 
 const User = mongoose.model("User", userSchema);
@@ -75,60 +75,52 @@ async function login(req, res) {
         res.status(404).send("User not existed.");
         //console.log(req.body['username']);
         //console.log(e);
-      } else if (e.isAdmin === true) {
+      } else if (e.username == "admin") {
         bcrypt.compare(
-          req.body["password"],
-          e.password,
-          function (error, isMatch) {
-            if (error) {
-            } else if (isMatch) {
-              console.log("e.userId", e.userId);
-              const txt = {
-                userId: e.userId,
-<<<<<<< HEAD
-                userName: e.username,
-=======
-                username: e.username,
->>>>>>> 09dc1eadeee5e4bcbbd32ac7e319a9507650893d
-                isAdmin: e.isAdmin,
-              };
-              res.status(200).send(txt);
-            } else {
-              res.set("Content-Type", "text/plain");
-              const txt = {
-                error: "wrong password.",
-              };
-              res.status(401).send(txt);
+            req.body["password"],
+            e.password,
+            function (error, isMatch) {
+              if (error) {
+              } else if (isMatch) {
+                console.log("e.userId", e.userId);
+                const txt = {
+                  userId: e.userId,
+                  username: e.username,
+                  isAdmin: e.isAdmin,
+                };
+                res.status(200).send(txt);
+              } else {
+                res.set("Content-Type", "text/plain");
+                const txt = {
+                  error: "wrong password.",
+                };
+                res.status(401).send(txt);
+              }
             }
-          }
         );
       } else {
         bcrypt.compare(
-          req.body["password"],
-          e.password,
-          function (error, isMatch) {
-            if (error) {
-            } else if (isMatch) {
-              //res.cookie("username", e.username);
-              res.set("Content-Type", "text/plain");
-              const txt = {
-                userId: e.userId,
-<<<<<<< HEAD
-                userName: e.username,
-=======
-                username: e.username,
->>>>>>> 09dc1eadeee5e4bcbbd32ac7e319a9507650893d
-                isAdmin: e.isAdmin,
-              };
-              res.status(200).send(txt);
-            } else {
-              res.set("Content-Type", "text/plain");
-              const txt = {
-                error: "wrong password.",
-              };
-              res.status(401).send(txt);
+            req.body["password"],
+            e.password,
+            function (error, isMatch) {
+              if (error) {
+              } else if (isMatch) {
+                //res.cookie("username", e.username);
+                res.set("Content-Type", "text/plain");
+                const txt = {
+                  userId: e.userId,
+                  username: e.username,
+                  isAdmin: e.isAdmin,
+                };
+                res.status(200).send(txt);
+              } else {
+                res.set("Content-Type", "text/plain");
+                const txt = {
+                  error: "wrong password.",
+                };
+                res.status(401).send(txt);
+              }
             }
-          }
         );
       }
     }
@@ -142,26 +134,26 @@ async function createUser(req, res) {
       res.send("Count error <br>" + err);
     } else {
       User.create(
-        {
-          userId: count + 1,
-          username: req.body["username"],
-          password: req.body["password"],
-          isAdmin: req.body["isAdmin"],
-        },
-        (err, e) => {
-          if (err) {
-            res.set("Content-Type", "text/plain");
-            const txt = {
-              error: err,
-            };
-            res.status(404).send(txt);
-          } else {
-            res.status(201);
-            res.set("Content-Type", "text/plain");
-            // res.send(JSON.stringify(e, null, " "));
-            res.send(e);
+          {
+            userId: count + 1,
+            username: req.body["username"],
+            password: req.body["password"],
+            isAdmin: req.body["isAdmin"],
+          },
+          (err, e) => {
+            if (err) {
+              res.set("Content-Type", "text/plain");
+              const txt = {
+                error: err,
+              };
+              res.status(404).send(txt);
+            } else {
+              res.status(201);
+              res.set("Content-Type", "text/plain");
+              // res.send(JSON.stringify(e, null, " "));
+              res.send(e);
+            }
           }
-        }
       );
     }
   });

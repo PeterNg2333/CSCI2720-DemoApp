@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
 import PropTypes from "prop-types";
@@ -6,6 +6,8 @@ import AdminEventCard from "./AdminEventCard";
 import {useCookies} from "react-cookie";
 
 function AdminNavBar(props){
+    const [name, setName] = useState("");
+
     let location = useLocation();
     const [cookies, setCookie, removeCookie] = useCookies(['userName']);
 
@@ -17,6 +19,12 @@ function AdminNavBar(props){
         clearToken();
         window.location.assign("/")
     }
+
+    useEffect(() => {
+        let username = sessionStorage.getItem("username");
+        setName(username);
+    }, []);
+
     return(
         <nav className="navbar navbar-expand nav-admin shadow shadow-lg border-bottom-1">
             <div className="p-0">
@@ -51,7 +59,7 @@ function AdminNavBar(props){
             </ul>
 
             <button className="btn navbar-btn nav-item-text text-white no-click">
-                <i className="fa fa-light fa-user mr-1"><span className='d-none d-lg-inline d-xl-inline'>Hi!,{cookies.userName}</span></i>
+                <i className="fa fa-light fa-user mr-1"><span className='d-none d-lg-inline d-xl-inline'>Hi!,{name}</span></i>
             </button>
             <button className="btn navbar-btn nav-item-text text-white" onClick={logOut}>
                 <span className='d-none d-lg-inline d-xl-inline'>Log Out</span><i className="fa fa-light fa-sign-out mx-1"></i>

@@ -66,9 +66,10 @@ function LoginForm() {
       })
       .then((result) => {
         console.log(result)
-        setCookie("userName", result.userName,{ path: '/' });
         if (result.isAdmin === true) {
           // go to admin page
+          sessionStorage.setItem("userId", result.userId);
+          sessionStorage.setItem("username", result.username);
           navigate('/admin_event');
         } else {
           sessionStorage.setItem("userId", result.userId);
