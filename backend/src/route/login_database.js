@@ -8,9 +8,8 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const fs = require("fs");
 
-const { userSchema } = require("../service/database/schema");
+const { userSchema, venueSchema } = require("../service/database/schema");
 const cors = require("cors");
 
 const app = express();
@@ -22,7 +21,7 @@ const DATABASE_CONNECT_STRING =
 mongoose.connect(DATABASE_CONNECT_STRING);
 
 const User = mongoose.model("User", userSchema);
-// const venueModel = mongoose.model("Venue", venueSchema);
+const venueModel = mongoose.model("Venue", venueSchema);
 // const eventModel = mongoose.model("Event", eventSchema);
 
 async function scrapData() {
@@ -30,18 +29,44 @@ async function scrapData() {
 }
 
 async function dumpData() {
-  fs.readFile("../dataScraping/output/venuesData.json", function (err, data) {
-    if (err) {
-      console.log("dumpData readfile error", err);
-    } else {
-      console.log("venue", result);
+  let rawData = require("../dataScraping/output/venuesData.json");
+  // get a certain number of venue array
+  let tmpDataArray = rawData.venues.venue.slice(13, 55);
+  let dataArray = [];
+  let i;
+  let count = 0;
+  // since not every location has latitude and longitude
+  // need to import those with latitude and longitude only
+  for (i = 0; i < tmpDataArray.length; i++) {
+    if (tmpDataArray[i].latitude._cdata && tmpDataArray[i].longitude._cdata) {
+      dataArray.push(tmpDataArray[i]);
+      count++;
     }
+    if (count == 10) break;
+  }
+  var id, name, latitude, longitude;
+  dataArray.forEach(async (element) => {
+    id = Number(element._attributes.id);
+    name = element.venuee._cdata;
+    latitude = Number(element.latitude._cdata);
+    longitude = Number(element.longitude._cdata);
+    await venueModel.create({
+      id,
+      name,
+      latitude,
+      longitude,
+    });
   });
 }
 
+async function clearData() {
+  await venueModel.deleteMany({});
+}
+
 async function login(req, res) {
+  await clearData();
   await scrapData();
-  //   await dumpData();
+  await dumpData();
   User.findOne({ username: req.body["username"] }, (err, e) => {
     if (err) res.send(err);
     else {
