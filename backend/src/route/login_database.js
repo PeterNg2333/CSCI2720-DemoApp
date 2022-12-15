@@ -82,9 +82,14 @@ async function login(req, res) {
           function (error, isMatch) {
             if (error) {
             } else if (isMatch) {
+              console.log("e.userId", e.userId);
               const txt = {
                 userId: e.userId,
+<<<<<<< HEAD
                 userName: e.username,
+=======
+                username: e.username,
+>>>>>>> 09dc1eadeee5e4bcbbd32ac7e319a9507650893d
                 isAdmin: e.isAdmin,
               };
               res.status(200).send(txt);
@@ -108,7 +113,11 @@ async function login(req, res) {
               res.set("Content-Type", "text/plain");
               const txt = {
                 userId: e.userId,
+<<<<<<< HEAD
                 userName: e.username,
+=======
+                username: e.username,
+>>>>>>> 09dc1eadeee5e4bcbbd32ac7e319a9507650893d
                 isAdmin: e.isAdmin,
               };
               res.status(200).send(txt);

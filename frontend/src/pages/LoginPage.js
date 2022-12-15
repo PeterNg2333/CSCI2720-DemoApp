@@ -71,6 +71,8 @@ function LoginForm() {
           // go to admin page
           navigate('/admin_event');
         } else {
+          sessionStorage.setItem("userId", result.userId);
+          sessionStorage.setItem("username", result.username);
           navigate("/location");
         }
       })
