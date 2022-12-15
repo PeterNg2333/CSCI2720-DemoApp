@@ -75,7 +75,7 @@ async function login(req, res) {
         res.status(404).send("User not existed.");
         //console.log(req.body['username']);
         //console.log(e);
-      } else if (e.username == "admin") {
+      } else if (e.isAdmin === true) {
         bcrypt.compare(
           req.body["password"],
           e.password,
@@ -83,6 +83,8 @@ async function login(req, res) {
             if (error) {
             } else if (isMatch) {
               const txt = {
+                userId: e.userId,
+                userName: e.username,
                 isAdmin: e.isAdmin,
               };
               res.status(200).send(txt);
@@ -105,6 +107,8 @@ async function login(req, res) {
               //res.cookie("username", e.username);
               res.set("Content-Type", "text/plain");
               const txt = {
+                userId: e.userId,
+                userName: e.username,
                 isAdmin: e.isAdmin,
               };
               res.status(200).send(txt);

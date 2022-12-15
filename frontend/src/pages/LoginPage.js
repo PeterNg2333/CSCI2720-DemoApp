@@ -10,6 +10,7 @@ import {
 import userIcon from "./Resource/LoginPage/user-icon.png";
 import { useState } from "react";
 import { backendUrl } from "../variables";
+import {useCookies} from "react-cookie";
 
 function LoginPage() {
   return (
@@ -31,6 +32,7 @@ function LoginPicture() {
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(['userName']);
 
   const handleUsername = (event) => {
     setUsername(event.target.value);
@@ -63,10 +65,11 @@ function LoginForm() {
         else return response.json();
       })
       .then((result) => {
+        console.log(result)
+        setCookie("userName", result.userName,{ path: '/' });
         if (result.isAdmin === true) {
           // go to admin page
-          // navigate('/admin');
-          console.log("navigate to admin");
+          navigate('/admin_event');
         } else {
           navigate("/location");
         }

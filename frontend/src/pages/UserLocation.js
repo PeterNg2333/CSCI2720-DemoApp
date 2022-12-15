@@ -8,7 +8,7 @@ import { useLoadScript } from "@react-google-maps/api";
 import { backendUrl, googleMapApiKey } from "../variables";
 
 function MapSection() {
-  console.log(`${backendUrl}/venue/all`);
+  //console.log(`${backendUrl}/venue/all`);
   fetch(`${backendUrl}/venue/all`)
     .then((response) => response.json())
     .then((data) => console.log(data));
