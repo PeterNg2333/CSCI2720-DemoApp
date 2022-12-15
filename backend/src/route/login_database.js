@@ -101,7 +101,8 @@ async function createUser(req, res) {
           } else {
             res.status(201);
             res.set("Content-Type", "text/plain");
-            res.send(JSON.stringify(e, null, " "));
+            // res.send(JSON.stringify(e, null, " "));
+            res.send(e);
           }
         }
       );
@@ -117,7 +118,8 @@ async function getUser(req, res) {
       res.set("Content-Type", "text/plain");
       res.send("No User Found");
     } else {
-      res.send(JSON.stringify(e, null, " "));
+      //   res.send(JSON.stringify(e, null, " "));
+      res.send(e);
     }
   });
 }
@@ -130,7 +132,8 @@ async function updateUser(req, res) {
       e.password = req.body["password"];
       e.save();
       res.set("Content-Type", "text/plain");
-      res.send(JSON.stringify(e, null, " "));
+      //   res.send(JSON.stringify(e, null, " "));
+      res.send(e);
     }
   });
 }
@@ -173,7 +176,8 @@ async function getAllUser(req, res) {
           });
         }
         res.set("Content-Type", "text/plain");
-        res.send(JSON.stringify(all, null, " "));
+        // res.send(JSON.stringify(all, null, " "));
+        res.send(all);
       }
     }
   });
