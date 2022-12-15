@@ -38,11 +38,16 @@ async function login(req, res) {
           function (error, isMatch) {
             if (error) {
             } else if (isMatch) {
-              res.redirect("/admin");
-              //res.cookie("username", e.username);
+              const txt = {
+                isAdmin: e.isAdmin,
+              };
+              res.status(200).send(txt);
             } else {
               res.set("Content-Type", "text/plain");
-              res.status(404).send("Wrong password.");
+              const txt = {
+                error: "wrong password.",
+              };
+              res.status(401).send(txt);
             }
           }
         );
@@ -54,11 +59,17 @@ async function login(req, res) {
             if (error) {
             } else if (isMatch) {
               //res.cookie("username", e.username);
-              res.redirect("/main");
+              res.set("Content-Type", "text/plain");
+              const txt = {
+                isAdmin: e.isAdmin,
+              };
+              res.status(200).send(txt);
             } else {
               res.set("Content-Type", "text/plain");
-              res.status(404).send("Wrong password.");
-              res.redirect("/login");
+              const txt = {
+                error: "wrong password.",
+              };
+              res.status(401).send(txt);
             }
           }
         );
@@ -83,7 +94,10 @@ async function createUser(req, res) {
         (err, e) => {
           if (err) {
             res.set("Content-Type", "text/plain");
-            res.send("Creating error <br>" + err);
+            const txt = {
+              error: err,
+            };
+            res.status(404).send(txt);
           } else {
             res.status(201);
             res.set("Content-Type", "text/plain");
