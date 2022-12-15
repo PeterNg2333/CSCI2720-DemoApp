@@ -55,17 +55,24 @@ function LoginForm() {
       headers: myHeaders,
       body: urlencoded,
       redirect: "follow",
+      credentials: 'same-origin',
     };
 
     fetch(`${backendUrl}/login`, requestOptions)
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((result) => {
-        if (result.isAdmin) {
-          // go to admin page
-          // navigate('/admin');
-        } else {
-          navigate("/location");
+        console.log(result);
+        if(result.error){
+          alert("Login Fail");
+        }else{
+          if (result.isAdmin) {
+            // go to admin page
+            // navigate('/admin');
+          } else {
+            navigate("/location");
+          }
         }
+        
       })
       .catch((error) => console.log("error", error));
   };

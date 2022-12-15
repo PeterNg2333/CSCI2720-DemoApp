@@ -82,14 +82,17 @@ async function login(req, res) {
           function (error, isMatch) {
             if (error) {
             } else if (isMatch) {
-              const txt = {
+              var txt = {
+                error: null,
                 isAdmin: e.isAdmin,
+                username: e.username
               };
+              res.cookie("username", e.username, {maxAge: '1200000'});
               res.status(200).send(txt);
             } else {
               res.set("Content-Type", "text/plain");
-              const txt = {
-                error: "wrong password.",
+              var txt = {
+                error: "wrong password."
               };
               res.status(401).send(txt);
             }
@@ -102,21 +105,24 @@ async function login(req, res) {
           function (error, isMatch) {
             if (error) {
             } else if (isMatch) {
-              //res.cookie("username", e.username);
+              
               res.set("Content-Type", "text/plain");
-              const txt = {
+              var txt = {
+                error: null,
                 isAdmin: e.isAdmin,
+                username: e.username
               };
+              res.cookie("username", e.username, {maxAge: '1200000'});
+              //console.log("here");
               res.status(200).send(txt);
             } else {
               res.set("Content-Type", "text/plain");
-              const txt = {
-                error: "wrong password.",
+              var txt = {
+                error: "wrong password."
               };
               res.status(401).send(txt);
-            }
           }
-        );
+        });
       }
     }
   });

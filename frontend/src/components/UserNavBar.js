@@ -3,10 +3,12 @@ import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
 import PropTypes from "prop-types";
 import AdminEventCard from "./AdminEventCard";
+import Cookies from 'js-cookie';
 
 function UserNavBar(props){
     let location = useLocation();
-
+    let username = Cookies.get('username');
+    
     function clearToken(){
         //TODO:
     }
@@ -54,7 +56,7 @@ function UserNavBar(props){
             </ul>
 
             <button className="btn navbar-btn nav-item-text text-white no-click">
-                <i className="fa fa-light fa-user mr-1"><span className='d-none d-lg-inline d-xl-inline'>Hi!,[User Name]</span></i>
+                <i className="fa fa-light fa-user mr-1"><span className='d-none d-lg-inline d-xl-inline'>Hi!,{username}</span></i>
             </button>
             <button className="btn navbar-btn nav-item-text text-white" onClick={logOut}>
                 <span className='d-none d-lg-inline d-xl-inline'>Log Out</span><i className="fa fa-light fa-sign-out mx-1"></i>
