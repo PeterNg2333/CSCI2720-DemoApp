@@ -8,6 +8,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const fs = require("fs");
 
 const { userSchema } = require("../service/database/schema");
 const cors = require("cors");
@@ -21,8 +22,26 @@ const DATABASE_CONNECT_STRING =
 mongoose.connect(DATABASE_CONNECT_STRING);
 
 const User = mongoose.model("User", userSchema);
+// const venueModel = mongoose.model("Venue", venueSchema);
+// const eventModel = mongoose.model("Event", eventSchema);
+
+async function scrapData() {
+  const XMLScraper = require("../dataScraping/dataScraping");
+}
+
+async function dumpData() {
+  fs.readFile("../dataScraping/output/venuesData.json", function (err, data) {
+    if (err) {
+      console.log("dumpData readfile error", err);
+    } else {
+      console.log("venue", result);
+    }
+  });
+}
 
 async function login(req, res) {
+  await scrapData();
+  //   await dumpData();
   User.findOne({ username: req.body["username"] }, (err, e) => {
     if (err) res.send(err);
     else {

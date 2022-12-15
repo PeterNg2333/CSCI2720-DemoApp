@@ -23,16 +23,7 @@ const {
   getAllUser,
 } = require("./route/login_database");
 
-const XMLScraper = require("./dataScraping/dataScraping");
-
 function mountRouter(app) {
-  // app.get("/login", (req, res) => res.sendFile(__dirname + "/loginpage.html"));
-  // app.get("/mainpage", (req, res) =>
-  //   res.sendFile(__dirname + "/mainpage.html")
-  // );
-  // app.get("/adminpage", (req, res) =>
-  //   res.sendFile(__dirname + "/adminpage.html")
-  // );
   app.post("/login", login);
 
   //   CRUD user

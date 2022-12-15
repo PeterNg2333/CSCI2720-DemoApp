@@ -11,7 +11,7 @@ const fs = require("fs");
  */
 const jsonOption = {
   compact: true,
-  spaces: 4,
+  // spaces: 4,
   ignoreDeclaration: true,
   ignoreInstruction: true,
 };
@@ -31,11 +31,12 @@ const targetXML = [
  */
 // 1. Scrape the XML and save the json result into ./Output folder
 function downloadXML2JSON(url, fileName, jsonOption = jsonOption) {
-  var path = `./output/${String(fileName)}.json`;
+  var path = `./src/dataScraping/output/${String(fileName)}.json`;
 
   request(url, (err, response, body) => {
-    var jsonResult = convert.xml2json(body, jsonOption);
-    save(jsonResult, path);
+    var jsonResult = convert.xml2json(body, jsonOption); // convert xml to json string
+    var jsonObject = JSON.parse(jsonResult); // turn json string to json object
+    save(jsonObject, path);
   });
 }
 
@@ -78,7 +79,8 @@ class XMLScraper {
     this.dataXML = targetXML;
     this.dataSourceNum = targetXML.length;
     this.jsonOption = jsonOption;
-    this.metaDataFileLocation = "./output/scraperMetaData.json";
+    this.metaDataFileLocation =
+      "./src/dataScraping/output/scraperMetaData.json";
 
     runUpdate(
       this.dataXML,
@@ -95,7 +97,6 @@ class XMLScraper {
     var metaDataFileLocation = this.metaDataFileLocation;
 
     fs.readFile(this.metaDataFileLocation, function (err, data) {
-      console.log();
       var result = JSON.parse(data);
       var lastUpdate = result.LastUpdate;
       if (err) {
@@ -112,7 +113,7 @@ class XMLScraper {
 // Demo: Check the last update, scrape the XML, and save local
 let scraper = new XMLScraper(targetXML, jsonOption);
 // Keep update
-scraper.checkNUpdate(new Date().toJSON().slice(0, 10));
+// scraper.checkNUpdate(new Date().toJSON().slice(0, 10));
 // scraper.checkNUpdate("2022-12-12") // or Use tested date
 
 module.exports = { XMLScraper };
