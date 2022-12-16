@@ -85,14 +85,14 @@ function LoginForm() {
         <div className="row align-items-center h-100">
           <div className="col-8 text-center mx-auto">
             <h3 className="mb-4">Hello! Welcome Back :{")"}</h3>
-            {/* <div>
+            <div>
               <img
                 className="img-fluid"
                 src={userIcon}
                 alt="img"
                 style={{ maxWidth: "50%", height: "auto" }}
               />
-            </div> */}
+            </div>
             <label for="username">Username</label>
             <br />
             <input
