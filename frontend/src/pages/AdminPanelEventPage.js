@@ -37,7 +37,8 @@ function AdminPanelEventPage() {
     async function createNewEvent(eventTitle, programDate, eventDescription, eventPresenter, eventPrice, programTime, ageLimit, remark, eventLocation) {
         let myHeaders = new Headers();
         let urlencoded = new URLSearchParams();
-        urlencoded.append("venue", eventLocation);
+        console.log(eventLocation)
+        urlencoded.append("venueId", eventLocation);
         urlencoded.append("title", eventTitle);
         urlencoded.append("datetime", programDate);
         urlencoded.append("description", eventDescription);
@@ -190,7 +191,7 @@ function AdminPanelEventPage() {
                                        }}
                                 />
                                 <AdminEventCard name={event.name} description={event.description}
-                                                location={event.venue?.name} programTime={event.programTime}
+                                                location={"event.venue?.name"} programTime={event.programTime}
                                                 datetime={event.datetime}/>
                             </div>
                         </React.Fragment>

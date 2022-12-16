@@ -81,7 +81,7 @@ const venueSchema = new Schema({
 const eventSchema = new Schema({
     eventId: Number,
     title: String,
-    venue: { type: mongoose.Schema.Types.ObjectId, ref:'Venue' },
+    venueId: Number,
     datetime: String,
     description: String,
     presenter: String,
