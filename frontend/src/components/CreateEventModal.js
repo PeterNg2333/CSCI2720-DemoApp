@@ -5,12 +5,13 @@ import PropTypes from "prop-types";
 import DatePicker from 'react-date-picker'
 import TimePicker from 'react-time-picker'
 
-const CreatEventModal = React.forwardRef(function CreatEventDialog(props, ref) {
+    const CreatEventModal = React.forwardRef(function CreatEventDialog(props, ref) {
     const [show, setShow] = useState(false);
     const [programDate, setProgramDate] = useState(new Date());
     const { register, handleSubmit, control, watch, formState: { errors } } = useForm();
 
     function handleClose() {
+        props.reload();
         setShow(false)
     }
 
@@ -77,22 +78,22 @@ const CreatEventModal = React.forwardRef(function CreatEventDialog(props, ref) {
                         <label htmlFor="eventDescription">Event Description</label>
                         <textarea className="form-control border border-dark w-75" id="eventDescription"
                                   cols="40" rows="5"
-                                  placeholder="Event Description" {...register("eventDescription", { required: true})}/>
+                                  placeholder="Event Description" {...register("eventDescription", { required: false})}/>
                         <label htmlFor="eventPresenter">Presenter</label>
                         <input className="form-control border border-dark w-75" id="eventPresenter"
-                               placeholder="Event Presenter" {...register("eventPresenter", { required: true})}/>
+                               placeholder="Event Presenter" {...register("eventPresenter", { required: false})}/>
                         <label htmlFor="eventPrice">Price</label>
                         <input className="form-control border border-dark w-75" id="eventPrice"
-                               placeholder="Event Price" {...register("eventPrice", { required: true})}/>
+                               placeholder="Event Price" {...register("eventPrice", { required: false})}/>
                         <label>Program Time</label>
                         <input className="form-control border border-dark w-75" id="eventPrice"
-                               placeholder="Program Time" {...register("programTime", { required: true})}/>
+                               placeholder="Program Time" {...register("programTime", { required: false})}/>
                         {/*<label htmlFor="ageLimit">Age Limit</label>*/}
                         {/*<input className="form-control border border-dark w-75" id="ageLimit"*/}
                         {/*       placeholder="Age Limit" {...register("ageLimit", { required: true})}/>*/}
                         <label htmlFor="remark">Remark</label>
                         <input className="form-control border border-dark w-75" id="remark"
-                               placeholder="Remark" {...register("remark", { required: true})}/>
+                               placeholder="Remark" {...register("remark", { required: false})}/>
                     </div>
                     <label>Location</label>
                     <div className="container rounded w-100 border border-dark px-3 pt-2 pb-3">

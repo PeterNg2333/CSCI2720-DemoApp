@@ -40,8 +40,8 @@ async function createEventRoute(req, res) {
 }
 
 async function updateEventRoute(req, res) {
-    const {eventId, venueId, title, description, presenter, price, programTime, ageLimit, remark} = req.body;
-    await updateEvent(eventId, venueId, title, description, presenter, price, programTime, ageLimit, remark);
+    const {eventId, venueId, title, description, datetime, presenter, price, programTime, ageLimit, remark} = req.body;
+    await updateEvent(eventId, venueId, title, description, datetime, presenter, price, programTime, ageLimit, remark);
     res.send({
         success: true,
     });

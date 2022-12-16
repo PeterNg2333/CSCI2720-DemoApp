@@ -12,7 +12,8 @@ function AdminNavBar(props){
     const [cookies, setCookie, removeCookie] = useCookies(['userName']);
 
     function clearToken(){
-        //TODO:
+        sessionStorage.removeItem("userId");
+        sessionStorage.removeItem("username");
     }
     function logOut(){
         console.log("logOut");
