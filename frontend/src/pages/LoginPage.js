@@ -81,33 +81,33 @@ function LoginForm() {
   };
   return (
     <section className="col-lg-6 logInFormBg border border-dark">
-      <div className="container h-100">
+      <div className="container h-100 mt-2">
         <div className="row align-items-center h-100">
           <div className="col-8 text-center mx-auto">
             <h3 className="mb-4">Hello! Welcome Back :{")"}</h3>
-            {/* <div>
+            <div>
               <img
-                className="img-fluid"
+                className="img-fluid d-none d-lg-inline d-xl-inline"
                 src={userIcon}
                 alt="img"
                 style={{ maxWidth: "50%", height: "auto" }}
               />
-            </div> */}
-            <label for="username">Username</label>
+            </div> 
+            <label for="username" style={{fontWeight: "bold", float: "left"}}><h5>Username</h5></label>
             <br />
             <input
-              className="text"
+              className="form-control"
               id="username"
               name="username"
               onChange={handleUsername}
               value={username}
               required
             />
-            <br />
-            <br />
-            <label for="password">Password</label>
+            <br/>
+            <label for="password" style={{fontWeight: "bold", float: "left"}}><h5>Password</h5></label>
             <br />
             <input
+              className="form-control"
               type="password"
               id="password"
               name="password"
@@ -115,10 +115,13 @@ function LoginForm() {
               value={password}
               required
             />
+            
             <br />
-            <input className="mt-3" type="checkbox" name="rememberMe" />{" "}
-            Remember Me <br />
-            <button className="login-btn" onClick={fetchLogin}>
+            <span style={{ float: "left", marginTop:"-5px"}}>
+            <input className="" type="checkbox" name="rememberMe" />{" "}
+            Remember Me </span>
+            <br />
+            <button className="btn btn-primary btn-block mt-2" type="button" onClick={fetchLogin}>
               Login
             </button>
           </div>
