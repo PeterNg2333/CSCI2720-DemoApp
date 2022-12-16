@@ -92,35 +92,56 @@ function UserMainFavorite() {
         }
       });
   }, []);
-  return (
-    listArray.length > 0 && (
-      <>
-        <header className="row">
-          <UserNavBar />
-        </header>
-        <section className="col-lg-12 ">
-          <div className="container-fluid bg-light mt-4 pb-4  table-responsive table-bordered">
-            <table className="col-5 table table-hover">
-              <thead className="shadow shadow-sm border-bottom-1">
-                <tr className="" style={{ textAlign: "center" }}>
-                  <th scope="col" colspan="2" className="border border-dark ">
-                    <h3>
-                      <strong>My Favourite Locations</strong>
-                    </h3>
-                  </th>
-                </tr>
-              </thead>
+  return listArray.length > 0 ? (
+    <>
+      <header className="row">
+        <UserNavBar />
+      </header>
+      <section className="col-lg-12 ">
+        <div className="container-fluid bg-light mt-4 pb-4  table-responsive table-bordered">
+          <table className="col-5 table table-hover">
+            <thead className="shadow shadow-sm border-bottom-1">
+              <tr className="" style={{ textAlign: "center" }}>
+                <th scope="col" colspan="2" className="border border-dark ">
+                  <h3>
+                    <strong>My Favourite Locations</strong>
+                  </h3>
+                </th>
+              </tr>
+            </thead>
 
-              <tbody className="mt-1">
-                {listArray.map((loc, index) => (
-                  <UserFavouriteVenueFileCard data={loc} />
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </>
-    )
+            <tbody className="mt-1">
+              {listArray.map((loc, index) => (
+                <UserFavouriteVenueFileCard data={loc} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </>
+  ) : (
+    <>
+      <header className="row">
+        <UserNavBar />
+      </header>
+      <section className="col-lg-12 ">
+        <div className="container-fluid bg-light mt-4 pb-4  table-responsive table-bordered">
+          <table className="col-5 table table-hover">
+            <thead className="shadow shadow-sm border-bottom-1">
+              <tr className="" style={{ textAlign: "center" }}>
+                <th scope="col" colspan="2" className="border border-dark ">
+                  <h3>
+                    <strong>My Favourite Locations</strong>
+                  </h3>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody className="mt-1"></tbody>
+          </table>
+        </div>
+      </section>
+    </>
   );
 }
 
