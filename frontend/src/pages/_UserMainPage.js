@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter,
   Route,
@@ -10,8 +10,14 @@ import {
 import UserNavBar from "../components/UserNavBar";
 import { MapSection, VenueSection, LocationPage } from "./UserLocation";
 import { UserEventLocationHead, UserEventList } from "./UserEventPage";
-import { UserVenueFileCardFavorite } from "./UserVenueFileCard";
+import {
+  UserVenueFileCard,
+  UserVenueFileCardFavorite,
+  UserFavouriteVenueFileCard,
+} from "./UserVenueFileCard";
 import { UserCommentSection } from "./UserCommentSection";
+import { useState } from "react";
+import { backendUrl, googleMapApiKey } from "../variables";
 
 /** Full webpage for the location page in user view e.g., http://localhost:3000/Location/ */
 function UserMainLocation() {
@@ -59,56 +65,62 @@ function UserMainEvents() {
 
 /** Full webpage for the favorite page of all the liked location in user view e.g., http://localhost:3000/Location/ABC/Events */
 function UserMainFavorite() {
-  let venueName = useParams();
+  const [listArray, setListArray] = useState("");
+
+  var userId = sessionStorage.getItem("userId");
+  useEffect(() => {
+    fetch(`${backendUrl}/venue/favourite/user/?userId=${userId}`)
+      .then((response) => response.json())
+      .then(async (data) => {
+        // console.log("fav", data.data);
+        let i;
+        let tmp = [];
+        for (i = 0; i < data.data.length; i++) {
+          // console.log("i", i);
+          await fetch(`${backendUrl}/venue/one/?venueId=${data.data[i]}`)
+            .then((response) => response.json())
+            .then((result) => {
+              // console.log(result.data.venue);
+              tmp.push(result.data.venue);
+              // console.log(i, "tmp", tmp);
+              // console.log("listArray", listArray);
+              if (i == data.data.length - 1) {
+                setListArray(tmp);
+              }
+            })
+            .catch((error) => console.log("error", error));
+        }
+      });
+  }, []);
   return (
-    <>
-      <header className="row">
-        <UserNavBar venue={String(venueName)} />
-      </header>
+    listArray.length > 0 && (
+      <>
+        <header className="row">
+          <UserNavBar />
+        </header>
+        <section className="col-lg-12 ">
+          <div className="container-fluid bg-light mt-4 pb-4  table-responsive table-bordered">
+            <table className="col-5 table table-hover">
+              <thead className="shadow shadow-sm border-bottom-1">
+                <tr className="" style={{ textAlign: "center" }}>
+                  <th scope="col" colspan="2" className="border border-dark ">
+                    <h3>
+                      <strong>My Favourite Locations</strong>
+                    </h3>
+                  </th>
+                </tr>
+              </thead>
 
-      <main className="container-lg">
-        <div className="row">
-          <h2 className="text-center mt-4">
-            {" "}
-            <strong>My Favorite Venue</strong>
-          </h2>
-        </div>
-
-        <div className="row">
-          <form className="form-group col-9 mr-0 mt-3 ">
-            <div className="rounded input-group">
-              <input
-                type="search"
-                className="form-control"
-                placeholder="Find Events"
-              />
-              <button className="btn navbar-btn bg-dark nav-item-text ">
-                <i class="fa fa-regular fa-search"></i>
-              </button>
-            </div>
-          </form>
-
-          <form className="form-group col-3 mt-3 p-0 pt-1 d-inline">
-            <select className="form-select rounded input-group" aria-label="">
-              <option selected>Sort by </option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </form>
-        </div>
-        <br />
-
-        <div className="row">
-          <UserVenueFileCardFavorite cardOrder={"AB"} />
-          <UserVenueFileCardFavorite cardOrder={"BA"} />
-          <UserVenueFileCardFavorite cardOrder={"AB"} />
-          <UserVenueFileCardFavorite cardOrder={"BA"} />
-          <UserVenueFileCardFavorite cardOrder={"AB"} />
-          <UserVenueFileCardFavorite cardOrder={"BA"} />
-        </div>
-      </main>
-    </>
+              <tbody className="mt-1">
+                {listArray.map((loc, index) => (
+                  <UserFavouriteVenueFileCard data={loc} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </>
+    )
   );
 }
 
