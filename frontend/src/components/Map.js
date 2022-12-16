@@ -1,62 +1,55 @@
 import React, { useState } from "react";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 
-function Map() {
-  const markers = [
-    {
-      id: 1,
-      name: "Chicago, Illinois",
-      position: { lat: 41.881832, lng: -87.623177 },
-    },
-    {
-      id: 2,
-      name: "Denver, Colorado",
-      position: { lat: 39.739235, lng: -104.99025 },
-    },
-    {
-      id: 3,
-      name: "Los Angeles, California",
-      position: { lat: 34.052235, lng: -118.243683 },
-    },
-    {
-      id: 4,
-      name: "New York, New York",
-      position: { lat: 40.712776, lng: -74.005974 },
-    },
-  ];
+function Map(props) {
+  //   const markers = [
+  //     {
+  //       id: 1,
+  //       name: "Chicago, Illinois",
+  //       position: { lat: 41.881832, lng: -87.623177 },
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "Denver, Colorado",
+  //       position: { lat: 39.739235, lng: -104.99025 },
+  //     },
+  //   ];
 
   const [activeMarker, setActiveMarker] = useState(null);
+  const navigate = useNavigate();
 
   const handleActiveMarker = (marker) => {
     if (marker === activeMarker) {
       return;
     }
+    navigate(`/location/${marker}/Events`);
     setActiveMarker(marker);
   };
 
   const handleOnLoad = (map) => {
     const bounds = new window.google.maps.LatLngBounds();
-    markers.forEach(({ position }) => bounds.extend(position));
+    props.markers.forEach(({ position }) => bounds.extend(position));
     map.fitBounds(bounds);
   };
-  console.log("markers: ", markers);
+  //   console.log("props.markers: ", props.markers);
   return (
     <GoogleMap
       onLoad={handleOnLoad}
       onClick={() => setActiveMarker(null)}
-      mapContainerStyle={{ width: "100vw", height: "100vh" }}
+      mapContainerStyle={props.style}
     >
-      {markers.map(({ id, name, position }) => (
+      {props.markers.map(({ id, name, position }) => (
         <MarkerF
           key={id}
           position={position}
           onClick={() => handleActiveMarker(id)}
         >
-          {activeMarker === id ? (
+          {/* {activeMarker === id ? (
             <InfoWindow onCloseClick={() => setActiveMarker(null)}>
               <div>{name}</div>
             </InfoWindow>
-          ) : null}
+          ) : null} */}
         </MarkerF>
       ))}
     </GoogleMap>

@@ -8,7 +8,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import UserNavBar from "../components/UserNavBar";
-import { MapSection, VenueSection } from "./UserLocation";
+import { MapSection, VenueSection, LocationPage } from "./UserLocation";
 import { UserEventLocationHead, UserEventList } from "./UserEventPage";
 import { UserVenueFileCardFavorite } from "./UserVenueFileCard";
 import { UserCommentSection } from "./UserCommentSection";
@@ -23,8 +23,9 @@ function UserMainLocation() {
       </header>
       <main>
         <div className="row mt-1">
-          <MapSection />
-          <VenueSection />
+          {/* <MapSection />
+          <VenueSection /> */}
+          <LocationPage />
         </div>
       </main>
     </>
@@ -44,7 +45,7 @@ function UserMainEvents() {
         <section className="col-lg-12">
           <div className="container-lg bg-light mt-3 pt-1 pb-4">
             <UserEventLocationHead />
-            <UserCommentSection />
+            {/* <UserCommentSection /> */}
           </div>
           <br />
           <div className="container-lg mt-3 pb-1">

@@ -9,7 +9,11 @@ const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
-const { userSchema, venueSchema } = require("../service/database/schema");
+const {
+  userSchema,
+  venueSchema,
+  eventSchema,
+} = require("../service/database/schema");
 const cors = require("cors");
 
 const app = express();
@@ -17,12 +21,12 @@ app.use(cors());
 app.use(cookieParser());
 
 const DATABASE_CONNECT_STRING =
-    "mongodb+srv://stu140:p875160W@cluster0.gbo7pn3.mongodb.net/stu140";
+  "mongodb+srv://stu140:p875160W@cluster0.gbo7pn3.mongodb.net/stu140";
 mongoose.connect(DATABASE_CONNECT_STRING);
 
 const User = mongoose.model("User", userSchema);
 const venueModel = mongoose.model("Venue", venueSchema);
-// const eventModel = mongoose.model("Event", eventSchema);
+const eventModel = mongoose.model("Event", eventSchema);
 
 async function scrapData() {
   const XMLScraper = require("../dataScraping/dataScraping");
@@ -31,16 +35,35 @@ async function scrapData() {
 async function dumpData() {
   let rawData = require("../dataScraping/output/venuesData.json");
   // get a certain number of venue array
-  let tmpDataArray = rawData.venues.venue.slice(13, 55);
+  // let tmpDataArray = rawData.venues.venue.slice(6, 80);
+  let tmpDataArray = rawData.venues.venue;
   let dataArray = [];
-  let i;
+  let tmpLatitude = [];
+  let i, j, skip;
   let count = 0;
   // since not every location has latitude and longitude
   // need to import those with latitude and longitude only
   for (i = 0; i < tmpDataArray.length; i++) {
     if (tmpDataArray[i].latitude._cdata && tmpDataArray[i].longitude._cdata) {
-      dataArray.push(tmpDataArray[i]);
-      count++;
+      if (tmpLatitude.length === 0) {
+        dataArray.push(tmpDataArray[i]);
+        tmpLatitude.push(tmpDataArray[i].latitude._cdata);
+        count++;
+      } else {
+        skip = false;
+        // this for-loop is to skip all the venues with the same position
+        for (j = 0; j < tmpLatitude.length; j++) {
+          if (tmpDataArray[i].latitude._cdata === tmpLatitude[j]) {
+            skip = true;
+            break;
+          }
+        }
+        if (skip === false) {
+          dataArray.push(tmpDataArray[i]);
+          tmpLatitude.push(tmpDataArray[i].latitude._cdata);
+          count++;
+        }
+      }
     }
     if (count == 10) break;
   }
@@ -57,10 +80,54 @@ async function dumpData() {
       longitude,
     });
   });
+
+  let eventRawData = require("../dataScraping/output/eventData.json");
+  let tmpEventDataArray = eventRawData.events.event;
+  let eventDataArray = [];
+  console.log("tmpEventDataArray.length", tmpEventDataArray.length);
+  for (i = 0; i < tmpEventDataArray.length; i++) {
+    for (j = 0; j < dataArray.length; j++) {
+      if (tmpEventDataArray[i].venueid._cdata === dataArray[j]._attributes.id) {
+        eventDataArray.push(tmpEventDataArray[i]);
+      }
+    }
+  }
+  var eid, etitle, evenue, edate, edesc, epresenter, eprice, eprogTime;
+  eventDataArray.forEach(async (element) => {
+    console.log(
+      element.venueid._cdata,
+      element.titlee._cdata,
+      element._attributes.id
+      // element.desce._cdata
+    );
+    eid = Number(element._attributes.id);
+    etitle = element.titlee._cdata;
+    evenue = Number(element.venueid._cdata);
+    edate = element.predateE._cdata;
+    edesc = element.desce._cdata;
+    epresenter = element.presenterorge._cdata;
+    eprice = element.pricee._cdata;
+    eprogTime = element.progtimee._cdata;
+    const age = "";
+    const remark = "";
+    await eventModel.create({
+      eventId: eid,
+      venueId: evenue,
+      title: etitle,
+      description: edesc,
+      datetime: edate,
+      presenter: epresenter,
+      price: eprice,
+      programTime: eprogTime,
+      ageLimit: age,
+      remark: remark,
+    });
+  });
 }
 
 async function clearData() {
   await venueModel.deleteMany({});
+  await eventModel.deleteMany({});
 }
 
 async function login(req, res) {
@@ -77,50 +144,50 @@ async function login(req, res) {
         //console.log(e);
       } else if (e.username == "admin") {
         bcrypt.compare(
-            req.body["password"],
-            e.password,
-            function (error, isMatch) {
-              if (error) {
-              } else if (isMatch) {
-                console.log("e.userId", e.userId);
-                const txt = {
-                  userId: e.userId,
-                  username: e.username,
-                  isAdmin: e.isAdmin,
-                };
-                res.status(200).send(txt);
-              } else {
-                res.set("Content-Type", "text/plain");
-                const txt = {
-                  error: "wrong password.",
-                };
-                res.status(401).send(txt);
-              }
+          req.body["password"],
+          e.password,
+          function (error, isMatch) {
+            if (error) {
+            } else if (isMatch) {
+              console.log("e.userId", e.userId);
+              const txt = {
+                userId: e.userId,
+                username: e.username,
+                isAdmin: e.isAdmin,
+              };
+              res.status(200).send(txt);
+            } else {
+              res.set("Content-Type", "text/plain");
+              const txt = {
+                error: "wrong password.",
+              };
+              res.status(401).send(txt);
             }
+          }
         );
       } else {
         bcrypt.compare(
-            req.body["password"],
-            e.password,
-            function (error, isMatch) {
-              if (error) {
-              } else if (isMatch) {
-                //res.cookie("username", e.username);
-                res.set("Content-Type", "text/plain");
-                const txt = {
-                  userId: e.userId,
-                  username: e.username,
-                  isAdmin: e.isAdmin,
-                };
-                res.status(200).send(txt);
-              } else {
-                res.set("Content-Type", "text/plain");
-                const txt = {
-                  error: "wrong password.",
-                };
-                res.status(401).send(txt);
-              }
+          req.body["password"],
+          e.password,
+          function (error, isMatch) {
+            if (error) {
+            } else if (isMatch) {
+              //res.cookie("username", e.username);
+              res.set("Content-Type", "text/plain");
+              const txt = {
+                userId: e.userId,
+                username: e.username,
+                isAdmin: e.isAdmin,
+              };
+              res.status(200).send(txt);
+            } else {
+              res.set("Content-Type", "text/plain");
+              const txt = {
+                error: "wrong password.",
+              };
+              res.status(401).send(txt);
             }
+          }
         );
       }
     }
@@ -134,26 +201,26 @@ async function createUser(req, res) {
       res.send("Count error <br>" + err);
     } else {
       User.create(
-          {
-            userId: count + 1,
-            username: req.body["username"],
-            password: req.body["password"],
-            isAdmin: req.body["isAdmin"],
-          },
-          (err, e) => {
-            if (err) {
-              res.set("Content-Type", "text/plain");
-              const txt = {
-                error: err,
-              };
-              res.status(404).send(txt);
-            } else {
-              res.status(201);
-              res.set("Content-Type", "text/plain");
-              // res.send(JSON.stringify(e, null, " "));
-              res.send(e);
-            }
+        {
+          userId: count + 1,
+          username: req.body["username"],
+          password: req.body["password"],
+          isAdmin: req.body["isAdmin"],
+        },
+        (err, e) => {
+          if (err) {
+            res.set("Content-Type", "text/plain");
+            const txt = {
+              error: err,
+            };
+            res.status(404).send(txt);
+          } else {
+            res.status(201);
+            res.set("Content-Type", "text/plain");
+            // res.send(JSON.stringify(e, null, " "));
+            res.send(e);
           }
+        }
       );
     }
   });
