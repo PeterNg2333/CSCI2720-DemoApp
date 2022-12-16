@@ -26,19 +26,19 @@ function AdminNavBar(props){
     }, []);
 
     return(
+
         <nav className="navbar navbar-expand nav-admin shadow shadow-lg border-bottom-1">
-            <div className="p-0">
+
             <button className="navbar-toggle btn ">
                 <i className="fa fa-chevron-left text-white"></i>
             </button>
             <button className="navbar-toggle btn ">
                 <i className="fa fa-chevron-right text-white"></i>
             </button>
-            <span className="navbar-toggle nav-item-text "> &nbsp; &nbsp;
+            <span className="navbar-toggle nav-item-text d-none d-sm-block"> &nbsp; &nbsp;
                 <Link to={location.pathname} className="btn text-white px-0">{location.pathname}</Link>
             </span>
 
-            </div>
 
             <ul className="nav navbar-nav ms-auto">
                 <li className="mx-1 nav-item ">
@@ -55,14 +55,15 @@ function AdminNavBar(props){
                         </button>
                     </Link>
                 </li>
+                <button className="btn navbar-btn nav-item-text text-white no-click">
+                    <i className="fa fa-light fa-user mr-1"><span className='d-none d-lg-inline d-xl-inline'>Hi!,{name}</span></i>
+                </button>
+                <button className="btn navbar-btn nav-item-text text-white" onClick={logOut}>
+                    <span className='d-none d-lg-inline d-xl-inline'>Log Out</span><i className="fa fa-light fa-sign-out mx-1"></i>
+                </button>
             </ul>
 
-            <button className="btn navbar-btn nav-item-text text-white no-click">
-                <i className="fa fa-light fa-user mr-1"><span className='d-none d-lg-inline d-xl-inline'>Hi!,{name}</span></i>
-            </button>
-            <button className="btn navbar-btn nav-item-text text-white" onClick={logOut}>
-                <span className='d-none d-lg-inline d-xl-inline'>Log Out</span><i className="fa fa-light fa-sign-out mx-1"></i>
-            </button>
+
         </nav>
     );
 }
