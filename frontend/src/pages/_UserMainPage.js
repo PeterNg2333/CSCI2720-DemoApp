@@ -10,7 +10,11 @@ import {
 import UserNavBar from "../components/UserNavBar";
 import { MapSection, VenueSection, LocationPage } from "./UserLocation";
 import { UserEventLocationHead, UserEventList } from "./UserEventPage";
-import { UserVenueFileCard, UserVenueFileCardFavorite, UserFavouriteVenueFileCard } from "./UserVenueFileCard";
+import {
+  UserVenueFileCard,
+  UserVenueFileCardFavorite,
+  UserFavouriteVenueFileCard,
+} from "./UserVenueFileCard";
 import { UserCommentSection } from "./UserCommentSection";
 import { useState } from "react";
 import { backendUrl, googleMapApiKey } from "../variables";
@@ -61,90 +65,63 @@ function UserMainEvents() {
 
 /** Full webpage for the favorite page of all the liked location in user view e.g., http://localhost:3000/Location/ABC/Events */
 function UserMainFavorite() {
-  const [mapArray, setMapArray] = useState("");
-  const [favouriteArray, setFavouriteArray] = useState("");
-  var userId = 4;//hard code for test first, please delete
+  const [listArray, setListArray] = useState("");
 
-  fetch(`${backendUrl}/venue/favourite/user/?userId=${userId}`)
-  .then((response) => response.json())
-  .then((data) => {
-    console.log("fav", data.data);
-    setFavouriteArray(data.data);
-  });
-
-  /*
-  fetch(`${backendUrl}/venue/all`)
-  .then((response) => response.json())
-  .then((data) => {
-    let countArray = data.data.eventCount;
-    // console.log("countArray", countArray);
-    let tmp = data.data.venues;
-    let i;
-    for (i = 0; i < tmp.length; i++) {
-      tmp[i].eventCount = countArray[tmp[i].venueId];
-      // tmp[i].eventCount = i;
-    }
-    // console.log("tmp", tmp);
-    setLocationArray(tmp);
-    let tmpMap = data.data.venues.map((venue) => ({
-      id: venue.venueId,
-      name: venue.name,
-      position: { lat: venue.latitude, lng: venue.longitude },
-    }));
-    // console.log("tmpMap", tmpMap);
-    setMapArray(tmpMap);
-  });
-*/
+  var userId = sessionStorage.getItem("userId");
+  useEffect(() => {
+    fetch(`${backendUrl}/venue/favourite/user/?userId=${userId}`)
+      .then((response) => response.json())
+      .then(async (data) => {
+        // console.log("fav", data.data);
+        let i;
+        let tmp = [];
+        for (i = 0; i < data.data.length; i++) {
+          // console.log("i", i);
+          await fetch(`${backendUrl}/venue/one/?venueId=${data.data[i]}`)
+            .then((response) => response.json())
+            .then((result) => {
+              // console.log(result.data.venue);
+              tmp.push(result.data.venue);
+              // console.log(i, "tmp", tmp);
+              // console.log("listArray", listArray);
+              if (i == data.data.length - 1) {
+                setListArray(tmp);
+              }
+            })
+            .catch((error) => console.log("error", error));
+        }
+      });
+  }, []);
   return (
-    favouriteArray.length > 0 && (
-    <>
-      <header className="row">
-        <UserNavBar  />
-      </header>
+    listArray.length > 0 && (
+      <>
+        <header className="row">
+          <UserNavBar />
+        </header>
+        <section className="col-lg-12 ">
+          <div className="container-fluid bg-light mt-4 pb-4  table-responsive table-bordered">
+            <table className="col-5 table table-hover">
+              <thead className="shadow shadow-sm border-bottom-1">
+                <tr className="" style={{ textAlign: "center" }}>
+                  <th scope="col" colspan="2" className="border border-dark ">
+                    <h3>
+                      <strong>My Favourite Locations</strong>
+                    </h3>
+                  </th>
+                </tr>
+              </thead>
 
-      <main className="container-lg">
-        <div className="row">
-          <h2 className="text-center mt-4">
-            {" "}
-            <strong>My Favorite Venue</strong>
-          </h2>
-        </div>
-
-        
-        <br />
-
-        
-      </main>
-
-      <section className="col-lg-12 ">
-        <div className="container-fluid bg-light mt-4 pb-4  table-responsive table-bordered">
-
-          <table className="col-5 table table-hover">
-            <thead className="shadow shadow-sm border-bottom-1">
-              <tr className="" style={{ textAlign: "center" }}>
-                <th scope="col" colspan="2" className="border border-dark ">
-                  <h3>
-                    <strong>Locations</strong>
-                  </h3>
-                </th>
-              </tr>
-            </thead>
-
-            <tbody className="mt-1">
-              {favouriteArray.map((loc, index) => (
-                <UserFavouriteVenueFileCard
-                  data={loc}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-      </section>
+              <tbody className="mt-1">
+                {listArray.map((loc, index) => (
+                  <UserFavouriteVenueFileCard data={loc} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       </>
     )
   );
 }
-
 
 export { UserMainLocation, UserMainEvents, UserMainFavorite };
