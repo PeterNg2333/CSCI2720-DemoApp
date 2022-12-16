@@ -21,7 +21,6 @@ function LocationPage() {
     fetch(`${backendUrl}/venue/favourite/user/?userId=${userId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         console.log("fav", data.data);
         setFavouriteArray(data.data);
       });
@@ -39,7 +38,7 @@ function LocationPage() {
           tmp[i].eventCount = countArray[tmp[i].venueId];
           // tmp[i].eventCount = i;
         }
-        console.log("tmp", tmp);
+        // console.log("tmp", tmp);
         setLocationArray(tmp);
         let tmpMap = data.data.venues.map((venue) => ({
           id: venue.venueId,
@@ -83,12 +82,20 @@ function VenueSection(props) {
   const [selectedClient, setSelectedClient] = useState("");
   const [keyword, setKeyword] = useState("");
   useEffect(() => {
+    setLocationArray(props.locationArray);
     sorting(2);
   }, []);
 
   const sorting = (option) => {
-    console.log("sort in", option);
-    let tmp = props.locationArray;
+    // console.log("sort in", option);
+    // console.log("locationArray", locationArray);
+    let tmp;
+    if (!locationArray) {
+      // console.log("no");
+      tmp = props.locationArray;
+    } else {
+      tmp = locationArray;
+    }
     if (option == 1) {
       tmp.sort((a, b) => a.eventCount - b.eventCount);
     } else if (option == 2) {
@@ -107,16 +114,24 @@ function VenueSection(props) {
   };
 
   const fetchSearch = () => {
-    console.log("keyword=", keyword);
+    // console.log("keyword=", keyword);
     if (keyword === "") {
       setLocationArray(props.locationArray);
     } else {
       fetch(`${backendUrl}/venue/all/keywords/?keyword=${keyword}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.data);
-
-          // setLocationArray(data.data);
+          // console.log(data.data);
+          let countArray = data.data.eventCount;
+          // console.log("countArray", countArray);
+          let tmp = data.data.venues;
+          let i;
+          for (i = 0; i < tmp.length; i++) {
+            tmp[i].eventCount = countArray[tmp[i].venueId];
+            // tmp[i].eventCount = i;
+          }
+          // console.log("tmp", tmp);
+          setLocationArray(tmp);
         });
     }
   };
