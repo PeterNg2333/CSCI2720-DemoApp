@@ -87,7 +87,7 @@ function LoginForm() {
             <h3 className="mb-4">Hello! Welcome Back :{")"}</h3>
             <div>
               <img
-                className="img-fluid d-none d-lg-inline d-xl-inline"
+                className="img-fluid"
                 src={userIcon}
                 alt="img"
                 style={{ maxWidth: "50%", height: "auto" }}
