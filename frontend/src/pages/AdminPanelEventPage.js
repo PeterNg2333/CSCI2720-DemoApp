@@ -34,10 +34,9 @@ function AdminPanelEventPage() {
             });
     }
 
-    async function createNewEvent(eventTitle, programDate, eventDescription, eventPresenter, eventPrice, programTime, ageLimit, remark, eventLocation) {
+     function createNewEvent(eventTitle, programDate, eventDescription, eventPresenter, eventPrice, programTime, eventLocation, remark) {
         let myHeaders = new Headers();
         let urlencoded = new URLSearchParams();
-        console.log(eventLocation)
         urlencoded.append("venueId", eventLocation);
         urlencoded.append("title", eventTitle);
         urlencoded.append("datetime", programDate);
@@ -45,8 +44,8 @@ function AdminPanelEventPage() {
         urlencoded.append("presenter", eventPresenter);
         urlencoded.append("price", eventPrice);
         urlencoded.append("programTime", programTime);
-        urlencoded.append("ageLimit", ageLimit);
         urlencoded.append("remark", remark);
+        // urlencoded.append("ageLimit", ageLimit);
         let requestOptions = {
             method: "POST",
             headers: myHeaders,
@@ -60,8 +59,30 @@ function AdminPanelEventPage() {
             });
     }
 
-    function updateEvent() {
+    function updateEvent(eventId, eventTitle, programDate, eventDescription, eventPresenter, eventPrice, programTime, eventLocation, remark) {
+        let myHeaders = new Headers();
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("eventId", eventId);
+        urlencoded.append("venueId", eventLocation);
+        urlencoded.append("title", eventTitle);
+        urlencoded.append("datetime", programDate);
+        urlencoded.append("description", eventDescription);
+        urlencoded.append("presenter", eventPresenter);
+        urlencoded.append("price", eventPrice);
+        urlencoded.append("programTime", programTime);
+        urlencoded.append("remark", remark);
+        // urlencoded.append("ageLimit", ageLimit);
+        let requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: "follow",
+        };
 
+        fetch(`${backendUrl}/event/update`, requestOptions)
+            .then((response) => {
+                reload();
+            });
     }
 
     function deleteEvent(event){
@@ -190,8 +211,8 @@ function AdminPanelEventPage() {
                                            }
                                        }}
                                 />
-                                <AdminEventCard name={event.name} description={event.description}
-                                                location={"event.venue?.name"} programTime={event.programTime}
+                                <AdminEventCard name={event.title} description={event.presenter}
+                                                location={event.venueId} programTime={event.programTime}
                                                 datetime={event.datetime}/>
                             </div>
                         </React.Fragment>

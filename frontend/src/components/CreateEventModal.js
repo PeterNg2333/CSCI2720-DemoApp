@@ -19,14 +19,13 @@ const CreatEventModal = React.forwardRef(function CreatEventDialog(props, ref) {
 
         props?.createNewEvent(
             data.eventTitle,
-            data.programDate.toISOString(),
+            data.programDate,
             data.eventDescription,
             data.eventPresenter,
             data.eventPrice,
             data.programTime,
-            data.ageLimit,
-            data.remark,
             data.eventLocation,
+            data.remark,
         );
         handleClose();
     }
@@ -72,15 +71,8 @@ const CreatEventModal = React.forwardRef(function CreatEventDialog(props, ref) {
                         <input className="form-control border border-dark w-75" id="eventTitle"
                                placeholder="Event Title" {...register("eventTitle", { required: true})}/>
                         <label>Program Date</label>
-                        <Controller
-                            name="programDate"
-                            control={control}
-                            rules={{ required: true }}
-                            defaultValue={programDate}
-                            render={({ field }) => <DatePicker className="d-block w-75 bg-transparent" onChange={(date) => field.onChange(date)}
-                                                               value={field.value}/>}
-                        />
-
+                        <input className="form-control border border-dark w-75" id="eventPrice"
+                               placeholder="Program Time" {...register("programDate", { required: true})}/>
 
                         <label htmlFor="eventDescription">Event Description</label>
                         <textarea className="form-control border border-dark w-75" id="eventDescription"
@@ -95,9 +87,9 @@ const CreatEventModal = React.forwardRef(function CreatEventDialog(props, ref) {
                         <label>Program Time</label>
                         <input className="form-control border border-dark w-75" id="eventPrice"
                                placeholder="Program Time" {...register("programTime", { required: true})}/>
-                        <label htmlFor="ageLimit">Age Limit</label>
-                        <input className="form-control border border-dark w-75" id="ageLimit"
-                               placeholder="Age Limit" {...register("ageLimit", { required: true})}/>
+                        {/*<label htmlFor="ageLimit">Age Limit</label>*/}
+                        {/*<input className="form-control border border-dark w-75" id="ageLimit"*/}
+                        {/*       placeholder="Age Limit" {...register("ageLimit", { required: true})}/>*/}
                         <label htmlFor="remark">Remark</label>
                         <input className="form-control border border-dark w-75" id="remark"
                                placeholder="Remark" {...register("remark", { required: true})}/>
