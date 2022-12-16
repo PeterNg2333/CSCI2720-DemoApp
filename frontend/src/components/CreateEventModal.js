@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import DatePicker from 'react-date-picker'
 import TimePicker from 'react-time-picker'
 
-const CreatEventDialog = React.forwardRef(function CreatEventDialog(props, ref) {
+const CreatEventModal = React.forwardRef(function CreatEventDialog(props, ref) {
     const [show, setShow] = useState(false);
     const [programDate, setProgramDate] = useState(new Date());
     const { register, handleSubmit, control, watch, formState: { errors } } = useForm();
@@ -120,12 +120,12 @@ const CreatEventDialog = React.forwardRef(function CreatEventDialog(props, ref) 
     )
 });
 
-CreatEventDialog.defaultProps = {};
+CreatEventModal.defaultProps = {};
 
-CreatEventDialog.propTypes = {
+CreatEventModal.propTypes = {
     createNewEvent: PropTypes.func,
     reload: PropTypes.func,
     dialogTitle: PropTypes.string
 };
 
-export default CreatEventDialog;
+export default CreatEventModal;

@@ -4,7 +4,7 @@ import {Col, Modal, Row} from "react-bootstrap";
 import {Controller, useForm} from "react-hook-form";
 import DatePicker from "react-date-picker";
 
-const UpdateEventDialog = React.forwardRef(function UpdateEventDialog(props, ref) {
+const UpdateEventModal = React.forwardRef(function UpdateEventDialog(props, ref) {
     const [show, setShow] = useState(false);
     const [programDate, setProgramDate] = useState(new Date());
     const { register, handleSubmit, control, watch, formState: { errors } } = useForm();
@@ -39,13 +39,15 @@ const UpdateEventDialog = React.forwardRef(function UpdateEventDialog(props, ref
 
 
 
+
     useImperativeHandle(ref, () => ({
         showDialog,
     }), []);
 
     useEffect(()=>{
         setEventSelected(props.eventSelected);
-        setVenueSelected(props.eventSelected.venueId)
+        setVenueSelected(props.eventSelected.venueId);
+        console.log(props.eventSelected.datetime)
     },[props]);
 
     return(
@@ -80,15 +82,8 @@ const UpdateEventDialog = React.forwardRef(function UpdateEventDialog(props, ref
                         <input className="form-control border border-dark w-75" id="eventTitle" value={eventSelected?.title}
                                placeholder="Event Title" {...register("eventTitle", { required: true})}/>
                         <label>Program Date</label>
-                        <Controller
-                            name="programDate"
-                            control={control}
-                            rules={{ required: true }}
-                            defaultValue={eventSelected?.datetime}
-                            render={({ field }) => <DatePicker className="d-block w-75 bg-transparent" onChange={(date) => field.onChange(date)}
-                                                               value={field.value}/>}
-                        />
-
+                        <input className="form-control border border-dark w-75" id="eventTitle" value={eventSelected?.datetime}
+                               placeholder="Program Date" {...register("programDate", { required: true})}/>
                         <label htmlFor="eventDescription">Event Description</label>
                         <textarea className="form-control border border-dark w-75" id="eventDescription"
                                   cols="40" rows="5" value={eventSelected?.description}
@@ -127,13 +122,13 @@ const UpdateEventDialog = React.forwardRef(function UpdateEventDialog(props, ref
     )
 });
 
-UpdateEventDialog.defaultProps = {};
+UpdateEventModal.defaultProps = {};
 
-UpdateEventDialog.propTypes = {
+UpdateEventModal.propTypes = {
     updateEvent: PropTypes.func,
     dialogTitle: PropTypes.string,
     eventSelected: PropTypes.object,
     locations: PropTypes.object,
 };
 
-export default UpdateEventDialog;
+export default UpdateEventModal;

@@ -2,10 +2,10 @@ import AdminEventCard from "../components/AdminEventCard";
 import React, {useEffect, useRef, useState} from "react";
 import AdminNavBar from "../components/AdminNavBar";
 import {backendUrl} from "../variables";
-import CreatEventDialog from "../components/CreateEventDialog";
+import CreatEventModal from "../components/CreateEventModal";
 import DatePicker from 'react-date-picker'
 import UpdateEventForm from "../components/UpdateEventForm";
-import UpdateEventDialog from "../components/UpdateEventDialog";
+import UpdateEventModal from "../components/UpdateEventModal";
 
 function AdminPanelEventPage() {
     const [eventTypes, setEventTypes] = useState(["type one", "type two", "type three"])
@@ -94,11 +94,11 @@ function AdminPanelEventPage() {
 
     return (
         <div>
-            <CreatEventDialog ref={creatEventRef} dialogTitle="Create Event" locations={locations}
-                              createNewEvent={createNewEvent} reload={reload}/>
+            <CreatEventModal ref={creatEventRef} dialogTitle="Create Event" locations={locations}
+                             createNewEvent={createNewEvent} reload={reload}/>
             {eventSelected && eventIdSelected &&
-                <UpdateEventDialog ref={updateEventRef} dialogTitle="Update Event" locations={locations}
-                                   eventSelected={eventSelected} updateEvent={updateEvent} reload={reload}
+                <UpdateEventModal ref={updateEventRef} dialogTitle="Update Event" locations={locations}
+                                  eventSelected={eventSelected} updateEvent={updateEvent} reload={reload}
                 />}
             <AdminNavBar/>
 
