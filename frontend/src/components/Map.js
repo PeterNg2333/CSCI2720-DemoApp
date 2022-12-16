@@ -23,7 +23,7 @@ function Map(props) {
     if (marker === activeMarker) {
       return;
     }
-    navigate(`/location/${marker}/Events`);
+    navigate(`/location/event?venueId=${marker}`);
     setActiveMarker(marker);
   };
 

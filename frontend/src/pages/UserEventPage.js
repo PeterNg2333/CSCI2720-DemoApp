@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter,
   Route,
@@ -11,6 +11,7 @@ import { UserEventFileCardRegular } from "./UserEventFileCard";
 import placeholder_canRemove from "./placeholder_canRemove.png";
 import { UserCommentSection, UserCommentInput } from "./UserCommentSection";
 import Map from "../components/Map";
+import { backendUrl } from "../variables";
 
 /** Components for Event Pages http://localhost:3000/Location/ABC/Events
  */
@@ -19,82 +20,143 @@ import Map from "../components/Map";
  * UserEventLocationHead: Information of the location e.g. address, map and Comment input box
  */
 function UserEventLocationHead() {
-  const markers = [
-    {
-      id: 1,
-      name: "Chicago, Illinois",
-      position: { lat: 41.881832, lng: -87.623177 },
-    },
-  ];
-  const fetchLocation = () => {};
+  const [locationData, setLocationData] = useState("");
+  const [mapArray, setMapArray] = useState("");
+  //   const [eventArray, setEventArray] = useState("");
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  useEffect(() => {
+    fetchLocation();
+  }, []);
+  const fetchLocation = () => {
+    const venueId = params.get("venueId");
+    // console.log("url venueId", venueId);
+    fetch(`${backendUrl}/venue/one/?venueId=${venueId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        setLocationData(data.data.venue);
+        let tmpMap = [
+          {
+            id: data.data.venue.id,
+            name: data.data.venue.name,
+            position: {
+              lat: data.data.venue.latitude,
+              lng: data.data.venue.longitude,
+            },
+          },
+        ];
+        // console.log("tmpMap", tmpMap);
+        setMapArray(tmpMap);
+      })
+      .catch((error) => console.log("error", error));
+  };
+  //   const fetchEvent = () => {
+  //     const venueId = params.get("venueId");
+  //     fetch(`${backendUrl}/event/venue/all/?venueId=${venueId}`)
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         console.log(data.data);
+  //         setEventArray(data.data);
+  //         // setLocationData(data.data.venue);
+  //         // let tmpMap = [
+  //         //   {
+  //         //     id: data.data.venue.id,
+  //         //     name: data.data.venue.name,
+  //         //     position: {
+  //         //       lat: data.data.venue.latitude,
+  //         //       lng: data.data.venue.longitude,
+  //         //     },
+  //         //   },
+  //         // ];
+  //         // // console.log("tmpMap", tmpMap);
+  //         // setMapArray(tmpMap);
+  //       })
+  //       .catch((error) => console.log("error", error));
+  //   };
   return (
-    <div className="row mt-3">
-      <div className="col-7">
-        <h2 style={{ color: "#181E84" }}>Location A</h2>
+    mapArray.length > 0 && (
+      <div className="row mt-3">
+        <div className="col-7">
+          <h2 className="mx-1 mt-3" style={{ color: "#181E84" }}>
+            {locationData.name}
+          </h2>
 
-        <div className="row">
-          <p className="mx-3 mt-3">
-            <i className="fa fa-map"></i> This is a address
-          </p>
-          <p className="mx-3">
+          <div className="row">
+            <p className="mx-1 mt-3">
+              Latitude: {locationData.latitude}, Longitude:
+              {locationData.longitude}
+            </p>
+            {/* <p className="mx-3">
             <i className="fa fa-info"></i> This is some information about the
             location
-          </p>
+          </p> */}
+          </div>
+
+          <div className="row">
+            <UserCommentInput />
+          </div>
+          <UserCommentSection />
         </div>
 
-        <div className="row">
-          <UserCommentInput />
+        <div className="row col-5">
+          <Map markers={mapArray} style={{ width: "100vw", height: "50vh" }} />
         </div>
-        <UserCommentSection />
       </div>
-
-      <div className="row col-5">
-        <Map markers={markers} style={{ width: "100vw", height: "50vh" }} />
-      </div>
-    </div>
+    )
   );
 }
 
 /**
  * UserEventLocationHead: A list of event and searching bar
  */
-function UserEventList(props) {
+function UserEventList() {
+  const [eventArray, setEventArray] = useState("");
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  useEffect(() => {
+    fetchEvent();
+  }, []);
+  const fetchEvent = () => {
+    const venueId = params.get("venueId");
+    fetch(`${backendUrl}/event/venue/all/?venueId=${venueId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.data);
+        setEventArray(data.data);
+        // setLocationData(data.data.venue);
+        // let tmpMap = [
+        //   {
+        //     id: data.data.venue.id,
+        //     name: data.data.venue.name,
+        //     position: {
+        //       lat: data.data.venue.latitude,
+        //       lng: data.data.venue.longitude,
+        //     },
+        //   },
+        // ];
+        // // console.log("tmpMap", tmpMap);
+        // setMapArray(tmpMap);
+      })
+      .catch((error) => console.log("error", error));
+  };
   return (
-    <section className="pb-3">
-      <h2 className="m-3 text-center">Upcoming Events</h2>
-      <div className="row">
-        <form className="form-group col-8 mx-3 mr-0 mt-3">
-          <div className="rounded input-group">
-            <input
-              type="search"
-              className="form-control"
-              placeholder="Find Events"
-            />
-            <button className="btn navbar-btn bg-dark nav-item-text ">
-              <i class="fa fa-regular fa-search"></i>
-            </button>
-          </div>
-        </form>
+    eventArray.length > 0 && (
+      <section className="pb-3">
+        <h2 className="m-3 text-center">Events</h2>
 
-        <form className="form-group col-3 mr-3 mt-3 p-0 pt-1 d-inline">
-          <select class="form-select rounded input-group" aria-label="">
-            <option selected>Sort by </option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </form>
-      </div>
-      <br />
-
-      <div className="row">
+        <div className="row mx-1">
+          {eventArray.map((event, index) => (
+            <UserEventFileCardRegular event={event} />
+          ))}
+          {/* <UserEventFileCardRegular />
         <UserEventFileCardRegular />
         <UserEventFileCardRegular />
         <UserEventFileCardRegular />
-        <UserEventFileCardRegular />
-        <UserEventFileCardRegular />
-      </div>
-    </section>
+        <UserEventFileCardRegular /> */}
+        </div>
+      </section>
+    )
   );
 }
 

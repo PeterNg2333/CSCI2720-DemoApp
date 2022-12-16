@@ -32,7 +32,7 @@ function App() {
         {/** User Pages*/}
         <Route path="/location" element={<UserMainLocation />} />
 
-        <Route path="/location/:venueId/Events" element={<UserMainEvents />} />
+        <Route path="/location/event" element={<UserMainEvents />} />
 
         <Route path="/location/Favorite_Venue" element={<UserMainFavorite />} />
 

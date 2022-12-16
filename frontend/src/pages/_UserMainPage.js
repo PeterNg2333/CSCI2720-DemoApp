@@ -32,7 +32,7 @@ function UserMainLocation() {
   );
 }
 
-/** Full webpage for the event page of particular location in user view e.g., http://localhost:3000/Location/ABC/Events */
+/** Full webpage for the event page of particular location in user view e.g., http://localhost:3000/Location/event?venueId=123 */
 function UserMainEvents() {
   let venueName = useParams();
   return (

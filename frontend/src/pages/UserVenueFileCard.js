@@ -16,7 +16,7 @@ function UserVenueFileCard(props) {
         <th scope="row">
           <div className="row">
             <Link
-              to={`/Location/${props.data.venueId}/Events`}
+              to={`/location/event?venueId=${props.data.venueId}`}
               className="col-10"
             >
               <h5 style={{ color: "#181E84" }}>{props.data.name}</h5>
