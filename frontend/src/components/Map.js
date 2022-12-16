@@ -13,16 +13,6 @@ function Map(props) {
   //       name: "Denver, Colorado",
   //       position: { lat: 39.739235, lng: -104.99025 },
   //     },
-  //     {
-  //       id: 3,
-  //       name: "Los Angeles, California",
-  //       position: { lat: 34.052235, lng: -118.243683 },
-  //     },
-  //     {
-  //       id: 4,
-  //       name: "New York, New York",
-  //       position: { lat: 40.712776, lng: -74.005974 },
-  //     },
   //   ];
 
   const [activeMarker, setActiveMarker] = useState(null);
@@ -31,6 +21,7 @@ function Map(props) {
     if (marker === activeMarker) {
       return;
     }
+    // do page route here
     setActiveMarker(marker);
   };
 
@@ -39,7 +30,7 @@ function Map(props) {
     props.markers.forEach(({ position }) => bounds.extend(position));
     map.fitBounds(bounds);
   };
-  console.log("props.markers: ", props.markers);
+  //   console.log("props.markers: ", props.markers);
   return (
     <GoogleMap
       onLoad={handleOnLoad}
@@ -52,11 +43,11 @@ function Map(props) {
           position={position}
           onClick={() => handleActiveMarker(id)}
         >
-          {activeMarker === id ? (
+          {/* {activeMarker === id ? (
             <InfoWindow onCloseClick={() => setActiveMarker(null)}>
               <div>{name}</div>
             </InfoWindow>
-          ) : null}
+          ) : null} */}
         </MarkerF>
       ))}
     </GoogleMap>

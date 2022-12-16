@@ -49,3 +49,7 @@
 .login-btn:hover {
   background-color: rgb(233, 233, 233);
 }
+
+.search-input {
+  height: 40px !important;
+}

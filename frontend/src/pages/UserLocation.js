@@ -7,6 +7,7 @@ import Map from "../components/Map";
 import { useLoadScript } from "@react-google-maps/api";
 import { useState } from "react";
 import { backendUrl, googleMapApiKey } from "../variables";
+import { Search } from "react-bootstrap-icons";
 
 function LocationPage() {
   const [locationArray, setLocationArray] = useState("");
@@ -14,20 +15,7 @@ function LocationPage() {
   const [mapArray, setMapArray] = useState("");
 
   useEffect(() => {
-    fetch(`${backendUrl}/venue/all`)
-      .then((response) => response.json())
-      .then((data) => {
-        setLocationArray(data.data.venues);
-        let tmp = data.data.venues.map((venue) => ({
-          id: venue.id,
-          name: venue.name,
-          position: { lat: venue.latitude, lng: venue.longitude },
-        }));
-        console.log("tmp", tmp);
-        setMapArray(tmp);
-      });
-  }, []);
-  useEffect(() => {
+    fetchVenue();
     var userId = sessionStorage.getItem("userId");
     // console.log("session", userId);
     fetch(`${backendUrl}/venue/favourite/user/?userId=${userId}`)
@@ -38,6 +26,30 @@ function LocationPage() {
         setFavouriteArray(data.data);
       });
   }, []);
+
+  const fetchVenue = () => {
+    fetch(`${backendUrl}/venue/all`)
+      .then((response) => response.json())
+      .then((data) => {
+        let countArray = data.data.eventCount;
+        // console.log("countArray", countArray);
+        let tmp = data.data.venues;
+        let i;
+        for (i = 0; i < tmp.length; i++) {
+          tmp[i].eventCount = countArray[tmp[i].venueId];
+          // tmp[i].eventCount = i;
+        }
+        console.log("tmp", tmp);
+        setLocationArray(tmp);
+        let tmpMap = data.data.venues.map((venue) => ({
+          id: venue.venueId,
+          name: venue.name,
+          position: { lat: venue.latitude, lng: venue.longitude },
+        }));
+        // console.log("tmpMap", tmpMap);
+        setMapArray(tmpMap);
+      });
+  };
   return (
     locationArray.length > 0 && (
       <>
@@ -52,46 +64,12 @@ function LocationPage() {
 }
 
 function MapSection(props) {
-  // const [mapArray, setMapArray] = useState("");
-  // useEffect(() => {
-  //   fetch(`${backendUrl}/venue/all`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       // console.log(data);
-  //       // console.log(data.data.venues);
-  //       setMapArray(data.data.venues);
-  //     });
-  // }, []);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: googleMapApiKey, // this is Janice's personal API key
   });
   return isLoaded ? (
     <section className="col-lg-7">
-      <div className="align-middle bg-light mt-4 pb-4">
-        <div className="row mb-4">
-          <form className="form-group col-8 mx-3 mr-0 my-3">
-            <div className="rounded input-group">
-              <input
-                type="search"
-                className="form-control"
-                placeholder="Find Venue"
-              />
-              <button className="btn navbar-btn bg-dark nav-item-text ">
-                <i class="fa fa-regular fa-search"></i>
-              </button>
-            </div>
-          </form>
-
-          <form className="form-group col-3 mr-3 my-3 p-0 pt-1 d-inline">
-            <select class="form-select rounded input-group" aria-label="">
-              <option selected>Sort by </option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </form>
-        </div>
-
+      <div className="align-middle bg-light mt-4 py-1">
         <div className="row rounded-top border border-dark b-3 mx-3 mt-3">
           <Map markers={props.mapArray} />
         </div>
@@ -101,28 +79,104 @@ function MapSection(props) {
 }
 
 function VenueSection(props) {
-  return (
-    <section className="col-lg-5 ">
-      <div className="container-fluid bg-light mt-4 pb-4  table-responsive table-bordered">
-        <table className="col-5 table mt-3 table-hover">
-          <thead className="shadow shadow-sm border-bottom-1">
-            <tr className="" style={{ textAlign: "center" }}>
-              <th scope="col" colspan="2" className="border border-dark ">
-                <h3>
-                  <strong>Locations</strong>
-                </h3>
-              </th>
-            </tr>
-          </thead>
+  const [locationArray, setLocationArray] = useState("");
+  const [selectedClient, setSelectedClient] = useState("");
+  const [keyword, setKeyword] = useState("");
+  useEffect(() => {
+    sorting(2);
+  }, []);
 
-          <tbody className="mt-1">
-            {props.locationArray.map((loc, index) => (
-              <UserVenueFileCard data={loc} favourite={props.favouriteArray} />
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {/* <div className="container-fluid bg-light mt-4 pb-4">
+  const sorting = (option) => {
+    console.log("sort in", option);
+    let tmp = props.locationArray;
+    if (option == 1) {
+      tmp.sort((a, b) => a.eventCount - b.eventCount);
+    } else if (option == 2) {
+      tmp.sort((a, b) => b.eventCount - a.eventCount);
+    }
+    setLocationArray(tmp);
+  };
+
+  const handleSelectChange = (event) => {
+    setSelectedClient(event.target.value);
+    sorting(event.target.value);
+  };
+
+  const handleKeyword = (event) => {
+    setKeyword(event.target.value);
+    if (event.target.value == "") {
+      setLocationArray(props.locationArray);
+    } else {
+      fetchSearch(event.target.value);
+    }
+  };
+
+  const fetchSearch = (keyword) => {
+    fetch(`${backendUrl}/venue/all/keywords/?keyword=${keyword}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.data);
+        setLocationArray(data.data);
+      });
+  };
+  return (
+    locationArray.length > 0 && (
+      <section className="col-lg-5 ">
+        <div className="container-fluid bg-light mt-4 pb-4  table-responsive table-bordered">
+          <div className="row">
+            <div className="col-7 mx-1 mr-0 my-3">
+              <div className="rounded input-group">
+                <input
+                  type="search"
+                  className="form-control search-input"
+                  placeholder="Find Venue"
+                  onChange={handleKeyword}
+                  value={keyword}
+                />
+                <button
+                  className="btn navbar-btn bg-dark nav-item-text "
+                  onClick={fetchSearch}
+                >
+                  <Search />
+                </button>
+              </div>
+            </div>
+
+            <div className="col-4 mr-3 my-3 p-0 d-inline">
+              <select
+                class="form-select rounded input-group"
+                value={selectedClient}
+                onChange={handleSelectChange}
+                aria-label=""
+              >
+                <option selected>Sort by no. of events</option>
+                <option value="1">Low to high</option>
+                <option value="2">High to low</option>
+              </select>
+            </div>
+          </div>
+          <table className="col-5 table table-hover">
+            <thead className="shadow shadow-sm border-bottom-1">
+              <tr className="" style={{ textAlign: "center" }}>
+                <th scope="col" colspan="2" className="border border-dark ">
+                  <h3>
+                    <strong>Locations</strong>
+                  </h3>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody className="mt-1">
+              {locationArray.map((loc, index) => (
+                <UserVenueFileCard
+                  data={loc}
+                  favourite={props.favouriteArray}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {/* <div className="container-fluid bg-light mt-4 pb-4">
           <h4 className="mx-2">Locations</h4>
           <div className="mx-2">
             {locationArray.map((loc, index) => (
@@ -130,7 +184,8 @@ function VenueSection(props) {
             ))}
           </div>
         </div> */}
-    </section>
+      </section>
+    )
   );
 }
 
