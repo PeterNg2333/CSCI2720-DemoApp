@@ -60,6 +60,56 @@ function UserVenueFileCard(props) {
   );
 }
 
+function UserFavouriteVenueFileCard(props) {
+  //   console.log("props.data", props.data);
+  const addFavourite = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    var urlencoded = new URLSearchParams();
+    var userId = sessionStorage.getItem("userId");
+    urlencoded.append("userId", userId);
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:1337/venue/favourite/add", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  };
+  return (
+    props.data && (
+      <tr>
+        <th scope="row">
+          <div className="row">
+            <Link
+              to={`/Location/${props.data.venueId}/Events`}
+              className="col-10"
+            >
+              <h5 style={{ color: "#181E84" }}>{props.data.name}</h5>
+            </Link>
+          </div>
+
+          <div className="row">
+            <div>
+              Latitude: {props.data.latitude}, Longitude: {props.data.longitude}
+            </div>
+          </div>
+        </th>
+        {/* 
+        <td className="">
+          <div>
+            <UserEventFileCardSmall />
+          </div>
+        </td> */}
+      </tr>
+    )
+  );
+}
+
 function HeartIcon(props) {
   const [isFavourite, setIsFavourite] = useState("");
 
@@ -220,7 +270,7 @@ function UserVenueFileCardFavorite_B(props) {
           </label>
         </form>
       </div>
-
+      
       <div className="card-body">
         <h5 className="mx-2 card-title text-primary">Upcoming Event</h5>
         <div className="container ">
@@ -241,4 +291,7 @@ function UserVenueFileCardFavorite_B(props) {
   );
 }
 
-export { UserVenueFileCard, UserVenueFileCardFavorite };
+
+
+
+export { UserVenueFileCard, UserVenueFileCardFavorite, UserFavouriteVenueFileCard };
