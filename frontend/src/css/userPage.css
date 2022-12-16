@@ -3,6 +3,8 @@ html, body{
 }
 
 
+    
+
 .nav-user{
     background:radial-gradient(circle farthest-corner at left,#334AFF,#181E84);
     color: white;
@@ -35,6 +37,12 @@ html, body{
     height: 750px;
 }
 
+.logInFormBgsm{
+    background-image: linear-gradient(rgba(255, 255, 255, 0.35),rgba(0,0,0,0)), url('/src/pages/Resource/LoginPage/Mobile_log-in.png');
+    background-size: 100% 100%;
+    background-size: cover;
+    height: 250px;
+}
 
 #likeButtionLabel{
     font-size: 1.25em;
@@ -140,4 +148,13 @@ html, body{
 
 .bg-deep-blue{
     background-color: #001f48;
+}
+
+.scrollable-div {
+    background-color: #f1f1f1;
+    height: 150px;
+    overflow: auto;
+    margin: 20px;
+    text-align: justify;
+    padding: 20px;
 }

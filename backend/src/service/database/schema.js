@@ -1,6 +1,7 @@
 const {Schema} = require("mongoose");
 const bcrypt = require('bcryptjs'),
 SALT_WORK_FACTOR = 10;
+const mongoose = require("mongoose");
 
 
 // updated by Carson&Allen 2022-12-11 yymmdd
@@ -66,7 +67,7 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 const commentSchema = new Schema({
     id: Number,
     userId: Number,
-    venueId: Number,
+    venue: Number,
     text: String,
 });
 
@@ -80,8 +81,8 @@ const venueSchema = new Schema({
 const eventSchema = new Schema({
     eventId: Number,
     title: String,
-    venueId: Number,
-    datetime: [],
+    venue: { type: mongoose.Schema.Types.ObjectId, ref:'Venue' },
+    datetime: String,
     description: String,
     presenter: String,
     price: String,

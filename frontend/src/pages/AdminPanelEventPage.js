@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from "react";
 import AdminNavBar from "../components/AdminNavBar";
 import {backendUrl} from "../variables";
 import CreatEventDialog from "../components/CreateEventDialog";
-
+import DatePicker from 'react-date-picker'
 
 function AdminPanelEventPage() {
     const [eventTypes, setEventTypes] = useState(["type one", "type two", "type three"])
@@ -21,26 +21,25 @@ function AdminPanelEventPage() {
     }
 
     function getVenue() {
-        console.log(`${backendUrl}/event/venue/all`)
-        fetch(`${backendUrl}/event/venue/all`)
+        fetch(`${backendUrl}/event/all`)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
-                console.log(data.data.venues);
+                console.log(data.data);
             });
     }
 
-    function createNewEvent() {
+    function createNewEvent(eventTitle,programDate,eventDescription,eventPresenter,eventPrice,programTime,ageLimit,remark,eventLocation) {
         let myHeaders = new Headers();
         let urlencoded = new URLSearchParams();
-        urlencoded.append("venueId", 2);
-        urlencoded.append("title", "Hi evn");
-        urlencoded.append("description", "yoo");
-        urlencoded.append("presenter", "jj");
-        urlencoded.append("price", "$160");
-        urlencoded.append("programTime", "1900");
-        urlencoded.append("ageLimit", "15+");
-        urlencoded.append("remark", "GHH");
+        urlencoded.append("venue", eventLocation);
+        urlencoded.append("title", eventTitle);
+        urlencoded.append("datetime", programDate);
+        urlencoded.append("description", eventDescription);
+        urlencoded.append("presenter", eventPresenter);
+        urlencoded.append("price", eventPrice);
+        urlencoded.append("programTime", programTime);
+        urlencoded.append("ageLimit", ageLimit);
+        urlencoded.append("remark", remark);
         let requestOptions = {
             method: "POST",
             headers: myHeaders,
@@ -62,8 +61,8 @@ function AdminPanelEventPage() {
 
     return (
         <div>
+            <CreatEventDialog ref={creatEventRef} dialogTitle="create event" locations={locations} createNewEvent={createNewEvent}/>
             <AdminNavBar isAdmin/>
-            <CreatEventDialog ref={creatEventRef} dialogTitle="create event"/>
             <form className='mt-3 d-flex flex-row '>
                 <section className="col mx-2">
                     <input type="search" className="form-control border border-dark h-100" id="location"

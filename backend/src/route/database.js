@@ -1,5 +1,6 @@
 const {
     getAllEventsByVenue,
+    getAllEvents,
     countEventsInVenue,
     createEvent,
     updateEvent,
@@ -22,9 +23,17 @@ async function getAllEventsByVenueRoute(req, res) {
     })
 }
 
+async function getAllEventsRoute(req, res) {
+    const events = await getAllEvents();
+    res.send({
+        data: events,
+    })
+}
+
 async function createEventRoute(req, res) {
-    const {venueId, title, description, presenter, price, programTime, ageLimit, remark} = req.body;
-    const eventId = await createEvent(venueId, title, description, presenter, price, programTime, ageLimit, remark);
+    const {venue, title, description, datetime, presenter, price, programTime, ageLimit, remark} = req.body;
+    console.log(req.body);
+    const eventId = await createEvent(venue, title, description, datetime, presenter, price, programTime, ageLimit, remark);
     res.send({
         data: {eventId}
     });
@@ -69,8 +78,12 @@ async function getAllVenuesRoute(req, res) {
 async function getVenuesByKeywordRoute(req, res) {
     const keyword = req.query.keyword;
     const venues = await getVenuesByKeyword(keyword);
+    const eventCount = {};
+    for (let venue of venues) {
+        eventCount[venue.venueId] = await countEventsInVenue(venue.venueId);
+    }
     res.send({
-        data: venues,
+        data: {venues, eventCount},
     });
 }
 
@@ -117,6 +130,7 @@ async function addCommentByVenueRoute(req, res) {
 
 module.exports = {
     getAllEventsByVenueRoute,
+    getAllEventsRoute,
     createEventRoute,
     updateEventRoute,
     deleteEventRoute,

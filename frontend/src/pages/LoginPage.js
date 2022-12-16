@@ -12,9 +12,10 @@ import { useState } from "react";
 import { backendUrl } from "../variables";
 import {useCookies} from "react-cookie";
 
+
 function LoginPage() {
   return (
-    <main className='container-xxl  w-100 p-4 mh-100"'>
+    <main className='container-xxl w-100 p-4 mh-100 '>
       <div className="row">
         <LoginPicture />
         <LoginForm />
@@ -25,7 +26,7 @@ function LoginPage() {
 
 // LHS of the login Pages in the protoype
 function LoginPicture() {
-  return <section className="col-lg-6 logInPictureBg"></section>;
+  return <section className="col-lg-6 logInPictureBg d-none d-lg-block d-xl-block"></section>;
 }
 
 // RHS of the login Pages in the protoype
@@ -46,7 +47,6 @@ function LoginForm() {
   const fetchLogin = () => {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
     let urlencoded = new URLSearchParams();
     urlencoded.append("username", username);
     urlencoded.append("password", password);
@@ -56,6 +56,7 @@ function LoginForm() {
       headers: myHeaders,
       body: urlencoded,
       redirect: "follow",
+      credentials: 'same-origin',
     };
 
     fetch(`${backendUrl}/login`, requestOptions)
@@ -85,29 +86,29 @@ function LoginForm() {
         <div className="row align-items-center h-100">
           <div className="col-8 text-center mx-auto">
             <h3 className="mb-4">Hello! Welcome Back :{")"}</h3>
-            {/* <div>
+            <div>
               <img
                 className="img-fluid"
                 src={userIcon}
                 alt="img"
                 style={{ maxWidth: "50%", height: "auto" }}
               />
-            </div> */}
-            <label for="username">Username</label>
+            </div> 
+            <label for="username" style={{fontWeight: "bold", float: "left"}}><h5>Username</h5></label>
             <br />
             <input
-              className="text"
+              className="form-control"
               id="username"
               name="username"
               onChange={handleUsername}
               value={username}
               required
             />
-            <br />
-            <br />
-            <label for="password">Password</label>
+            <br/>
+            <label for="password" style={{fontWeight: "bold", float: "left"}}><h5>Password</h5></label>
             <br />
             <input
+              className="form-control"
               type="password"
               id="password"
               name="password"
@@ -115,10 +116,13 @@ function LoginForm() {
               value={password}
               required
             />
+            
             <br />
-            <input className="mt-3" type="checkbox" name="rememberMe" />{" "}
-            Remember Me <br />
-            <button className="login-btn" onClick={fetchLogin}>
+            <span style={{ float: "left", marginTop:"-5px"}}>
+            <input className="" type="checkbox" name="rememberMe" />{" "}
+            Remember Me </span>
+            <br />
+            <button className="btn btn-primary btn-block mt-2" type="button" onClick={fetchLogin}>
               Login
             </button>
           </div>
