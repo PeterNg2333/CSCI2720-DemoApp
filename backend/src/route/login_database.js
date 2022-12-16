@@ -9,7 +9,11 @@ const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
-const { userSchema, venueSchema } = require("../service/database/schema");
+const {
+  userSchema,
+  venueSchema,
+  eventSchema,
+} = require("../service/database/schema");
 const cors = require("cors");
 
 const app = express();
@@ -22,7 +26,7 @@ mongoose.connect(DATABASE_CONNECT_STRING);
 
 const User = mongoose.model("User", userSchema);
 const venueModel = mongoose.model("Venue", venueSchema);
-// const eventModel = mongoose.model("Event", eventSchema);
+const eventModel = mongoose.model("Event", eventSchema);
 
 async function scrapData() {
   const XMLScraper = require("../dataScraping/dataScraping");
@@ -76,10 +80,54 @@ async function dumpData() {
       longitude,
     });
   });
+
+  let eventRawData = require("../dataScraping/output/eventData.json");
+  let tmpEventDataArray = eventRawData.events.event;
+  let eventDataArray = [];
+  console.log("tmpEventDataArray.length", tmpEventDataArray.length);
+  for (i = 0; i < tmpEventDataArray.length; i++) {
+    for (j = 0; j < dataArray.length; j++) {
+      if (tmpEventDataArray[i].venueid._cdata === dataArray[j]._attributes.id) {
+        eventDataArray.push(tmpEventDataArray[i]);
+      }
+    }
+  }
+  var eid, etitle, evenue, edate, edesc, epresenter, eprice, eprogTime;
+  eventDataArray.forEach(async (element) => {
+    console.log(
+      element.venueid._cdata,
+      element.titlee._cdata,
+      element._attributes.id
+      // element.desce._cdata
+    );
+    eid = Number(element._attributes.id);
+    etitle = element.titlee._cdata;
+    evenue = Number(element.venueid._cdata);
+    edate = element.predateE._cdata;
+    edesc = element.desce._cdata;
+    epresenter = element.presenterorge._cdata;
+    eprice = element.pricee._cdata;
+    eprogTime = element.progtimee._cdata;
+    const age = "";
+    const remark = "";
+    await eventModel.create({
+      eventId: eid,
+      venueId: evenue,
+      title: etitle,
+      description: edesc,
+      datetime: edate,
+      presenter: epresenter,
+      price: eprice,
+      programTime: eprogTime,
+      ageLimit: age,
+      remark: remark,
+    });
+  });
 }
 
 async function clearData() {
   await venueModel.deleteMany({});
+  await eventModel.deleteMany({});
 }
 
 async function login(req, res) {
