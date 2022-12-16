@@ -195,6 +195,8 @@ async function login(req, res) {
 }
 
 async function createUser(req, res) {
+  const user = await User.findOne({}).sort("-userId");
+  let newId=user == null? 1 : user.userId + 1;
   User.count((err, count) => {
     if (err) {
       res.set("Content-Type", "text/plain");
@@ -202,7 +204,7 @@ async function createUser(req, res) {
     } else {
       User.create(
         {
-          userId: count + 1,
+          userId: newId,
           username: req.body["username"],
           password: req.body["password"],
           isAdmin: req.body["isAdmin"],

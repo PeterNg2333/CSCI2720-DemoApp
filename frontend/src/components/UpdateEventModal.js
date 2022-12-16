@@ -12,14 +12,14 @@ const UpdateEventModal = React.forwardRef(function UpdateEventDialog(props, ref)
     const [venueSelected, setVenueSelected] = useState(null); //number
 
     function handleClose() {
+        props.reload();
         setShow(false)
-
     }
 
     function onSubmit(data) {
         console.log(data);
 
-        props?.updateNewEvent(
+        props?.updateEvent(
             eventSelected.eventId,
             data.eventTitle,
             data.programDate,
@@ -86,22 +86,22 @@ const UpdateEventModal = React.forwardRef(function UpdateEventDialog(props, ref)
                         <label htmlFor="eventDescription">Event Description</label>
                         <textarea className="form-control border border-dark w-75" id="eventDescription"
                                   cols="40" rows="5" defaultValue={eventSelected?.description}
-                                  placeholder="Event Description" {...register("eventDescription", { required: true})}/>
+                                  placeholder="Event Description" {...register("eventDescription", { required: false})}/>
                         <label htmlFor="eventPresenter">Presenter</label>
                         <input className="form-control border border-dark w-75" id="eventPresenter" defaultValue={eventSelected?.presenter}
-                               placeholder="Event Presenter" {...register("eventPresenter", { required: true})}/>
+                               placeholder="Event Presenter" {...register("eventPresenter", { required: false})}/>
                         <label htmlFor="eventPrice">Price</label>
                         <input className="form-control border border-dark w-75" id="eventPrice" defaultValue={eventSelected?.price}
-                               placeholder="Event Price" {...register("eventPrice", { required: true})}/>
+                               placeholder="Event Price" {...register("eventPrice", { required: false})}/>
                         <label>Program Time</label>
                         <input className="form-control border border-dark w-75" id="eventPrice" defaultValue={eventSelected?.programTime}
-                               placeholder="Program Time" {...register("programTime", { required: true})}/>
+                               placeholder="Program Time" {...register("programTime", { required: false})}/>
                         {/*<label htmlFor="ageLimit">Age Limit</label>*/}
                         {/*<input className="form-control border border-dark w-75" id="ageLimit" value={eventSelected?.ageLimit}*/}
                         {/*       placeholder="Age Limit" {...register("ageLimit", { required: true})}/>*/}
                         <label htmlFor="remark">Remark</label>
                         <input className="form-control border border-dark w-75" id="remark"  defaultValue={eventSelected?.remark}
-                               placeholder="Remark" {...register("remark", { required: true})}/>
+                               placeholder="Remark" {...register("remark", { required: false})}/>
                     </div>
                     <label>Location</label>
                     <div className="container rounded w-100 border border-dark px-3 pt-2 pb-3">
@@ -128,6 +128,7 @@ UpdateEventModal.propTypes = {
     dialogTitle: PropTypes.string,
     eventSelected: PropTypes.object,
     locations: PropTypes.object,
+    reload: PropTypes.func,
 };
 
 export default UpdateEventModal;
