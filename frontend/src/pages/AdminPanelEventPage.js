@@ -115,6 +115,7 @@ function AdminPanelEventPage() {
 
     return (
         <div>
+            <div className={"row"}>
             <CreatEventModal ref={creatEventRef} dialogTitle="Create Event" locations={locations}
                              createNewEvent={createNewEvent} reload={reload}/>
             {eventSelected && eventIdSelected &&
@@ -123,68 +124,28 @@ function AdminPanelEventPage() {
                 />}
             <AdminNavBar/>
 
-            <form className='m-3 row'>
-                <section className="col mx-2">
-                    <input type="search" className="form-control border border-dark h-100" id="location"
-                           placeholder="Location"/>
-                </section>
-                <section className="col mx-2">
-                    <input type="search" className="form-control border border-dark h-100" id="eventId"
-                           placeholder="Event ID"/>
-                </section>
-                <section className="col mx-2">
-                    <input type="search" className="form-control border border-dark h-100" id="eventName"
-                           placeholder="Event Name"/>
-                </section>
-                <section className="col mx-2">
-                    <select className="form-select border border-dark h-100" aria-label="Even Type">
-                        <option selected>Event Type</option>
-                        {
-                            eventTypes.map((eventType, index) => {
-                                return <option value={index}>{eventType}</option>
-                            })
-                        }
-                    </select>
-                </section>
-                <section className="col mx-2">
-                    <input type="search" className="form-control border border-dark h-100" id="eventName"
-                           placeholder="Date and time"/>
-                </section>
-                <section className="col mx-2">
-                    <button type="button" className="btn btn-sm btn-dark one-line bg-deep-blue h-100 w-100">Find Event
-                    </button>
-                </section>
-                <section className="col mx-2">
-                    <select className="form-select border border-dark h-100" aria-label="Order by">
-                        <option selected>Order by</option>
-                        <option value="location">Location</option>
-                        <option value="eventId">Event ID</option>
-                        <option value="eventName">Event Name</option>
-                        <option value="dateAndTime">Date and time</option>
-                    </select>
-                </section>
-                {eventIdSelected ?
-                    <section className="col mx-2">
+            {eventIdSelected ?
+                    <section className="col-6 px-2">
                         <button onClick={() => updateEventRef?.current?.showDialog()}
                                 type="button"
-                                className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center h-100">
+                                className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center w-100">
                             <i className="fa fa-circle-plus color-green fa-2x"></i>
                             <div className='color-green'>Update</div>
                         </button>
                     </section>
                     :
-                    <section className="col mx-2">
+                    <section className="col-6 px-2">
                         <button onClick={() => creatEventRef?.current?.showDialog()}
                                 type="button"
-                                className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center h-100">
+                                className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center w-100">
                             <i className="fa fa-circle-plus color-green fa-2x"></i>
                             <div className='color-green'>Create</div>
                         </button>
                     </section>
                 }
 
-                <section className="col mx-2 ">
-                    <button type="button" className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-around h-100"
+                <section className="col-6 px-2 ">
+                    <button type="button" className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center w-100"
                         onClick={()=>{
                             deleteEvent(eventSelected);
                         }}
@@ -193,7 +154,7 @@ function AdminPanelEventPage() {
                         <div className='color-red'>Delete</div>
                     </button>
                 </section>
-            </form>
+        </div>
             <div className="container-xl">
                 {events?.map((event, index) => {
                     return (
