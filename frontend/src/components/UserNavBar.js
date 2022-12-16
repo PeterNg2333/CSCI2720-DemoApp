@@ -14,7 +14,8 @@ function UserNavBar(props) {
     }, []);
 
     function clearToken() {
-        //TODO:
+        sessionStorage.removeItem("userId");
+        sessionStorage.removeItem("username");
     }
     function logOut() {
         console.log("logOut");
