@@ -196,7 +196,7 @@ async function login(req, res) {
 
 async function createUser(req, res) {
   const user = await User.findOne({}).sort("-userId");
-  let newId=user == null? 1 : user.userId + 1;
+  let newId = user == null ? 1 : user.userId + 1;
   User.count((err, count) => {
     if (err) {
       res.set("Content-Type", "text/plain");
@@ -230,6 +230,20 @@ async function createUser(req, res) {
 
 async function getUser(req, res) {
   User.findOne({ username: req.body["username"] }, (err, e) => {
+    //console.log(req.body['username']);
+    if (!e) {
+      res.status(404);
+      res.set("Content-Type", "text/plain");
+      res.send("No User Found");
+    } else {
+      //   res.send(JSON.stringify(e, null, " "));
+      res.send(e);
+    }
+  });
+}
+
+async function getUserById(req, res) {
+  User.findOne({ userId: req.body["userId"] }, (err, e) => {
     //console.log(req.body['username']);
     if (!e) {
       res.status(404);
@@ -316,6 +330,7 @@ module.exports = {
   login,
   createUser,
   getUser,
+  getUserById,
   updateUser,
   deleteUser,
   getAllUser,

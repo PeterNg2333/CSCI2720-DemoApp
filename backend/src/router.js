@@ -19,6 +19,7 @@ const {
   login,
   createUser,
   getUser,
+  getUserById,
   updateUser,
   deleteUser,
   getAllUser,
@@ -30,6 +31,7 @@ function mountRouter(app) {
   //   CRUD user
   app.post("/admin/createuser", createUser);
   app.post("/admin/getuser", getUser);
+  app.post("/admin/getuserbyid", getUserById);
   app.put("/admin/updateuser", updateUser);
   app.delete("/admin/deleteuser", deleteUser);
   app.get("/admin/getalluser", getAllUser);
