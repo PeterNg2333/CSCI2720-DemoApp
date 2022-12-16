@@ -35,22 +35,21 @@ function AdminNavBar(props){
                 <i className="fa fa-chevron-right text-white"></i>
             </button>
             <span className="navbar-toggle nav-item-text "> &nbsp; &nbsp;
-                <Link to="/Location" className="btn text-white px-0">{location.pathname}</Link>
-                    <span className="text-white url">{props.venueName}</span>
-                </span>
+                <Link to={location.pathname} className="btn text-white px-0">{location.pathname}</Link>
+            </span>
 
-        </div>
+            </div>
 
             <ul className="nav navbar-nav ms-auto">
                 <li className="mx-1 nav-item ">
-                    <Link to="/Location" className="nav-item-text">
+                    <Link to="/admin_event" className="nav-item-text">
                         <button className="btn navbar-btn nav-item-text text-white">
                             <i className="fa fa-light fa-calendar mr-2"> <span className='d-none d-lg-inline d-xl-inline'>Events</span>  </i>
                         </button>
                     </Link>
                 </li>
                 <li className="mx-1 nav-item">
-                    <Link to="/Location/Favorite_Venue" className="nav-item-text">
+                    <Link to="/admin_user" className="nav-item-text">
                         <button className="btn navbar-btn nav-item-text text-white">
                             <i className="fa fa-light fa-users mr-2"><span className='d-none d-lg-inline d-xl-inline'>User Data</span> </i>
                         </button>

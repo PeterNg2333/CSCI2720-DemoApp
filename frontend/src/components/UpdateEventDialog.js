@@ -1,14 +1,15 @@
-import {Col, Modal, Row} from "react-bootstrap";
-import React, {useImperativeHandle, useState} from "react";
-import { useForm, Controller } from "react-hook-form";
+import React, {useEffect, useImperativeHandle, useState} from "react";
 import PropTypes from "prop-types";
-import DatePicker from 'react-date-picker'
-import TimePicker from 'react-time-picker'
+import {Col, Modal, Row} from "react-bootstrap";
+import {Controller, useForm} from "react-hook-form";
+import DatePicker from "react-date-picker";
 
-const CreatEventDialog = React.forwardRef(function CreatEventDialog(props, ref) {
+const UpdateEventDialog = React.forwardRef(function UpdateEventDialog(props, ref) {
     const [show, setShow] = useState(false);
     const [programDate, setProgramDate] = useState(new Date());
     const { register, handleSubmit, control, watch, formState: { errors } } = useForm();
+    const [eventSelected, setEventSelected] = useState(null); //number
+    const [venueSelected, setVenueSelected] = useState(null); //number
 
     function handleClose() {
         setShow(false)
@@ -17,30 +18,37 @@ const CreatEventDialog = React.forwardRef(function CreatEventDialog(props, ref) 
     function onSubmit(data) {
         console.log(data);
 
-        props?.createNewEvent(
-            data.eventTitle,
-            data.programDate.toISOString(),
-            data.eventDescription,
-            data.eventPresenter,
-            data.eventPrice,
-            data.programTime,
-            data.ageLimit,
-            data.remark,
-            data.eventLocation,
-        );
-        handleClose();
+        // props?.updateNewEvent(
+        //     data.eventTitle,
+        //     data.programDate.toISOString(),
+        //     data.eventDescription,
+        //     data.eventPresenter,
+        //     data.eventPrice,
+        //     data.programTime,
+        //     data.ageLimit,
+        //     data.remark,
+        //     data.eventLocation,
+        // );
+        // handleClose();
     }
 
     function showDialog() {
+
         setShow(true);
     }
+
+
 
     useImperativeHandle(ref, () => ({
         showDialog,
     }), []);
 
+    useEffect(()=>{
+        setEventSelected(props.eventSelected);
+        setVenueSelected(props.eventSelected.venue._id)
+    },[props]);
 
-    return (
+    return(
         <Modal show={show} onHide={handleClose} backdrop="static" size="xl">
             <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -69,44 +77,43 @@ const CreatEventDialog = React.forwardRef(function CreatEventDialog(props, ref) 
                     <label>Event Description</label>
                     <div className="container rounded w-100 border border-dark px-3 pt-2 pb-3">
                         <label htmlFor="eventTitle">Event Title</label>
-                        <input className="form-control border border-dark w-75" id="eventTitle"
+                        <input className="form-control border border-dark w-75" id="eventTitle" value={eventSelected?.title}
                                placeholder="Event Title" {...register("eventTitle", { required: true})}/>
                         <label>Program Date</label>
                         <Controller
                             name="programDate"
                             control={control}
                             rules={{ required: true }}
-                            defaultValue={programDate}
+                            defaultValue={eventSelected?.datetime}
                             render={({ field }) => <DatePicker className="d-block w-75 bg-transparent" onChange={(date) => field.onChange(date)}
                                                                value={field.value}/>}
                         />
 
-
                         <label htmlFor="eventDescription">Event Description</label>
                         <textarea className="form-control border border-dark w-75" id="eventDescription"
-                                  cols="40" rows="5"
+                                  cols="40" rows="5" value={eventSelected?.description}
                                   placeholder="Event Description" {...register("eventDescription", { required: true})}/>
                         <label htmlFor="eventPresenter">Presenter</label>
-                        <input className="form-control border border-dark w-75" id="eventPresenter"
+                        <input className="form-control border border-dark w-75" id="eventPresenter" value={eventSelected?.presenter}
                                placeholder="Event Presenter" {...register("eventPresenter", { required: true})}/>
                         <label htmlFor="eventPrice">Price</label>
-                        <input className="form-control border border-dark w-75" id="eventPrice"
+                        <input className="form-control border border-dark w-75" id="eventPrice" value={eventSelected?.price}
                                placeholder="Event Price" {...register("eventPrice", { required: true})}/>
                         <label>Program Time</label>
-                        <input className="form-control border border-dark w-75" id="eventPrice"
+                        <input className="form-control border border-dark w-75" id="eventPrice" value={eventSelected?.programTime}
                                placeholder="Program Time" {...register("programTime", { required: true})}/>
                         <label htmlFor="ageLimit">Age Limit</label>
-                        <input className="form-control border border-dark w-75" id="ageLimit"
+                        <input className="form-control border border-dark w-75" id="ageLimit" value={eventSelected?.ageLimit}
                                placeholder="Age Limit" {...register("ageLimit", { required: true})}/>
                         <label htmlFor="remark">Remark</label>
-                        <input className="form-control border border-dark w-75" id="remark"
+                        <input className="form-control border border-dark w-75" id="remark"  value={eventSelected?.remark}
                                placeholder="Remark" {...register("remark", { required: true})}/>
                     </div>
                     <label>Location</label>
                     <div className="container rounded w-100 border border-dark px-3 pt-2 pb-3">
                         <label htmlFor="eventLocation">Location</label>
                         <select className="form-select border border-dark w-75" aria-label="Order by"
-                                id="eventLocation" {...register("eventLocation")}>
+                                id="eventLocation" {...register("eventLocation")} defaultValue={venueSelected} onChange={(value)=>{setVenueSelected(value)}}>
                             {
                                 props?.locations.map((location) => {
                                     return <option value={location._id}>{location.name}</option>
@@ -120,12 +127,11 @@ const CreatEventDialog = React.forwardRef(function CreatEventDialog(props, ref) 
     )
 });
 
-CreatEventDialog.defaultProps = {};
+UpdateEventDialog.defaultProps = {};
 
-CreatEventDialog.propTypes = {
+UpdateEventDialog.propTypes = {
     createNewEvent: PropTypes.func,
-    reload: PropTypes.func,
-    dialogTitle: PropTypes.string
+    dialogTitle: PropTypes.string,
 };
 
-export default CreatEventDialog;
+export default UpdateEventDialog;

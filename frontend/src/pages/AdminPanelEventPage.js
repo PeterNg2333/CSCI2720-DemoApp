@@ -4,13 +4,17 @@ import AdminNavBar from "../components/AdminNavBar";
 import {backendUrl} from "../variables";
 import CreatEventDialog from "../components/CreateEventDialog";
 import DatePicker from 'react-date-picker'
+import UpdateEventForm from "../components/UpdateEventForm";
+import UpdateEventDialog from "../components/UpdateEventDialog";
 
 function AdminPanelEventPage() {
     const [eventTypes, setEventTypes] = useState(["type one", "type two", "type three"])
     const [locations, setLocation] = useState([]);
     const [events, setEvents] = useState([]);
+    const [eventIdSelected, setEventIdSelected] = useState(null); //number
     const [eventSelected, setEventSelected] = useState(null); //number
     const creatEventRef = useRef(null);
+    const updateEventRef = useRef(null);
 
     function getLocation() {
         fetch(`${backendUrl}/venue/all`)
@@ -30,7 +34,7 @@ function AdminPanelEventPage() {
             });
     }
 
-    function createNewEvent(eventTitle,programDate,eventDescription,eventPresenter,eventPrice,programTime,ageLimit,remark,eventLocation) {
+    async function createNewEvent(eventTitle, programDate, eventDescription, eventPresenter, eventPrice, programTime, ageLimit, remark, eventLocation) {
         let myHeaders = new Headers();
         let urlencoded = new URLSearchParams();
         urlencoded.append("venue", eventLocation);
@@ -51,20 +55,35 @@ function AdminPanelEventPage() {
 
         fetch(`${backendUrl}/event/create`, requestOptions)
             .then((response) => {
-                console.log(response)
+                reload();
             })
+    }
+
+    function updateNewEvent(){
+
+    }
+
+
+    function reload(){
+        getLocation();
+        getVenue();
     }
 
     useEffect(() => {
         getLocation();
         getVenue();
-        //createNewEvent();
     }, []);
 
     return (
         <div>
-            <CreatEventDialog ref={creatEventRef} dialogTitle="create event" locations={locations} createNewEvent={createNewEvent}/>
-            <AdminNavBar isAdmin/>
+            <CreatEventDialog ref={creatEventRef} dialogTitle="Create Event" locations={locations}
+                              createNewEvent={createNewEvent} reload={reload}/>
+            {eventSelected&&eventIdSelected&&
+                <UpdateEventDialog ref={updateEventRef} dialogTitle="Update Event" locations={locations}
+                                   eventSelected={eventSelected} updateNewEvent={updateNewEvent} reload={reload}
+                />}
+            <AdminNavBar/>
+
             <form className='mt-3 d-flex flex-row '>
                 <section className="col mx-2">
                     <input type="search" className="form-control border border-dark h-100" id="location"
@@ -105,15 +124,26 @@ function AdminPanelEventPage() {
                         <option value="dateAndTime">Date and time</option>
                     </select>
                 </section>
-                <section className="col mx-2">
-                    <button onClick={() => creatEventRef?.current?.showDialog()}
-                            type="button"
-                            className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-around h-100">
-                        <i className="fa fa-circle-plus color-green fa-2x"></i>
-                        <div className='color-green'>Create</div>
-                    </button>
-                </section>
-                {eventSelected ?
+                {eventIdSelected ?
+                    <section className="col mx-2">
+                        <button onClick={() => updateEventRef?.current?.showDialog()}
+                                type="button"
+                                className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center h-100">
+                            <i className="fa fa-circle-plus color-green fa-2x"></i>
+                            <div className='color-green'>Update</div>
+                        </button>
+                    </section>
+                    :
+                    <section className="col mx-2">
+                        <button onClick={() => creatEventRef?.current?.showDialog()}
+                                type="button"
+                                className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center h-100">
+                            <i className="fa fa-circle-plus color-green fa-2x"></i>
+                            <div className='color-green'>Create</div>
+                        </button>
+                    </section>
+                }
+                {eventIdSelected ?
                     <section className="col mx-2 ">
                         <button type="button"
                                 className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-around h-100">
@@ -122,7 +152,7 @@ function AdminPanelEventPage() {
                         </button>
                     </section> :
                     <section className="col mx-2 ">
-                        <button type="button"
+                        <button type="button" onClick={reload}
                                 className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-around h-100">
                             <i className="fas fa-trash-alt color-red fa-2x"></i>
                             <div className='color-red'>Delete</div>
@@ -133,15 +163,27 @@ function AdminPanelEventPage() {
                 `
             </form>
             <div className="container-xl">
-                {events?.map((event,index)=>{
-                    return(
-                        <div className="form-check d-flex flex-row align-items-center">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked={eventSelected===event.eventId} onClick={()=>{
-                                setEventSelected(event.eventId);
-                            }}/>
-                            <AdminEventCard name={event.name} description={event.description} location={""} type={"type"}
-                                            datetime={"datetime"}/>
-                        </div>
+                {events?.map((event, index) => {
+                    return (
+                        <React.Fragment key={index}>
+                            <div className="form-check d-flex flex-row align-items-center">
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                       checked={eventIdSelected === event.eventId}
+                                       onClick={() => {
+                                           if (eventIdSelected === event.eventId) {
+                                               setEventIdSelected(null);
+                                               setEventSelected(null);
+                                           } else {
+                                               setEventIdSelected(event.eventId);
+                                               setEventSelected(event);
+                                           }
+                                       }}
+                                />
+                                <AdminEventCard name={event.name} description={event.description}
+                                                location={event.venue?.name} programTime={event.programTime}
+                                                datetime={event.datetime}/>
+                            </div>
+                        </React.Fragment>
                     )
                 })}
             </div>
