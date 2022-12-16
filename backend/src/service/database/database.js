@@ -110,6 +110,8 @@ async function getAllVenues() {
 async function getVenuesByKeyword(keyword) {
   const venues = await venueModel.find({ name: { $regex: keyword } }).exec();
   return venues.map((venue) => ({
+    _id: venue._id,
+    venueId: venue.id,
     name: venue.name,
     latitude: venue.latitude,
     longitude: venue.longitude,
