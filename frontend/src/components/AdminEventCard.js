@@ -20,13 +20,13 @@ function AdminEventCard(props) {
                         </section>
                     </div>
                     <div className={"d-flex flex-row my-2"}>
-                        <section className={"col-6 d-flex flex-row"}>
-                            <i className="fa fa-tag" aria-hidden="true"></i>
-                            <div className={"mx-2"}>{props.type}</div>
-                        </section>
                         <section className={"col-6 d-flex flex-row "}>
                             <i className="fas fa-calendar-times"></i>
                             <div className={"mx-2"}>{props.datetime}</div>
+                        </section>
+                        <section className={"col-6 d-flex flex-row"}>
+                            <i className="fa fa-tag" aria-hidden="true"></i>
+                            <div className={"mx-2"}>{props.programTime}</div>
                         </section>
                     </div>
                 </section>
@@ -42,7 +42,7 @@ AdminEventCard.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     location: PropTypes.string,
-    type: PropTypes.string,
+    programTime: PropTypes.string,
     datetime: PropTypes.string
 };
 

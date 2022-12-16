@@ -16,6 +16,7 @@ import {
   UserMainFavorite,
 } from "./pages/_UserMainPage";
 import LoginPage from "./pages/LoginPage";
+import AdminPanelUsersPage from "./pages/AdminPanelUsersPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
 
         {/**Admin Pages*/}
         <Route path="/admin_event" element={<AdminPanelEventPage />} />
+        <Route path="/admin_user" element={<AdminPanelUsersPage />} />
 
         {/** User Pages*/}
         <Route path="/location" element={<UserMainLocation />} />

@@ -21,7 +21,7 @@ async function getAllEventsByVenue(venueId) {
 
 async function getAllEvents(venueId) {
   //const events = await eventModel.find({}).exec();
-  return await eventModel.find({}).populate("venue").exec();
+  return await eventModel.find().populate("venue").exec();
 }
 
 async function getNextEventId() {
