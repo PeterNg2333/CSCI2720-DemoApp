@@ -1,5 +1,6 @@
 const {
   getAllEventsByVenueRoute,
+  getAllEventsRoute,
   createEventRoute,
   updateEventRoute,
   deleteEventRoute,
@@ -34,6 +35,7 @@ function mountRouter(app) {
   app.get("/admin/getalluser", getAllUser);
 
   app.get("/event/venue/all", getAllEventsByVenueRoute);
+  app.get("/event/all", getAllEventsRoute);
   app.post("/event/create", createEventRoute);
   app.post("/event/update", updateEventRoute);
   app.post("/event/delete", deleteEventRoute);

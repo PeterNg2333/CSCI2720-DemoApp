@@ -1,5 +1,6 @@
 const {
     getAllEventsByVenue,
+    getAllEvents,
     countEventsInVenue,
     createEvent,
     updateEvent,
@@ -17,6 +18,13 @@ const {
 async function getAllEventsByVenueRoute(req, res) {
     const {venueId} = req.query;
     const events = await getAllEventsByVenue(venueId);
+    res.send({
+        data: events,
+    })
+}
+
+async function getAllEventsRoute(req, res) {
+    const events = await getAllEvents();
     res.send({
         data: events,
     })
@@ -117,6 +125,7 @@ async function addCommentByVenueRoute(req, res) {
 
 module.exports = {
     getAllEventsByVenueRoute,
+    getAllEventsRoute,
     createEventRoute,
     updateEventRoute,
     deleteEventRoute,

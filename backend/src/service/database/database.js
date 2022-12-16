@@ -18,6 +18,11 @@ async function getAllEventsByVenue(venueId) {
   return await eventModel.find({ venueId }).exec();
 }
 
+async function getAllEvents(venueId) {
+  //const events = await eventModel.find({}).exec();
+  return await eventModel.find({}).exec();
+}
+
 async function getNextEventId() {
   const event = await eventModel.findOne({}).sort("-eventId");
 
@@ -158,6 +163,7 @@ countEventsInVenue(1).then((e) => console.log(e));
 
 module.exports = {
   getAllEventsByVenue,
+  getAllEvents,
   countEventsInVenue,
   createEvent,
   updateEvent,
