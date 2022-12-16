@@ -102,7 +102,7 @@ function AdminPanelEventPage() {
                 />}
             <AdminNavBar/>
 
-            <form className='m-3 d-flex flex-row '>
+            <form className='m-3 row'>
                 <section className="col mx-2">
                     <input type="search" className="form-control border border-dark h-100" id="location"
                            placeholder="Location"/>

@@ -45,7 +45,7 @@ const UpdateEventDialog = React.forwardRef(function UpdateEventDialog(props, ref
 
     useEffect(()=>{
         setEventSelected(props.eventSelected);
-        setVenueSelected(props.eventSelected.venue._id)
+        setVenueSelected(props.eventSelected.venueId)
     },[props]);
 
     return(
@@ -116,7 +116,7 @@ const UpdateEventDialog = React.forwardRef(function UpdateEventDialog(props, ref
                                 id="eventLocation" {...register("eventLocation")} defaultValue={venueSelected} onChange={(value)=>{setVenueSelected(value)}}>
                             {
                                 props?.locations.map((location) => {
-                                    return <option value={location._id}>{location.name}</option>
+                                    return <option value={location.venueId}>{location.name}</option>
                                 })
                             }
                         </select>
