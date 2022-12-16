@@ -15,13 +15,12 @@ const venueModel = mongoose.model("Venue", venueSchema);
 const eventModel = mongoose.model("Event", eventSchema);
 
 async function getAllEventsByVenue(venueId) {
-  const venue = await venueModel.findOne({ id: venueId }).exec();
-  return await eventModel.find({ venue }).populate("venue").exec();
+  return await eventModel.find({ venueId: venueId }).exec();
 }
 
 async function getAllEvents(venueId) {
   //const events = await eventModel.find({}).exec();
-  return await eventModel.find().populate("venue").exec();
+  return await eventModel.find().exec();
 }
 
 async function getNextEventId() {
@@ -31,7 +30,7 @@ async function getNextEventId() {
 }
 
 async function createEvent(
-  venue,
+  venueId,
   title,
   description,
   datetime,
@@ -44,7 +43,7 @@ async function createEvent(
   const nextEventId = await getNextEventId();
   await eventModel.create({
     eventId: nextEventId,
-    venue: mongoose.Types.ObjectId(venue),
+    venueId,
     title,
     description,
     datetime,

@@ -109,7 +109,7 @@ const CreatEventDialog = React.forwardRef(function CreatEventDialog(props, ref) 
                                 id="eventLocation" {...register("eventLocation")}>
                             {
                                 props?.locations.map((location) => {
-                                    return <option value={location._id}>{location.name}</option>
+                                    return <option value={location.venueId}>{location.name}</option>
                                 })
                             }
                         </select>
