@@ -45,7 +45,7 @@ function UserMainEvents() {
         <section className="col-lg-12">
           <div className="container-lg bg-light mt-3 pt-1 pb-4">
             <UserEventLocationHead />
-            <UserCommentSection />
+            {/* <UserCommentSection /> */}
           </div>
           <br />
           <div className="container-lg mt-3 pb-1">

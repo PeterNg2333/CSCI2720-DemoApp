@@ -70,7 +70,10 @@ function MapSection(props) {
     <section className="col-lg-7">
       <div className="align-middle bg-light mt-4 py-1">
         <div className="row rounded-top border border-dark b-3 mx-3 mt-3">
-          <Map markers={props.mapArray} />
+          <Map
+            markers={props.mapArray}
+            style={{ width: "100vw", height: "100vh" }}
+          />
         </div>
       </div>
     </section>

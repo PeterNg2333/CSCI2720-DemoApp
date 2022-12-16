@@ -37,7 +37,7 @@ function Map(props) {
     <GoogleMap
       onLoad={handleOnLoad}
       onClick={() => setActiveMarker(null)}
-      mapContainerStyle={{ width: "100vw", height: "100vh" }}
+      mapContainerStyle={props.style}
     >
       {props.markers.map(({ id, name, position }) => (
         <MarkerF
