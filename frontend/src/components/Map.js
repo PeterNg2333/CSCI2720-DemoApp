@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 
 function Map(props) {
@@ -16,12 +17,13 @@ function Map(props) {
   //   ];
 
   const [activeMarker, setActiveMarker] = useState(null);
+  const navigate = useNavigate();
 
   const handleActiveMarker = (marker) => {
     if (marker === activeMarker) {
       return;
     }
-    // do page route here
+    navigate(`/location/${marker}/Events`);
     setActiveMarker(marker);
   };
 
