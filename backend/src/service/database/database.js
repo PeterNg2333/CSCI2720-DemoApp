@@ -16,7 +16,6 @@ const eventModel = mongoose.model("Event", eventSchema);
 
 async function getAllEventsByVenue(venueId) {
   const venue = await venueModel.findOne({ id: venueId }).exec();
-  console.log(venue)
   return await eventModel.find({ venue }).populate("venue").exec();
 }
 
