@@ -78,8 +78,12 @@ async function getAllVenuesRoute(req, res) {
 async function getVenuesByKeywordRoute(req, res) {
     const keyword = req.query.keyword;
     const venues = await getVenuesByKeyword(keyword);
+    const eventCount = {};
+    for (let venue of venues) {
+        eventCount[venue.venueId] = await countEventsInVenue(venue.venueId);
+    }
     res.send({
-        data: venues,
+        data: {venues, eventCount},
     });
 }
 
