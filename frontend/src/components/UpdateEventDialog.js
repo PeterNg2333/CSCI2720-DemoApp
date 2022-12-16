@@ -130,8 +130,10 @@ const UpdateEventDialog = React.forwardRef(function UpdateEventDialog(props, ref
 UpdateEventDialog.defaultProps = {};
 
 UpdateEventDialog.propTypes = {
-    createNewEvent: PropTypes.func,
+    updateEvent: PropTypes.func,
     dialogTitle: PropTypes.string,
+    eventSelected: PropTypes.object,
+    locations: PropTypes.object,
 };
 
 export default UpdateEventDialog;

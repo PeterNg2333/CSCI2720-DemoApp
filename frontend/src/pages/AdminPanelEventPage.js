@@ -56,15 +56,32 @@ function AdminPanelEventPage() {
         fetch(`${backendUrl}/event/create`, requestOptions)
             .then((response) => {
                 reload();
-            })
+            });
     }
 
-    function updateNewEvent(){
+    function updateEvent() {
 
     }
 
+    function deleteEvent(event){
+        const eventId= event.eventId
+        console.log(eventId);
+        let myHeaders = new Headers();
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("eventId", eventId);
+        let requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: "follow",
+        };
+        fetch(`${backendUrl}/event/delete`, requestOptions)
+            .then((response) => {
+                reload();
+            });
+    }
 
-    function reload(){
+    function reload() {
         getLocation();
         getVenue();
     }
@@ -78,9 +95,9 @@ function AdminPanelEventPage() {
         <div>
             <CreatEventDialog ref={creatEventRef} dialogTitle="Create Event" locations={locations}
                               createNewEvent={createNewEvent} reload={reload}/>
-            {eventSelected&&eventIdSelected&&
+            {eventSelected && eventIdSelected &&
                 <UpdateEventDialog ref={updateEventRef} dialogTitle="Update Event" locations={locations}
-                                   eventSelected={eventSelected} updateNewEvent={updateNewEvent} reload={reload}
+                                   eventSelected={eventSelected} updateEvent={updateEvent} reload={reload}
                 />}
             <AdminNavBar/>
 
@@ -143,24 +160,17 @@ function AdminPanelEventPage() {
                         </button>
                     </section>
                 }
-                {eventIdSelected ?
-                    <section className="col mx-2 ">
-                        <button type="button"
-                                className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-around h-100">
-                            <i className="fas fa-trash-alt color-red fa-2x"></i>
-                            <div className='color-red'>Cancel</div>
-                        </button>
-                    </section> :
-                    <section className="col mx-2 ">
-                        <button type="button" onClick={reload}
-                                className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-around h-100">
-                            <i className="fas fa-trash-alt color-red fa-2x"></i>
-                            <div className='color-red'>Delete</div>
-                        </button>
-                    </section>
-                }
 
-                `
+                <section className="col mx-2 ">
+                    <button type="button" className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-around h-100"
+                        onClick={()=>{
+                            deleteEvent(eventSelected);
+                        }}
+                    >
+                        <i className="fas fa-trash-alt color-red fa-2x"></i>
+                        <div className='color-red'>Delete</div>
+                    </button>
+                </section>
             </form>
             <div className="container-xl">
                 {events?.map((event, index) => {
