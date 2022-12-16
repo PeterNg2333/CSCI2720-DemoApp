@@ -104,20 +104,21 @@ function VenueSection(props) {
 
   const handleKeyword = (event) => {
     setKeyword(event.target.value);
-    if (event.target.value == "") {
-      setLocationArray(props.locationArray);
-    } else {
-      fetchSearch(event.target.value);
-    }
   };
 
-  const fetchSearch = (keyword) => {
-    fetch(`${backendUrl}/venue/all/keywords/?keyword=${keyword}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.data);
-        setLocationArray(data.data);
-      });
+  const fetchSearch = () => {
+    console.log("keyword=", keyword);
+    if (keyword === "") {
+      setLocationArray(props.locationArray);
+    } else {
+      fetch(`${backendUrl}/venue/all/keywords/?keyword=${keyword}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.data);
+
+          // setLocationArray(data.data);
+        });
+    }
   };
   return (
     locationArray.length > 0 && (
