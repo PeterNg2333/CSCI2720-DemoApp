@@ -1,4 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Link,
+  useParams,
+  useLocation,
+} from "react-router-dom";
+import { UserEventFileCardRegular } from "./UserEventFileCard";
+import placeholder_canRemove from "./placeholder_canRemove.png";
+import { backendUrl } from "../variables";
 
 /** Components for comment section in Event Page
  * UserCommentSection: show the comment history
@@ -15,28 +26,77 @@ function UserCommentSection(props) {
       >
         <UserComment />
         <UserComment />
-        <UserComment />
-        <UserComment />
       </div>
     </div>
   );
 }
 
-function UserCommentInput(props) {
+function UserCommentInput() {
+  const [input, setInput] = useState("");
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+
+  useEffect(() => {
+    listComment();
+  });
+  const handleInput = (event) => {
+    setInput(event.target.value);
+  };
+
+  const addComment = () => {
+    var userId = sessionStorage.getItem("userId");
+    const venueId = params.get("venueId");
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("userId", userId);
+    urlencoded.append("venueId", venueId);
+    urlencoded.append("commentText", input);
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch(`${backendUrl}/venue/comment/create`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setInput("");
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const listComment = () => {
+    const venueId = params.get("venueId");
+    fetch(`${backendUrl}/venue/comment/get/?venueId=${venueId}`)
+      .then((response) => response.json())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  };
   return (
-    <form class="mb-3">
+    <div class="mb-3">
       <div>
         <textarea
           rows="2"
           id="commentInput"
           className="form-control"
           placeholder="Add a comment..."
+          onChange={handleInput}
+          value={input}
         ></textarea>
-        <button type="button" className="btn btn-dark me-2 block">
+        <button
+          type="button"
+          className="btn btn-dark me-2 block"
+          onClick={addComment}
+        >
           Post
         </button>
       </div>
-    </form>
+    </div>
   );
 }
 
