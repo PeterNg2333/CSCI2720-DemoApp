@@ -8,6 +8,7 @@ import DatePicker from 'react-date-picker'
 function AdminPanelEventPage() {
     const [eventTypes, setEventTypes] = useState(["type one", "type two", "type three"])
     const [locations, setLocation] = useState([]);
+    const [events, setEvents] = useState([]);
     const [eventSelected, setEventSelected] = useState(null); //number
     const creatEventRef = useRef(null);
 
@@ -25,6 +26,7 @@ function AdminPanelEventPage() {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data.data);
+                setEvents(data.data);
             });
     }
 
@@ -131,11 +133,17 @@ function AdminPanelEventPage() {
                 `
             </form>
             <div className="container-xl">
-                <div className="form-check d-flex flex-row align-items-center">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                    <AdminEventCard name={"name"} description={"description"} location={"location"} type={"type"}
-                                    datetime={"datetime"}/>
-                </div>
+                {events?.map((event,index)=>{
+                    return(
+                        <div className="form-check d-flex flex-row align-items-center">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked={eventSelected===event.eventId} onClick={()=>{
+                                setEventSelected(event.eventId);
+                            }}/>
+                            <AdminEventCard name={event.name} description={event.description} location={""} type={"type"}
+                                            datetime={"datetime"}/>
+                        </div>
+                    )
+                })}
             </div>
 
         </div>
