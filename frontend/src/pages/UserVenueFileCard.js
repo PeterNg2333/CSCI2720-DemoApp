@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import placeholder_canRemove from "./placeholder_canRemove.png";
 import { UserEventFileCardSmall } from "./UserEventFileCard";
@@ -60,6 +60,18 @@ function UserVenueFileCard(props) {
       </tr>
     )
   );
+}
+
+function HeartIcon(props) {
+  useEffect(() => {
+    let i;
+    let isFavourite = false;
+    for (i = 0; i < props.favourite.length; i++) {
+      if (props.data.venueId == props.favourite[i]) {
+        isFavourite = true;
+      }
+    }
+  }, []);
 }
 
 /**
