@@ -10,25 +10,6 @@ import { backendUrl } from "../variables";
 //UserVenueFileCard: location and latest event in the location pages http://localhost:3000/Location/
 
 function UserVenueFileCard(props) {
-  //   console.log("props.data", props.data);
-  const addFavourite = () => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    var urlencoded = new URLSearchParams();
-    var userId = sessionStorage.getItem("userId");
-    urlencoded.append("userId", userId);
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
-
-    fetch("http://localhost:1337/venue/favourite/add", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  };
   return (
     props.data && (
       <tr>
