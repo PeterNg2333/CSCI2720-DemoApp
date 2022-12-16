@@ -10,8 +10,7 @@ function AdminUsersCard(props) {
     const [password, setPassword] = useState("");
 
     function updateUser() {
-        console.log(username)
-        console.log(password)
+        props.updateUser(userId,username,password)
     }
 
     const handleUsername = (event) => {
@@ -156,7 +155,8 @@ AdminUsersCard.propTypes = {
     username: PropTypes.string,
     password: PropTypes.string,
     setUserIdSelected: PropTypes.func,
-    isSelected: PropTypes.bool
+    isSelected: PropTypes.bool,
+    updateUser: PropTypes.func
 };
 
 export default AdminUsersCard

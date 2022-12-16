@@ -4,11 +4,13 @@ import React, {useEffect, useState} from "react";
 import AdminUsersCard from "../components/AdminUsersCard";
 import {backendUrl} from "../variables";
 import CreateNewUserCard from "../components/CreateNewUserCard";
+import {useLocation} from "react-router-dom";
 
 function AdminPanelUsersPage() {
     const [users, setUsers] = useState([]);
     const [userIdSelected, setUserIdSelected] = useState(null);
     const [isCreatingUser, setIsCreatingUser] = useState(false);
+    const [name, setName] = useState("");
 
     function getUsers() {
         fetch(`${backendUrl}/admin/getalluser`)
@@ -42,6 +44,30 @@ function AdminPanelUsersPage() {
 
     }
 
+    function updateUser(userId,username,password){
+        console.log(username)
+        console.log(password)
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("userId", userId);
+        urlencoded.append("username", username);
+        urlencoded.append("password", password);
+
+        let requestOptions = {
+            method: "PUT",
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: "follow",
+            credentials: 'same-origin',
+        };
+        fetch(`${backendUrl}/admin/updateuser`, requestOptions)
+            .then(()=>{
+                reload();
+            });
+
+    }
+
     function reload(){
         getUsers();
     }
@@ -67,6 +93,8 @@ function AdminPanelUsersPage() {
 
     useEffect(() => {
         getUsers();
+        let username = sessionStorage.getItem("username");
+        setName(username);
     }, [])
     return (
         <div>
@@ -126,11 +154,11 @@ function AdminPanelUsersPage() {
 
                 <div className="row">
                     {
-                        users && users.map((user, index) => {
+                        users && users.filter(user=>user.username!==name).map((user, index) => {
                             return (
                                 <AdminUsersCard key={index} userId={user.UserId} username={user.username}
                                                 password={user.password} setUserIdSelected={setUserIdSelected}
-                                                isSelected={userIdSelected === user.UserId}/>
+                                                isSelected={userIdSelected === user.UserId} updateUser={updateUser}/>
                             )
                         })
                     }
