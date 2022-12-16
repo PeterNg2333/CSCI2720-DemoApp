@@ -23,11 +23,11 @@ const CreatEventDialog = React.forwardRef(function CreatEventDialog(props, ref) 
             data.programDate.toISOString(),
             data.eventDescription,
             data.eventPresenter,
-            parseInt(data.eventPrice),
-            data.programTime.toISOString(),
-            parseInt(data.ageLimit),
+            data.eventPrice,
+            data.programTime,
+            data.ageLimit,
             data.remark,
-            parseInt(data.eventLocation),
+            data.eventLocation,
         );
         //handleClose();
     }
@@ -93,16 +93,9 @@ const CreatEventDialog = React.forwardRef(function CreatEventDialog(props, ref) 
                         <label htmlFor="eventPrice">Price</label>
                         <input className="form-control border border-dark w-75" id="eventPrice"
                                placeholder="Event Price" {...register("eventPrice", { required: true})}/>
-                        <label>Program Date</label>
-                        <Controller
-                            name="programTime"
-                            control={control}
-                            rules={{ required: true }}
-                            defaultValue={programTime}
-                            render={({ field }) => <TimePicker className="d-block w-75 bg-transparent" onChange={(time) => field.onChange(time)}
-                                                               value={field.value} disableClock/>}
-                        />
-
+                        <label>Program Time</label>
+                        <input className="form-control border border-dark w-75" id="eventPrice"
+                               placeholder="Program Time" {...register("programTime", { required: true})}/>
                         <label htmlFor="ageLimit">Age Limit</label>
                         <input className="form-control border border-dark w-75" id="ageLimit"
                                placeholder="Age Limit" {...register("ageLimit", { required: true})}/>
@@ -117,7 +110,7 @@ const CreatEventDialog = React.forwardRef(function CreatEventDialog(props, ref) 
                                 id="eventLocation" {...register("eventLocation")}>
                             {
                                 props?.locations.map((location) => {
-                                    return <option value={location.venueId}>{location.name}</option>
+                                    return <option value={location._id}>{location.name}</option>
                                 })
                             }
                         </select>

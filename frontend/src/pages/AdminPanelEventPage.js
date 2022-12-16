@@ -21,19 +21,17 @@ function AdminPanelEventPage() {
     }
 
     function getVenue() {
-        console.log(`${backendUrl}/event/venue/all`)
-        fetch(`${backendUrl}/event/venue/all`)
+        fetch(`${backendUrl}/event/all`)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
-                console.log(data.data.venues);
+                console.log(data.data);
             });
     }
 
     function createNewEvent(eventTitle,programDate,eventDescription,eventPresenter,eventPrice,programTime,ageLimit,remark,eventLocation) {
         let myHeaders = new Headers();
         let urlencoded = new URLSearchParams();
-        urlencoded.append("venueId", eventLocation);
+        urlencoded.append("venue", eventLocation);
         urlencoded.append("title", eventTitle);
         urlencoded.append("datetime", programDate);
         urlencoded.append("description", eventDescription);
@@ -42,7 +40,6 @@ function AdminPanelEventPage() {
         urlencoded.append("programTime", programTime);
         urlencoded.append("ageLimit", ageLimit);
         urlencoded.append("remark", remark);
-        console.log(urlencoded)
         let requestOptions = {
             method: "POST",
             headers: myHeaders,

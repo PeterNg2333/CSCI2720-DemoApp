@@ -31,8 +31,9 @@ async function getAllEventsRoute(req, res) {
 }
 
 async function createEventRoute(req, res) {
-    const {venueId, title, description, presenter, price, programTime, ageLimit, remark} = req.body;
-    const eventId = await createEvent(venueId, title, description, presenter, price, programTime, ageLimit, remark);
+    const {venue, title, description, datetime, presenter, price, programTime, ageLimit, remark} = req.body;
+    console.log(req.body);
+    const eventId = await createEvent(venue, title, description, datetime, presenter, price, programTime, ageLimit, remark);
     res.send({
         data: {eventId}
     });

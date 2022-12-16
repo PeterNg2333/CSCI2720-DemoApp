@@ -15,12 +15,12 @@ const venueModel = mongoose.model("Venue", venueSchema);
 const eventModel = mongoose.model("Event", eventSchema);
 
 async function getAllEventsByVenue(venueId) {
-  return await eventModel.find({ venueId }).exec();
+  return await eventModel.find({ venueId }).populate("venue").exec();
 }
 
 async function getAllEvents(venueId) {
   //const events = await eventModel.find({}).exec();
-  return await eventModel.find({}).exec();
+  return await eventModel.find({}).populate("venue").exec();
 }
 
 async function getNextEventId() {
@@ -30,9 +30,10 @@ async function getNextEventId() {
 }
 
 async function createEvent(
-  venueId,
+  venue,
   title,
   description,
+  datetime,
   presenter,
   price,
   programTime,
@@ -42,10 +43,10 @@ async function createEvent(
   const nextEventId = await getNextEventId();
   await eventModel.create({
     eventId: nextEventId,
-    venueId,
+    venue: mongoose.Types.ObjectId(venue),
     title,
     description,
-    datetime: [],
+    datetime,
     presenter,
     price,
     programTime,
@@ -98,6 +99,7 @@ async function getAllVenues() {
   const venues = await venueModel.find({}).exec();
 
   return venues.map((venue) => ({
+    _id: venue._id,
     venueId: venue.id,
     name: venue.name,
     latitude: venue.latitude,
@@ -107,7 +109,6 @@ async function getAllVenues() {
 
 async function getVenuesByKeyword(keyword) {
   const venues = await venueModel.find({ name: { $regex: keyword } }).exec();
-
   return venues.map((venue) => ({
     name: venue.name,
     latitude: venue.latitude,
