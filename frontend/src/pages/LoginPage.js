@@ -15,7 +15,7 @@ import Cookies from 'js-cookie';
 
 function LoginPage() {
   return (
-    <main className='container-xxl  w-100 p-4 mh-100"'>
+    <main className='container-xxl w-100 p-4 mh-100 '>
       <div className="row">
         <LoginPicture />
         <LoginForm />
@@ -26,7 +26,7 @@ function LoginPage() {
 
 // LHS of the login Pages in the protoype
 function LoginPicture() {
-  return <section className="col-lg-6 logInPictureBg"></section>;
+  return <section className="col-lg-6 logInPictureBg d-none d-lg-block d-xl-block"></section>;
 }
 
 // RHS of the login Pages in the protoype
@@ -81,7 +81,7 @@ function LoginForm() {
   };
   return (
     <section className="col-lg-6 logInFormBg border border-dark">
-      <div className="container h-100 mt-2">
+      <div className="container h-100">
         <div className="row align-items-center h-100">
           <div className="col-8 text-center mx-auto">
             <h3 className="mb-4">Hello! Welcome Back :{")"}</h3>
