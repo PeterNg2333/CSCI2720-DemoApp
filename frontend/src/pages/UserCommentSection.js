@@ -52,6 +52,7 @@ function UserCommentSection() {
       .catch((error) => console.log("error", error));
   };
 
+  let tmpusername;
   const listComment = async () => {
     const venueId = params.get("venueId");
     await fetch(`${backendUrl}/venue/comment/get/?venueId=${venueId}`)
@@ -63,7 +64,8 @@ function UserCommentSection() {
         for (i = 0; i < tmp.length; i++) {
           await getUser(tmp[i].userId);
           //   console.log("us", username);
-          tmp[i].username = username;
+          tmp[i].username = tmpusername;
+          //   tmp[i].username = username;
         }
         setCommentArray(tmp);
         console.log("tmp", tmp);
@@ -92,6 +94,7 @@ function UserCommentSection() {
       .then((result) => {
         console.log(result);
         console.log(result.username);
+        tmpusername = result.username;
         setUsername(result.username);
       })
       .catch((error) => console.log("error", error));
