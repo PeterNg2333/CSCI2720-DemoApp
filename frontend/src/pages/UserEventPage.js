@@ -75,9 +75,9 @@ function UserEventLocationHead() {
           </p> */}
           </div>
 
-          <div className="row">
+          {/* <div className="row">
             <UserCommentInput />
-          </div>
+          </div> */}
           <UserCommentSection />
           {/* <UserCommentParent /> */}
         </div>

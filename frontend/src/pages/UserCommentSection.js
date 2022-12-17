@@ -10,6 +10,8 @@ import { backendUrl } from "../variables";
 
 function UserCommentSection() {
   const [commentArray, setCommentArray] = useState("");
+  const [input, setInput] = useState("");
+
   const [username, setUsername] = useState("");
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -17,9 +19,42 @@ function UserCommentSection() {
   useEffect(() => {
     listComment();
   }, []);
-  const listComment = () => {
+
+  const handleInput = (event) => {
+    setInput(event.target.value);
+  };
+
+  const addComment = () => {
+    var userId = sessionStorage.getItem("userId");
     const venueId = params.get("venueId");
-    fetch(`${backendUrl}/venue/comment/get/?venueId=${venueId}`)
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("userId", userId);
+    urlencoded.append("venueId", venueId);
+    urlencoded.append("commentText", input);
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch(`${backendUrl}/venue/comment/create`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setInput("");
+        listComment();
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const listComment = async () => {
+    const venueId = params.get("venueId");
+    await fetch(`${backendUrl}/venue/comment/get/?venueId=${venueId}`)
       .then((response) => response.json())
       .then(async (result) => {
         console.log(result);
@@ -52,7 +87,7 @@ function UserCommentSection() {
       redirect: "follow",
     };
 
-    await fetch("http://localhost:1337/admin/getuserbyid", requestOptions)
+    await fetch(`${backendUrl}/admin/getuserbyid`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -62,16 +97,39 @@ function UserCommentSection() {
       .catch((error) => console.log("error", error));
   };
   return commentArray.length > 0 ? (
-    <div className="row">
-      <div
-        className="mt-2"
-        style={{ margin: "-10px", height: "200px", overflowY: "auto" }}
-      >
-        {commentArray.map((cm, index) => (
-          <UserComment comment={cm} />
-        ))}
+    <>
+      <div className="row">
+        <div class="mb-3">
+          <div>
+            <textarea
+              rows="2"
+              id="commentInput"
+              className="form-control"
+              placeholder="Add a comment..."
+              onChange={handleInput}
+              value={input}
+            ></textarea>
+            <button
+              type="button"
+              className="btn btn-dark me-2 block"
+              onClick={addComment}
+            >
+              Post
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+      <div className="row">
+        <div
+          className="mt-2"
+          style={{ margin: "-10px", height: "200px", overflowY: "auto" }}
+        >
+          {commentArray.map((cm, index) => (
+            <UserComment comment={cm} />
+          ))}
+        </div>
+      </div>
+    </>
   ) : (
     <div className="row">
       <div
@@ -83,63 +141,56 @@ function UserCommentSection() {
 }
 
 function UserCommentInput() {
-  const [input, setInput] = useState("");
-
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-
-  const handleInput = (event) => {
-    setInput(event.target.value);
-  };
-
-  const addComment = () => {
-    var userId = sessionStorage.getItem("userId");
-    const venueId = params.get("venueId");
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    var urlencoded = new URLSearchParams();
-    urlencoded.append("userId", userId);
-    urlencoded.append("venueId", venueId);
-    urlencoded.append("commentText", input);
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
-
-    fetch(`${backendUrl}/venue/comment/create`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        setInput("");
-      })
-      .catch((error) => console.log("error", error));
-  };
-
-  return (
-    <div class="mb-3">
-      <div>
-        <textarea
-          rows="2"
-          id="commentInput"
-          className="form-control"
-          placeholder="Add a comment..."
-          onChange={handleInput}
-          value={input}
-        ></textarea>
-        <button
-          type="button"
-          className="btn btn-dark me-2 block"
-          onClick={addComment}
-        >
-          Post
-        </button>
-      </div>
-    </div>
-  );
+  //   const [input, setInput] = useState("");
+  //   const location = useLocation();
+  //   const params = new URLSearchParams(location.search);
+  //   const handleInput = (event) => {
+  //     setInput(event.target.value);
+  //   };
+  //   const addComment = () => {
+  //     var userId = sessionStorage.getItem("userId");
+  //     const venueId = params.get("venueId");
+  //     var myHeaders = new Headers();
+  //     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  //     var urlencoded = new URLSearchParams();
+  //     urlencoded.append("userId", userId);
+  //     urlencoded.append("venueId", venueId);
+  //     urlencoded.append("commentText", input);
+  //     var requestOptions = {
+  //       method: "POST",
+  //       headers: myHeaders,
+  //       body: urlencoded,
+  //       redirect: "follow",
+  //     };
+  //     fetch(`${backendUrl}/venue/comment/create`, requestOptions)
+  //       .then((response) => response.json())
+  //       .then((result) => {
+  //         console.log(result);
+  //         setInput("");
+  //       })
+  //       .catch((error) => console.log("error", error));
+  //   };
+  //   return (
+  //     <div class="mb-3">
+  //       <div>
+  //         <textarea
+  //           rows="2"
+  //           id="commentInput"
+  //           className="form-control"
+  //           placeholder="Add a comment..."
+  //           onChange={handleInput}
+  //           value={input}
+  //         ></textarea>
+  //         <button
+  //           type="button"
+  //           className="btn btn-dark me-2 block"
+  //           onClick={addComment}
+  //         >
+  //           Post
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
 }
 
 function UserComment(props) {
