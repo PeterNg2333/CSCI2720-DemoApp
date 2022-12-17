@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Link,
-  useParams,
-  useLocation,
-} from "react-router-dom";
-import { UserEventFileCardRegular } from "./UserEventFileCard";
-import placeholder_canRemove from "./placeholder_canRemove.png";
+import { Route, Routes, Link, useParams, useLocation } from "react-router-dom";
 import { backendUrl } from "../variables";
 
 /** Components for comment section in Event Page
@@ -17,28 +8,86 @@ import { backendUrl } from "../variables";
  * UserCommentI one user comment (used by UserCommentSection)
  */
 
-function UserCommentSection(props) {
-  return (
+function UserCommentSection() {
+  const [commentArray, setCommentArray] = useState("");
+  const [username, setUsername] = useState("");
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+
+  useEffect(() => {
+    listComment();
+  }, []);
+  const listComment = () => {
+    const venueId = params.get("venueId");
+    fetch(`${backendUrl}/venue/comment/get/?venueId=${venueId}`)
+      .then((response) => response.json())
+      .then(async (result) => {
+        console.log(result);
+        let tmp = result.data;
+        let i;
+        for (i = 0; i < tmp.length; i++) {
+          await getUser(tmp[i].userId);
+          //   console.log("us", username);
+          tmp[i].username = username;
+        }
+        setCommentArray(tmp);
+        console.log("tmp", tmp);
+
+        console.log("commentArray", commentArray);
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const getUser = async (userId) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("userId", userId);
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    await fetch("http://localhost:1337/admin/getuserbyid", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        console.log(result.username);
+        setUsername(result.username);
+      })
+      .catch((error) => console.log("error", error));
+  };
+  return commentArray.length > 0 ? (
     <div className="row">
       <div
         className="mt-2"
         style={{ margin: "-10px", height: "200px", overflowY: "auto" }}
       >
-        <UserComment />
-        <UserComment />
+        {commentArray.map((cm, index) => (
+          <UserComment comment={cm} />
+        ))}
       </div>
+    </div>
+  ) : (
+    <div className="row">
+      <div
+        className="mt-2"
+        style={{ margin: "-10px", height: "200px", overflowY: "auto" }}
+      ></div>
     </div>
   );
 }
 
 function UserCommentInput() {
   const [input, setInput] = useState("");
+
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
-  useEffect(() => {
-    listComment();
-  });
   const handleInput = (event) => {
     setInput(event.target.value);
   };
@@ -70,13 +119,6 @@ function UserCommentInput() {
       .catch((error) => console.log("error", error));
   };
 
-  const listComment = () => {
-    const venueId = params.get("venueId");
-    fetch(`${backendUrl}/venue/comment/get/?venueId=${venueId}`)
-      .then((response) => response.json())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  };
   return (
     <div class="mb-3">
       <div>
@@ -100,11 +142,11 @@ function UserCommentInput() {
   );
 }
 
-function UserComment() {
+function UserComment(props) {
   return (
     <div class="d-flex mt-2">
       <div class="flex-shrink-0">
-        <svg height="60" width="60">
+        {/* <svg height="60" width="60">
           <g>
             <circle cx="35" cy="35" r="25" fill="#d4d6dbd7" />
             <text
@@ -117,18 +159,14 @@ function UserComment() {
               P
             </text>
           </g>
-        </svg>
+        </svg> */}
       </div>
 
       <div height="100" class="flex-grow-1">
-        <h5 class="mt-2 ms-2 mb-0">
-          <b>Peter </b>
+        <h5 class="mt-2 ms-2 mb-0 px-2">
+          <b>{props.comment.username}</b>
         </h5>
-        <p class="mt-1 ms-3 mb-0">
-          {" "}
-          Hi, testing! testing!testing!testing! testing!testing!testing!
-          testing!testing!testing! testing!testing! Testing! testing!{" "}
-        </p>
+        <p class="mt-1 ms-3 mb-0">{props.comment.text}</p>
         <hr className="p-0 m-1" />
       </div>
     </div>
