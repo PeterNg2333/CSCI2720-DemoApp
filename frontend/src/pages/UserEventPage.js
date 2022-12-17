@@ -9,7 +9,11 @@ import {
 } from "react-router-dom";
 import { UserEventFileCardRegular } from "./UserEventFileCard";
 import placeholder_canRemove from "./placeholder_canRemove.png";
-import { UserCommentSection, UserCommentInput } from "./UserCommentSection";
+import {
+  UserCommentSection,
+  UserCommentInput,
+  UserCommentParent,
+} from "./UserCommentSection";
 import Map from "../components/Map";
 import { backendUrl } from "../variables";
 
@@ -51,29 +55,7 @@ function UserEventLocationHead() {
       })
       .catch((error) => console.log("error", error));
   };
-  //   const fetchEvent = () => {
-  //     const venueId = params.get("venueId");
-  //     fetch(`${backendUrl}/event/venue/all/?venueId=${venueId}`)
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         console.log(data.data);
-  //         setEventArray(data.data);
-  //         // setLocationData(data.data.venue);
-  //         // let tmpMap = [
-  //         //   {
-  //         //     id: data.data.venue.id,
-  //         //     name: data.data.venue.name,
-  //         //     position: {
-  //         //       lat: data.data.venue.latitude,
-  //         //       lng: data.data.venue.longitude,
-  //         //     },
-  //         //   },
-  //         // ];
-  //         // // console.log("tmpMap", tmpMap);
-  //         // setMapArray(tmpMap);
-  //       })
-  //       .catch((error) => console.log("error", error));
-  //   };
+
   return (
     mapArray.length > 0 && (
       <div className="row mt-3">
@@ -97,6 +79,7 @@ function UserEventLocationHead() {
             <UserCommentInput />
           </div>
           <UserCommentSection />
+          {/* <UserCommentParent /> */}
         </div>
 
         <div className="row col-5">
@@ -124,19 +107,6 @@ function UserEventList() {
       .then((data) => {
         console.log(data.data);
         setEventArray(data.data);
-        // setLocationData(data.data.venue);
-        // let tmpMap = [
-        //   {
-        //     id: data.data.venue.id,
-        //     name: data.data.venue.name,
-        //     position: {
-        //       lat: data.data.venue.latitude,
-        //       lng: data.data.venue.longitude,
-        //     },
-        //   },
-        // ];
-        // // console.log("tmpMap", tmpMap);
-        // setMapArray(tmpMap);
       })
       .catch((error) => console.log("error", error));
   };
@@ -149,11 +119,6 @@ function UserEventList() {
           {eventArray.map((event, index) => (
             <UserEventFileCardRegular event={event} />
           ))}
-          {/* <UserEventFileCardRegular />
-        <UserEventFileCardRegular />
-        <UserEventFileCardRegular />
-        <UserEventFileCardRegular />
-        <UserEventFileCardRegular /> */}
         </div>
       </section>
     )
