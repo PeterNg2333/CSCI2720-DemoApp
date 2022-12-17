@@ -69,7 +69,6 @@ function UserCommentSection() {
         }
         setCommentArray(tmp);
         console.log("tmp", tmp);
-
         console.log("commentArray", commentArray);
       })
       .catch((error) => console.log("error", error));
@@ -135,6 +134,27 @@ function UserCommentSection() {
     </>
   ) : (
     <div className="row">
+      <div className="row">
+        <div class="mb-3">
+          <div>
+            <textarea
+              rows="2"
+              id="commentInput"
+              className="form-control"
+              placeholder="Add a comment..."
+              onChange={handleInput}
+              value={input}
+            ></textarea>
+            <button
+              type="button"
+              className="btn btn-dark me-2 block"
+              onClick={addComment}
+            >
+              Post
+            </button>
+          </div>
+        </div>
+      </div>
       <div
         className="mt-2"
         style={{ margin: "-10px", height: "200px", overflowY: "auto" }}
