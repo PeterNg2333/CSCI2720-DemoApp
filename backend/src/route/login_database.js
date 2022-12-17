@@ -84,7 +84,7 @@ async function dumpData() {
   let eventRawData = require("../dataScraping/output/eventData.json");
   let tmpEventDataArray = eventRawData.events.event;
   let eventDataArray = [];
-  console.log("tmpEventDataArray.length", tmpEventDataArray.length);
+  // console.log("tmpEventDataArray.length", tmpEventDataArray.length);
   for (i = 0; i < tmpEventDataArray.length; i++) {
     for (j = 0; j < dataArray.length; j++) {
       if (tmpEventDataArray[i].venueid._cdata === dataArray[j]._attributes.id) {
@@ -94,12 +94,12 @@ async function dumpData() {
   }
   var eid, etitle, evenue, edate, edesc, epresenter, eprice, eprogTime;
   eventDataArray.forEach(async (element) => {
-    console.log(
-      element.venueid._cdata,
-      element.titlee._cdata,
-      element._attributes.id
-      // element.desce._cdata
-    );
+    // console.log(
+    //   element.venueid._cdata,
+    //   element.titlee._cdata,
+    //   element._attributes.id
+    //   // element.desce._cdata
+    // );
     eid = Number(element._attributes.id);
     etitle = element.titlee._cdata;
     evenue = Number(element.venueid._cdata);
@@ -166,6 +166,7 @@ async function login(req, res) {
           }
         );
       } else {
+        let lastUpdateData = require("../dataScraping/output/scraperMetaData.json");
         bcrypt.compare(
           req.body["password"],
           e.password,
@@ -178,6 +179,7 @@ async function login(req, res) {
                 userId: e.userId,
                 username: e.username,
                 isAdmin: e.isAdmin,
+                lastUpdate: lastUpdateData.LastUpdate,
               };
               res.status(200).send(txt);
             } else {

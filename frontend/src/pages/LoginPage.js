@@ -10,12 +10,11 @@ import {
 import userIcon from "./Resource/LoginPage/user-icon.png";
 import { useState } from "react";
 import { backendUrl } from "../variables";
-import {useCookies} from "react-cookie";
-
+import { useCookies } from "react-cookie";
 
 function LoginPage() {
   return (
-    <main className='container-xxl w-100 p-4 mh-100 '>
+    <main className="container-xxl w-100 p-4 mh-100 ">
       <div className="row">
         <LoginPicture />
         <LoginForm />
@@ -26,14 +25,16 @@ function LoginPage() {
 
 // LHS of the login Pages in the protoype
 function LoginPicture() {
-  return <section className="col-lg-6 logInPictureBg d-none d-lg-block d-xl-block"></section>;
+  return (
+    <section className="col-lg-6 logInPictureBg d-none d-lg-block d-xl-block"></section>
+  );
 }
 
 // RHS of the login Pages in the protoype
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [cookies, setCookie, removeCookie] = useCookies(['userName']);
+  const [cookies, setCookie, removeCookie] = useCookies(["userName"]);
 
   const handleUsername = (event) => {
     setUsername(event.target.value);
@@ -56,7 +57,7 @@ function LoginForm() {
       headers: myHeaders,
       body: urlencoded,
       redirect: "follow",
-      credentials: 'same-origin',
+      credentials: "same-origin",
     };
 
     fetch(`${backendUrl}/login`, requestOptions)
@@ -66,15 +67,17 @@ function LoginForm() {
         else return response.json();
       })
       .then((result) => {
-        console.log(result)
+        console.log(result);
         if (result.isAdmin === true) {
           // go to admin page
           sessionStorage.setItem("userId", result.userId);
           sessionStorage.setItem("username", result.username);
-          navigate('/admin_event');
+          sessionStorage.setItem("lastUpdate", result.lastUpdate);
+          navigate("/admin_event");
         } else {
           sessionStorage.setItem("userId", result.userId);
           sessionStorage.setItem("username", result.username);
+          sessionStorage.setItem("lastUpdate", result.lastUpdate);
           navigate("/location");
         }
       })
@@ -93,8 +96,10 @@ function LoginForm() {
                 alt="img"
                 style={{ maxWidth: "50%", height: "auto" }}
               />
-            </div> 
-            <label for="username" style={{fontWeight: "bold", float: "left"}}><h5>Username</h5></label>
+            </div>
+            <label for="username" style={{ fontWeight: "bold", float: "left" }}>
+              <h5>Username</h5>
+            </label>
             <br />
             <input
               className="form-control"
@@ -104,8 +109,10 @@ function LoginForm() {
               value={username}
               required
             />
-            <br/>
-            <label for="password" style={{fontWeight: "bold", float: "left"}}><h5>Password</h5></label>
+            <br />
+            <label for="password" style={{ fontWeight: "bold", float: "left" }}>
+              <h5>Password</h5>
+            </label>
             <br />
             <input
               className="form-control"
@@ -116,13 +123,18 @@ function LoginForm() {
               value={password}
               required
             />
-            
+
             <br />
-            <span style={{ float: "left", marginTop:"-5px"}}>
-            <input className="" type="checkbox" name="rememberMe" />{" "}
-            Remember Me </span>
+            <span style={{ float: "left", marginTop: "-5px" }}>
+              <input className="" type="checkbox" name="rememberMe" /> Remember
+              Me{" "}
+            </span>
             <br />
-            <button className="btn btn-primary btn-block mt-2" type="button" onClick={fetchLogin}>
+            <button
+              className="btn btn-primary btn-block mt-2"
+              type="button"
+              onClick={fetchLogin}
+            >
               Login
             </button>
           </div>

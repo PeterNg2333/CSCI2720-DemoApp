@@ -84,9 +84,13 @@ function VenueSection(props) {
   const [locationArray, setLocationArray] = useState("");
   const [selectedClient, setSelectedClient] = useState("");
   const [keyword, setKeyword] = useState("");
+  const [time, setTime] = useState("");
+
   useEffect(() => {
     setLocationArray(props.locationArray);
     sorting(2);
+    var time = sessionStorage.getItem("lastUpdate");
+    setTime(time);
   }, []);
 
   const sorting = (option) => {
@@ -181,6 +185,7 @@ function VenueSection(props) {
                   <h3>
                     <strong>Locations</strong>
                   </h3>
+                  <div>Last Update: {time} </div>
                 </th>
               </tr>
             </thead>

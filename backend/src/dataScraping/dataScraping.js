@@ -54,7 +54,9 @@ function save(jsonResult, path) {
 
 // 3. update the data file as well as meta data file at "./output"
 function runUpdate(dataXML, dataSourceNum, jsonOption, metaDataFileLocation) {
-  var currentDate = new Date().toJSON().slice(0, 10);
+  // var currentDate = new Date().toJSON().slice(0, 10);
+  var currentDate = new Date().toJSON();
+  // console.log(new Date().toJSON());
   var jsonMetaData = { LastUpdate: currentDate };
 
   // Record XML scraper's meta data e.g. last update date
@@ -99,13 +101,20 @@ class XMLScraper {
     fs.readFile(this.metaDataFileLocation, function (err, data) {
       var result = JSON.parse(data);
       var lastUpdate = result.LastUpdate;
+      // if (err) {
+      //   console.log("An error occured while reading JSON File.");
+      //   console.log(err);
+      // } else if (lastUpdate <= currentDate) {
+      //   console.log("Outdated! Run Update");
+      //   runUpdate(dataXML, dataSourceNum, jsonOption, metaDataFileLocation);
+      // } else console.log(`Last update is : ${lastUpdate}, not need to update`);
       if (err) {
         console.log("An error occured while reading JSON File.");
         console.log(err);
-      } else if (lastUpdate <= currentDate) {
-        console.log("Outdated! Run Update");
+      } else {
+        // console.log("Outdated! Run Update");
         runUpdate(dataXML, dataSourceNum, jsonOption, metaDataFileLocation);
-      } else console.log(`Last update is : ${lastUpdate}, not need to update`);
+      }
     });
   }
 }
