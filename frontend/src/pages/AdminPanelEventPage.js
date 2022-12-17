@@ -1,11 +1,9 @@
 import AdminEventCard from "../components/AdminEventCard";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import AdminNavBar from "../components/AdminNavBar";
 import {backendUrl} from "../variables";
-import CreatEventModal from "../components/CreateEventModal";
-import DatePicker from 'react-date-picker'
 import UpdateEventForm from "../components/UpdateEventForm";
-import UpdateEventModal from "../components/UpdateEventModal";
+import CreateEventForm from "../components/CreateEventForm";
 
 function AdminPanelEventPage() {
     const [eventTypes, setEventTypes] = useState(["type one", "type two", "type three"])
@@ -13,8 +11,7 @@ function AdminPanelEventPage() {
     const [events, setEvents] = useState([]);
     const [eventIdSelected, setEventIdSelected] = useState(null); //number
     const [eventSelected, setEventSelected] = useState(null); //number
-    const creatEventRef = useRef(null);
-    const updateEventRef = useRef(null);
+    const [isCreatingEvent, setIsCreatingEvent] = useState(false); //number
 
     function getLocation() {
         fetch(`${backendUrl}/venue/all`)
@@ -34,7 +31,7 @@ function AdminPanelEventPage() {
             });
     }
 
-     function createNewEvent(eventTitle, programDate, eventDescription, eventPresenter, eventPrice, programTime, eventLocation, remark) {
+    function createNewEvent(eventTitle, programDate, eventDescription, eventPresenter, eventPrice, programTime, eventLocation, remark) {
         let myHeaders = new Headers();
         let urlencoded = new URLSearchParams();
         urlencoded.append("venueId", eventLocation);
@@ -81,12 +78,14 @@ function AdminPanelEventPage() {
 
         fetch(`${backendUrl}/event/update`, requestOptions)
             .then((response) => {
+                setEventIdSelected(null)
+                setEventSelected(null);
                 reload();
             });
     }
 
-    function deleteEvent(event){
-        const eventId= event.eventId
+    function deleteEvent(event) {
+        const eventId = event.eventId
         console.log(eventId);
         let myHeaders = new Headers();
         let urlencoded = new URLSearchParams();
@@ -116,45 +115,31 @@ function AdminPanelEventPage() {
     return (
         <div>
             <div className={"row"}>
-            <CreatEventModal ref={creatEventRef} dialogTitle="Create Event" locations={locations}
-                             createNewEvent={createNewEvent} reload={reload}/>
-            {eventSelected && eventIdSelected &&
-                <UpdateEventModal ref={updateEventRef} dialogTitle="Update Event" locations={locations}
-                                  eventSelected={eventSelected} updateEvent={updateEvent} reload={reload}
-                />}
-            <AdminNavBar/>
+                <AdminNavBar/>
+                <section className="col-6 px-2">
+                    <button onClick={() => setIsCreatingEvent(true)}
+                            type="button"
+                            className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center w-100">
+                        <i className="fa fa-circle-plus color-green fa-2x"></i>
+                        <div className='color-green'>Create</div>
+                    </button>
+                </section>
 
-            {eventIdSelected ?
-                    <section className="col-6 px-2">
-                        <button onClick={() => updateEventRef?.current?.showDialog()}
-                                type="button"
-                                className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center w-100">
-                            <i className="fa fa-circle-plus color-green fa-2x"></i>
-                            <div className='color-green'>Update</div>
-                        </button>
-                    </section>
-                    :
-                    <section className="col-6 px-2">
-                        <button onClick={() => creatEventRef?.current?.showDialog()}
-                                type="button"
-                                className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center w-100">
-                            <i className="fa fa-circle-plus color-green fa-2x"></i>
-                            <div className='color-green'>Create</div>
-                        </button>
-                    </section>
-                }
 
                 <section className="col-6 px-2 ">
-                    <button type="button" className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center w-100"
-                        onClick={()=>{
-                            deleteEvent(eventSelected);
-                        }}
+                    <button type="button"
+                            className="btn btn-outline-light bg-transparent d-flex align-content-center justify-content-center w-100"
+                            onClick={() => {
+                                deleteEvent(eventSelected);
+                            }}
                     >
                         <i className="fas fa-trash-alt color-red fa-2x"></i>
                         <div className='color-red'>Delete</div>
                     </button>
                 </section>
-        </div>
+            </div>
+            {isCreatingEvent && <CreateEventForm locations={locations} createNewEvent={createNewEvent} reload={reload}
+                                                 setIsCreatingEvent={setIsCreatingEvent}/>}
             <div className="container-xl">
                 {events?.map((event, index) => {
                     return (
@@ -176,6 +161,11 @@ function AdminPanelEventPage() {
                                                 location={event.venueId} programTime={event.programTime}
                                                 datetime={event.datetime}/>
                             </div>
+                            {eventSelected && eventIdSelected === event.eventId &&
+                                <UpdateEventForm locations={locations}
+                                                 eventSelected={eventSelected} updateEvent={updateEvent} reload={reload}
+                                                 setEventIdSelected={setEventIdSelected}
+                                />}
                         </React.Fragment>
                     )
                 })}
